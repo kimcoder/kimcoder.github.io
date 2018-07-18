@@ -1,5 +1,7 @@
 # kimcoder dev note
 
+https://kimcoder.github.io/
+
 안녕하세요.<br>
 kimcoder라는 웹 프론트엔드 개발자입니다.<br>
 그동안의 배움에 있어 놓치고 가는 부분이 많아, 스스로 정리를 하고자 블로그를 시작합니다.<br>

@@ -10,3 +10,10 @@ kimcoder라는 웹 프론트엔드 개발자입니다.<br>
 전반적인 웹 프론트엔드 개발을 중점으로 꾸준히 포스팅하는 것이 목표입니다.<br><br>
 
 이 블로그는 아래 [Jekyll](http://jekyllrb.com)과 [Hydeout](http://jekyllthemes.org/themes/hydeout/) 테마를 사용하여 구축되었습니다.<br>
+
+<hr/>
+
+### usage 
+```
+bundle exec jekyll serve
+```

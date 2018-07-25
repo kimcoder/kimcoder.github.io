@@ -1,0 +1,218 @@
+---
+layout: post
+title: "this 키워드에 대해"
+categories:
+  - javascript
+tags:
+  - javascript
+  - function
+  - this
+---
+<hr/>
+
+일반적으로 프로그래밍에서 this 키워드는 클래스로부터 생성되는 현재 인스턴스 객체를 의미한다.<br>
+하지만 자바스크립트에서 ``this``는 ``함수의 현재 실행되는 컨텍스트``를 의미한다.<br>
+컨텍스트의 개념은 <a href="../17/javascript-context.html" target="_blank">여기</a>에서 확인할 수 있다.<br>
+추가적으로 ES6에서부터 지원하는 Class에서는 현재 인스턴스 객체를 가리키는 것으로도 사용할 수 있다.<br>
+복잡한 개념은 아니지만, 꼭 알아야 하는 것이니 확인해보자.
+<hr/>
+
+### 함수 호출의 여러가지 패턴
+정확하게 this 키워드를 이해하려면 자바스크립트의 함수 실행과 컨텍스트와의 관계를 알아야 한다.<br>
+먼저 자바스크립트에서 함수를 호출하는 여러가지 패턴에 대해서 알아보자.<br>
+
+1. [함수 실행](#callByFunction)
+2. [객체의 메소드 실행](#callByMethod)
+3. [생성자 실행](#callByConstructor)
+4. [함수의 메소드를 통한 실행](#callByFunctionMethod)
+<hr/>
+
+###### <a name="callByFunction"></a>함수 실행
+```
+function hello() {
+    console.log(this);   // Window 객체  
+}
+
+hello();
+```
+한눈에 봐도 알 수 있지만 선언된 함수를 그냥 직접 호출하는 방식이다.<br>
+함수 내부에서 this를 확인해보면 전역 객체인 Window가 바인딩된 것을 볼 수 있다.<br>
+아래의 즉시 실행 함수도 마찬가지이다.
+
+```
+(function hello() {
+    console.log(this);   // Window 객체  
+})()
+```
+<hr/>
+
+###### <a name="callByMethod"></a>객체의 메소드로서 함수 실행
+함수를 어떤 객체의 속성으로 저장하는 경우를 ``메소드``라고 한다.<br>
+아래 코드를 통해 확인해보자.
+
+```
+var obj = {
+    hello: function() {
+        console.log(this);  // Object { hello: hello() }
+    }
+};
+obj.hello();
+```
+메소드로의 함수 실행은 해당 객체가 this에 바인딩이 된다.<br>
+위의 코드를 실제 콘솔창에서 확인해보면 hello 속성을 가진 객체가 출력되는 것을 볼 수 있다.
+<hr/>
+
+###### <a name="callByConstructor"></a>생성자로서 실행
+생성자라고하면 일반적으로 Class의 constructor 함수가 떠오를 것이다.<br>
+ES6 이전의 자바스크립트에서는 클래스가 없었기 때문에 여기서 설명하는 생성자는 좀 다르다.<br><br>
+자바스크립트의 함수를 ``new``라는 전치 연산자와 함께 호출하면, 호출한 함수의 prototype 속성 값에 연결되는<br>
+링크를 갖는 객체가 생성되고, this는 이 객체에 바인딩이 된다.<br>
+아래 코드를 통해 확인해보자.
+
+```
+var Obj = function() {
+    console.log(this instanceof Obj); // true
+    this.name = "hello man~";
+    console.log(this);      // Object { name: "hello man~" } 
+};
+
+var myObj = new Obj();
+```
+위의 설명대로 this는 호출되는 함수를 기반으로 Obj라는 새로운 객체가 this에 바인딩이 된다.<br>
+주의할점은 이와 같이 생성자로 호출할 경우는 꼭 ``new``키워드와 같이 호출해야 한다.<br><br>
+``new``와 같이 호출되지 않는다면 새로운 객체가 생성되지 않으므로, this에 전역객체인 Window가 바인딩되고,<br>
+이는 프로그램이 생각한 대로 돌아가지 않을 원인으로 작용될 수 있다.
+<hr/>
+
+###### <a name="callByFunctionMethod"></a>함수의 메소드를 통한 실행
+함수는 자바스크립트 객체이고, 조금 더 정확하게 표현하자면 Function이라는 객체이다.<br>
+Function의 메소드 중 함수를 호출하는 함수가 2가지가 있다.
+
+```
+Function.prototype.apply(thisArg, [arguments])
+
+Function.prototype.call(thisArg, [arguments])
+```
+
+위의 2가지 메소드는 1번째 인자로 this객체를 전달 받고, 2번째 인자로는 함수의 실행 인자들을 전달받는다.<br>
+따라서 위의 ``apply``, ``call``로 호출되는 함수들은 내부에서 this를 참조할 시, ``apply``, ``call`` 메소드를 호출할 때 전달하는 1번째 인자가 바인딩된다.<br>
+조금 더 쉽게 코드를 통해 확인해보자.<br>
+
+```
+var obj = { 
+    name: "hello man~"
+};
+
+function hello() {
+    console.log(this);       // Object { name: "hello man~" } 
+    console.log(this.name);  // hello man~
+}
+
+hello.apply(obj);
+hello.call(obj);
+```
+일반적으로 ``hello()``라고 함수를 호출할 때는 this에 전역 객체인 Window가 바인딩 되어있는 것을 볼 수 있다.<br>
+하지만 위의 코드처럼 ``apply``, ``call`` 메소드를 사용하여 1번째 인자로 ``obj``객체를 전달하면,<br>
+this는 obj객체로 바인딩이 되어 있는 것을 볼 수 있다.<br><br>
+
+여기서 다시 우리가 생각해야할 점은 자바스크립트의 컨텍스트는 코드가 실행되는 환경이라는 것이다.<br>
+따라서 동일하게 선언된 함수라도, 함수를 어떤 환경에서 실행했는지에 따라 다른 결과가 나올 수 있다.
+<hr/>
+
+### 주의사항 & 추가사항
+##### 메소드의 내부함수에서의 this
+```
+var obj = {
+    hello: function() {
+        console.log(this);  // Object { hello: hello() }
+        function hey() {
+            console.log(this);  // Window
+        }
+
+        hey();
+    }
+};
+obj.hello();
+```
+위와 같은 형식의 코드는 우리가 개발하다보면 언젠가 한 번은 마주치는 스타일이다.<br>
+``hey``라는 내부함수는 obj라는 객체의 메소드가 아닌 단지 그냥 메소드 내부에 선언된 함수일 뿐이다.<br>
+그럼 당연히 ``hey`` 함수 내부에서 this는 전역 객체인 Window이다.<br><br>
+
+함수들 내부에서 참조하고 있는 this가 정확하게 뭘 가리키는지 확실하게 알고 개발하자.
+<hr/>
+
+##### strict mode
+말그대로 엄격한 모드라는 의미의 strict mode는 코드 안정성과 더 나은 오류 검증을 제공하기 위해 ES5에서부터 사용이 가능하다. ``strict mode`` 실행은 최상단에 ``"use strict";``라는 예약어를 적으면 된다.
+
+```
+"use strict";
+function hello(){
+    console.log(this);  // undefined
+}
+
+hello();
+```
+위 코드의 실행결과로도 알 수 있지만 ``strict mode``에서는 기본적으로 Window가 this에 바인딩되지 않는다.<br> 
+생성자를 통한 호출, 메소드 호출, 함수의 메소드를 통한 호출은 this가 해당 실행 객체로 바인딩이 되지만,<br>
+기본적으로 전역객체인 Window가 바인딩되지 않으므로 ``strict mode``를 사용한다면 주의해야 한다.
+<hr/>
+
+##### Function.prototype.bind
+ES5에서 또 새롭게 정의된 Function의 ``bind``라는 메소드를 사용하여 this 객체를 지정할 수 있다.<br>
+```
+var obj = {
+    hello: function() {
+        // console.log(this);  
+    }
+};
+function hello() {  
+    console.log(this);      // Object { hello: hello() }
+}
+
+hello.bind(obj)();
+```
+일반적으로 ``hello``라는 함수가 호출되고 내부의 명령에 의해 this가 출력되면 Window 객체가 확인되지만,<br>
+위처럼 bind라는 메소드를 사용한 뒤, 호출하면 바인드된 obj라는 객체가 this로 출력된다.
+<hr/>
+
+##### ES6 Arrow Function
+ES6에서 나온 화살표 함수는 실행될 때 자체적인 실행 컨텍스트를 가지지 않는 아주 중요한 특징이 있다.<br>
+따라서 화살표 함수 안의 this는 외부 컨텍스트의 this를 참조한다.
+아래 코드를 확인해보자.
+
+```
+var obj = {
+    hello: () => {
+        console.log(this);  // Window
+    }
+};
+obj.hello();
+```
+obj라는 객체의 hello 메소드를 화살표 함수 방식으로 선언하였다.<br>
+일반적인 상황이라면 this가 obj 객체가 되겠지만 화살표 함수는 위의 설명대로 외부의 this를 참조하므로<br>
+여기서는 Window 객체가 된다.<br><br>
+
+또, 화살표 함수는 ``strict mode``를 사용하는한다면 this에 관한 strict 규칙은 모두 무시된다.<br>
+```
+"use strict";
+var hello = () => {
+    console.log(this);   // Window
+};
+hello();
+```
+<hr/>
+
+#### 마치며
+정리를 하자면..
+1. 자바스크립트에서 this는 함수가 현재 실행되는 컨텍스트 객체를 가리킨다.
+2. 따라서, this를 정확하게 파악할려면 해당 함수가 어떤 환경에서 실행되는지 파악해야 한다.
+3. 기본적으로 this는 전역객체인 Window 객체이다.
+4. 메소드로서의 함수 실행, 생성자 함수 실행, 함수 메소드로서의 간접 실행에서의 this는 함수가 실행되는 컨텍스트 객체이다.
+5. 그 외에도 bind 혹은 arrow function, strict mode 등에서의 환경에서의 동작도 알아둬야 한다.<br>
+<hr/>
+
+##### references
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/this<br>
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function/prototype<br>
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Strict_mode<br>
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/%EC%95%A0%EB%A1%9C%EC%9A%B0_%ED%8E%91%EC%85%98<br>

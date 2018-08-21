@@ -65,11 +65,8 @@ function Person(){}
 여튼, ``__proto__``는 위에 말한 ``Prototype Link``이다.<br><br>
 
 ``Prototype Link``는 해당 객체가 생성될 때 어떤 ``Prototype Object``를 복사하여 생성되었는지 알려준다.<br>
-그럼 위의 함수 Person 객체에서는 ``Prototype Link``는 무엇일까?<br>
-정답은 ``Function.prototype``이다.<br>
-이유는 간단하게 Person은 함수 객체이므로 당연히 함수의 프로토타입을 복사하여 만들었다고 볼 수 있다.<br>
 그럼, 위의 ``Person Prototype`` 객체의 ``Prototype Link``는 무엇일까?<br>
-여기서는 ``Object Prototype`` 객체이다. 또, 함수의 프로토타입의 ``Prototype Link`` 또한 마찬가지다.<br><br>
+``Object Prototype`` 객체이다.<br><br>
 
 ```
 자바스크립트의 모든 객체는 Object 프로토타입을 확장하여 만들었기 때문이다.

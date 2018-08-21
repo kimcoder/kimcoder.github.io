@@ -56,10 +56,7 @@ function showName() {
 함수 컨텍스트는 선언된 해당 함수가 호출 될때 생성되고, 함수의 모든 동작이 끝나면 소멸된다.<br>
 마찬가지로 이해하기 쉽게 코드와 컨텍스트를 시각화하여 표현해보자.
 ```
-var name = "kimcoder";
-
 function showName(friend) {
-    console.log(name);      // "kimcoder"
     var name = "steve";
     console.log(name);      // "steve"
     console.log(friend);    // "james"
@@ -67,10 +64,6 @@ function showName(friend) {
 
 showName("james");
 ```
-처음으로 console에 name을 출력하면 showName 컨텍스트에 선언된 name 변수가 없기 때문에<br>
-스코프체이닝을 하여 전역객체(window)에서 값을 참조하게 되어 "kimcoder"가 출력된다.<br>
-그 후에 console 출력은 showName 컨텍스트 내부에 선언된 "steve"라는 값의 name변수를 참조하여<br>
-출력이 된다.<br>
 
 showName의 함수 컨텍스트를 시각화하자면, 함수가 실행될때 아래와 같이 컨텍스트가 생성되며,<br>
 전역 컨텍스트와의 달리 변수객체에 함수 인자로 전달받는 arguments가 추가되고<br>
@@ -80,7 +73,6 @@ showName 컨텍스트 : {
     variableObject : {
         variable : {
             name : "steve",
-            showName : Function
         }, 
         arguments : {
             friend : "james"

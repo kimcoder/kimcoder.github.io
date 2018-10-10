@@ -1,0 +1,191 @@
+---
+layout: post
+title: "React 컴포넌트 제작기 2 / 3"
+categories:
+  - react
+tags:
+  - reactjs
+  - react-component
+  - proptypes
+  - typescript
+---
+<hr/>
+
+컴포넌트 제작기의 첫 포스팅 이후에 잠시 여행을 다녀와 포스팅이 미루어졌다.<br>
+이번 포스팅의 내용은 비교적 간단하다.<br>
+컴포넌트를 제작시 실제로 고려해야 되는 부분들에 대하여 쓰고자 한다.<br><br>
+( <a href="https://github.com/kimcoder/react-simple-image-slider" target="_blank"><b>react-simple-image-slider</b></a>를 제작하면서 쓰는 포스팅. )
+
+<hr/>
+
+### 컴포넌트 제작시 고려할 사항
+1. 사용목적에 맞는 다양한 환경에서의 접근성을 고려.
+2. 캡슐화 및 실제 개발 코드상에서의 사용성 고려.
+3. 외부적인 요인에 의한 부작용 방지.
+
+컴포넌트가 어떤 종류의 것인지, 어떤 특징들이 있는지에 대해 먼저 생각해 보아야하며,<br>
+이 컴포넌트를 실제 사용하는 여러 개발자들의 개발 환경을 고려해주어야 한다.<br>
+여기서는 React 컴포넌트를 제작 후 기록하는 포스팅이기 때문에, 이미 모두 고려된부분이라 할 수 있겠다.<br>
+또, 컴포넌트 소스의 캡슐화가 잘 되어있어, 독립적으로 특정 기능들이 실행되는지, 외부요인의 영향을 받거나 끼치는 등의 부작용을 방지하는지, 다른 개발자들에게 편리한 인터페이스가 제공되는지 등을 생각해보아야 한다.<br>
+
+물론, 컴포넌트의 성격이나 종류에 따라 차이가 있겠지만, 아마 대부분 위의 사항들을 고려해야하지 않을까 싶다.
+
+<hr/>
+
+### 컴포넌트 기능 정의 
+필자가 여기서 만들고자하였던 것은 <b>이미지슬라이더</b>였다.<br>
+
+사실 프론트엔드개발자라면 이미지슬라이더는 매우 많이 접해보았을 것이고, 외부모듈을 가져다쓰기도하며, 직접 개발하여 작업한 적도 많이 있을 것이다. 필자가 이미지슬라이더를 제작하고자 마음을 먹은 이유는, 외부모듈을 가져다쓰는데 아쉬움이 있어 실제로 제작하여 배포를 해보면 좋을 것 같다고 생각했었다.<br><br>
+만들고자할 때, 가장 염두에 두었던 사항들은 아래와 같았다.<br>
+
+- 현재 인덱스에 맞게 다음 인덱스의 이미지를 사전에 로드.
+- 슬라이더를 정적인 크기로 지정하면 이미지도 비율에 맞춰 잘 보이도록.(이미지의 크기와 상관없이)
+- 2개의 객체를 활용하여 슬라이드 이미지들 표현.
+- 그 외 기본적인 사항들 지원.
+    - 네비게이션의 유무
+    - bullet 네비게이션의 유무
+    - GPU 렌더링 지원 유무
+    - 슬라이딩 속도 조절.
+    - 여러 이벤트에 대한 콜백 함수.
+
+<hr/>
+
+### PropsTypes를 활용하여 React Component Prop 체크
+컴포넌트를 제작하고 배포하는 입장에서는,<br>
+사용하는 개발자들이 정확한 값을 전달하도록하여 오류없이 컴포넌트의 기능들을 사용하게끔 해야한다.<br>
+
+이는 ``prop-types``를 사용하여 해결 할 수 있는데,<br>
+``ReactComponent`` <b>Props의 유효성 검사 및 기본 값 지정, 타입체크</b>를 할 수 있게 해준다.<br>
+``prop-types``는 react v15.5부터는 별도로 설치를 해주어야한다. ( npm 등을 통해 설치하자 )<br><br>
+어떤 값들이 필수적으로 전달되어야 하는지, 선택적으로 전달되어야 하는지, 또 기본 값은 있는지를 구분지어보자.<br>
+결과적으로 아래와 같이 컴포넌트 클래스에 propTypes와 defaultProps 지정하면 된다.
+```
+import React from "react";
+import PropTypes from "prop-types";
+...
+
+class SimpleImageSlider extends React.Component {
+    ...
+}
+
+SimpleImageSlider.propTypes = {
+    // Required
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.shape({
+        url: PropTypes.string.isRequired,
+    })).isRequired,
+
+    // Optional
+    style: PropTypes.objectOf(PropTypes.string),
+    slideDuration: PropTypes.number,
+    showNavs: PropTypes.bool,
+    showBullets: PropTypes.bool,
+    bgColor: PropTypes.string,
+    useGPURender: PropTypes.bool,
+    onClickNav: PropTypes.func,
+    onClickBullets: PropTypes.func,
+    onStartSlide: PropTypes.func,
+    onCompleteSlide: PropTypes.func,
+
+    // Optional, Navigation Arrow Style
+    navStyle: (props, propName, componentName) => {
+        if (!isValidNavStyle(props[propName])) {
+            return new Error(`Invalid prop ${propName} supplied to ${componentName}. Validation failed.`);
+        }
+        return null;
+    }
+};
+
+SimpleImageSlider.defaultProps = {
+    slideDuration: 0.5,
+    showNavs: true,
+    showBullets: true,
+    bgColor: "#000000",
+    useGPURender: true,
+    navStyle: 1
+};
+```
+이제 위의 내용을 readme 혹은 다른 문서에 아래와 같이 정의를 해주자.<br>
+이러한 작업들은 컴포넌트를 사용할 개발자들에게 좋은 사용성을 제공해줄 것이다.<br>
+또, 고품질의 컴포넌트의 조건 중 일부라고 생각한다.<br>
+
+|Name|Type|Required|Description|Default|
+|:--:|:--:|:-----:|:----------|:------|
+|**width**|`Number`|`Required`|Image Slider Width||
+|**height**|`Number`|`Required`|Image Slider Height||
+|**images**|`Array`|`Required`|Images,<br>Array Elements should be like this structure,<br>{ url: "" }||
+|**style**|`String`|`Optional`|css object||
+|**slideDuration**|`Number`|`Optional`|css transition-duration property|`0.5`|
+|**navStyle**|`Number`|`Optional`|Arrow Navgation Style,<br>1 or 2|`1`|
+|**showNavs**|`Boolean`|`Optional`|Toggle Arrow Navgation|`true`|
+|**showBullets**|`Boolean`|`Optional`|Toggle Bullets|`true`|
+|**useGPURender**|`Boolean`|`Optional`|Toggle GPU Render|`true`|
+|**bgColor**|`String`|`Optional`|slider container's css background-color property|`#000000`|
+|**onClickNav**|`Function`|`Optional`|Arrow Navigation Callback function,<br>`onClickNav = (toRight) => { }`<br>toRight : Boolean : slide direction||
+|**onClickBullets**|`Function`|`Optional`|Bullets Callback function,<br>`onClickBullets = (idx) => { }`<br>idx : Number : clicked bullet index (begin from 0)||
+|**onStartSlide**|`Function`|`Optional`|Slide Transition Start function,<br>`onStartSlide = (idx, length) => { }`<br>idx : Number : start index (begin from 1)<br>length : Number : image length||
+|**onCompleteSlide**|`Function`|`Optional`|Slide TransitionEnd Callback function,<br>`onCompleteSlide = (idx, length) => { }`<br>idx : Number : start index (begin from 1)<br>length : Number : image length||
+
+<a href="https://github.com/kimcoder/react-simple-image-slider#props" target="_blank">Props 정의 Gitub에서 보기</a>
+
+<hr/>
+
+### Typescript를 위한 index.d.ts
+Typescript 개발 환경도 고려하여 index.d.ts파일을 컴포넌트 루트 경로에 생성하여 아래와 같이 작성하자.<br>
+파일명의 d는 일반적으로 declare의 약자로 표현하여 사용하고, 이 파일은 Typescript에서<br>
+특정 모듈, 인터페이스, 변수 등에 대한 타입 선언을 하는 역할을 한다.<br>
+컴포넌트와 같이 개발자가 커스텀하여 정의한 컴포넌트 클래스는 Typescript에서 인식을 하지 못하기 때문에,<br>
+아래와 같이 index.d.ts라는 파일을 통해 선언을 해주어야 한다.
+
+```
+import * as React from "react";
+
+// RSIS = React Simple Image Slider
+export interface RSISImage {
+    url: string;
+}
+
+export interface RSISProps {
+    width: number;
+    height: number;
+    images: RSISImage[],
+
+    style?: CSSStyleDeclaration,
+    slideDuration?: number;
+    showNavs?: boolean;
+    showBullets?: boolean;
+    bgColor?: string;
+    useGPURender?: boolean;
+    navStyle?: 1 | 2;
+    onClickNav?: (toRight: boolean) => void;
+    onClickBullets?: (idx: number) => void;
+    onStartSlide?: (current: number, length: number) => void;
+    onCompleteSlide?: (current: number, length: number) => void;
+}
+
+declare class ReactSimpleImageSlider extends React.Component<RSISProps> {
+    
+}
+
+export default ReactSimpleImageSlider;
+```
+index.d.ts파일을 컴포넌트 디렉토리에 추가하지 않고도 <a href="https://github.com/DefinitelyTyped/DefinitelyTyped" target="_blank">@Types/</a>에
+index.d.ts 업로드하여 해결할 수도 있다.<br>
+( 이 경우 사용하는 개발자가 npm에서 '@types/모듈'을 별도로 설치해주어야 한다. )
+
+<hr/>
+
+#### 마치며
+
+여기까지의 과정들은 <a href="https://github.com/kimcoder/react-simple-image-slider" target="_blank">Git Repository</a>에서 확인할 수 있다.<br>
+
+React 컴포넌트의 구현 소스는 사실 React를 조금 다루어보았다면 크게 어려운 부분은 아니다.<br>
+그러하여 포스팅의 주된 내용을 어떤 것들을 고려해서 개발해야 하는지, 좋은 사용성과 높은 품질의 컴포넌트를 만들려면 어떤 것들을 생각해보아야 하는지로 선정하였다.<br>
+사실 부족한 부분이 많겠지만 아주 마이너하고 심플한 컴포넌트이기 때문에 최대한 간략히 정리를 해보았다.
+
+<hr/>
+
+##### references
+https://reactjs.org/docs/typechecking-with-proptypes.html<br>
+http://definitelytyped.org/<br>

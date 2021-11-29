@@ -1,19 +1,30 @@
-# kimcoder dev note
+# React Query Docs
 
-https://kimcoder.github.io/
+This is source code to react-query.tanstack.com. It is forked from the [Formik](https://formik.org) docs and is built with:
 
-안녕하세요.<br>
-kimcoder라는 웹 프론트엔드 개발자입니다.<br>
-그동안의 배움에 있어 놓치고 가는 부분이 많아, 스스로 정리를 하고자 블로그를 시작합니다.<br>
+- Next.js
+- MDX
+- Tailwind
+- Algolia
+- Notion
 
-다양한 개발을 해왔으며, 분야에 한정되지 않고 흥미를 느끼지만<br>
-전반적인 웹 프론트엔드 개발을 중점으로 꾸준히 포스팅하는 것이 목표입니다.<br><br>
+## Running locally
 
-이 블로그는 아래 [Jekyll](http://jekyllrb.com)과 [Hydeout](http://jekyllthemes.org/themes/hydeout/) 테마를 사용하여 구축되었습니다.<br>
-
-<hr/>
-
-### usage 
+```sh
+yarn install
 ```
-bundle exec jekyll serve
+
+At the moment, you need to signup for Notion, and [follow these instructions](https://github.com/ijjk/notion-blog#getting-blog-index-and-token) to get a token and create a blog in order to develop locally. Not ideal, but hopefully will fix soon.
+
+With tokens and page index in hand, rename `.sample.env` and `.sample.env.build` to just `.env` and `.env.build`. In each one, add respective parameters:
+
+```diff
+-NOTION_TOKEN=XXXX
++NOTION_TOKEN=<YOUR_TOKEN>
+-BLOG_INDEX_ID=XXXXX
++BLOG_INDEX_ID=<YOUR_BLOG_INDEX_ID>
 ```
+
+Now it will work. Run `yarn dev` to get going.
+
+If you get stuck or need help, [send a DM to Jared](https://twitter.com/jaredpalmer) on Twitter.

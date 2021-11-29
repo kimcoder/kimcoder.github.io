@@ -1,5 +1,5 @@
 ---
-layout: post
+id: react-simple-image-slider-3
 title: "React 컴포넌트 제작기 3 / 3"
 categories:
   - react
@@ -9,8 +9,9 @@ tags:
   - npm
   - github
 ---
-<hr/>
 
+<hr/>
+2018-10-11
 컴포넌트 제작의 마지막인 이번 포스팅은,<br>
 npm에 publish하는 과정과 관리에 대해 다루고자 한다.<br>
 
@@ -19,6 +20,7 @@ npm에 publish하는 과정과 관리에 대해 다루고자 한다.<br>
 <hr/>
 
 ### npm
+
 npm에 먼저 배포를 하고자하려면 계정이 있어야 한다.<br>
 가입을 하지 않았다면, <a href="https://www.npmjs.com/" target="_blank">npm 홈페이지</a>에서 가입을 먼저 하자.<br>
 그리고 아래와 같은 단계를 거치면 손쉽게 배포할 수 있다.
@@ -29,10 +31,13 @@ npm에 먼저 배포를 하고자하려면 계정이 있어야 한다.<br>
 
 사실, package.json은 컴포넌트의 환경 셋팅, 소스작업 전에 위의 명령어를 통해 최초에 생성해주는 것이 좋다.<br>
 생성은 아래 명령어로 생성할 수 있다.
+
 ```
 npm init
 ```
+
 위의 터미널에 명령어를 입력하면, 아래와 같은 순으로 데이터 입력을 받는다.<br>
+
 - package name
 - version
 - description
@@ -43,6 +48,7 @@ npm init
 - license
 
 여기서 필자가 개발한 컴포넌트의 package.json을 예시로 확인해보자.
+
 ```
 {
   "name": "react-simple-image-slider",
@@ -84,9 +90,10 @@ npm init
   }
 }
 ```
+
 여기에 크게 부가적인 설명이 필요할 것 같지 않지만 조금 신경써야 할 부분이 있다면,<br>
-컴포넌트 제작시 ``dependencies``와 ``devDependencies``를 잘 구분하여 모듈을 설치하고 작업을 해야한다.<br>
-컴포넌트 개발에만 필요한 모듈들은 ``devDependencies``로 설치를 해주어야 한다.<br>
+컴포넌트 제작시 `dependencies`와 `devDependencies`를 잘 구분하여 모듈을 설치하고 작업을 해야한다.<br>
+컴포넌트 개발에만 필요한 모듈들은 `devDependencies`로 설치를 해주어야 한다.<br>
 실제 컴포넌트를 사용하는 개발자들이 설치할 필요가 없는 모듈이라고 생각하면 이해가 쉽다.<br>
 
 <hr/>
@@ -94,6 +101,7 @@ npm init
 #### npm ignore
 
 git과 마찬가지로 npm에도 특정 디렉토리, 파일들을 ignore 할 수 있다.<br>
+
 ```
 .DS_Store
 .vscode
@@ -105,6 +113,7 @@ npm-debug.log
 yarn-debug.log
 yarn-error.log
 ```
+
 이것은 역시 환경에 따라 다르겠지만, 기본적으로 컴포넌트 사용시에만 필요한 파일들을 기준으로 배포하자.<br>
 개발시 사용하였던 테스트나 예제, 모듈들, 로그 등의 파일들은 필요가 없으니 추가해주자.
 
@@ -113,10 +122,12 @@ yarn-error.log
 #### npm adduser
 
 배포 전, 아래와 같은 npm cli를 통해 로그인을 해주도록 하자.
+
 ```
 npm adduser
 ```
-로그인이 완료되면 아래와 같이 ``Logged in as 유저``라는 메시지를 볼 수 있을 것이다.<br><br>
+
+로그인이 완료되면 아래와 같이 `Logged in as 유저`라는 메시지를 볼 수 있을 것이다.<br><br>
 <img src="/assets/images/react-component-3-adduser.png" alt="npm adduser"/>
 
 <hr/>
@@ -125,20 +136,25 @@ npm adduser
 
 테스트는 실제 npm install을 통하여 하는 것이 좋다.<br>
 물론, 아직 배포를 하지 않았기 때문에 아래와 같이 컴포넌트의 루트디렉토리 경로를 통해 설치해보자.<br>
+
 ```
 npm install /Users/KIMCODER/Documents/react-simple-image-slider/
 or
 npm install ../react-simple-image-slider/
 ```
+
 실제 컴포넌트를 사용하는 환경에서 import하여 정상적으로 사용이 가능하다면, 배포해도 좋을 것이다.<br>
 
 <hr/>
 
 #### npm publish
+
 배포를 위한 명령어는 아래와 같다.
+
 ```
 npm publish
 ```
+
 package.json의 version에 따라 배포가 되며, 만약 최초배포가 아닌 경우는 version을 업그레이드하여 publish를 하면 된다.<br>
 배포가 정상적으로 완료가 되면, `https://www.npmjs.com/package/이름`의 URL에서 확인할 수 있다.<br>
 또는, `https://www.npmjs.com/settings/아이디/packages`에서도 확인이 가능하다.<br><br>
@@ -170,6 +186,7 @@ npm과 github의 역할에 대해 생각하면 충분히 납득이 가능하리�
 <hr/>
 
 ##### references
+
 https://www.npmjs.com/<br>
 https://docs.npmjs.com/getting-started/publishing-npm-packages<br>
 https://docs.npmjs.com/cli/publish<br>

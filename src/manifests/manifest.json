@@ -67,27 +67,7 @@
             {
               "title": "제작기 - 1",
               "path": "/react/react-simple-image-slider/log-1",
-              "editUrl": "/react/react-simple-image-slider/log-1.md"
-            },
-            {
-              "title": "제작기 - 2",
-              "path": "/react/reactaaaa/hahaha",
-              "editUrl": "/react-native.md"
-            },
-            {
-              "title": "제작기 - 3",
-              "path": "/react/react-simple-image-slider/history-3",
-              "editUrl": "/react/react-simple-image-slider/history-3.md"
-            },
-            {
-              "title": "제작기 - 4",
-              "path": "/react/test",
-              "editUrl": "/react-native.md"
-            },
-            {
-              "title": "제작기 - 2",
-              "path": "/react/a",
-              "editUrl": "/guides/updates-from-mutation-responses.md"
+              "editUrl": "/react/react-simple-image-slider/log-1.mdx"
             }
           ]
         }

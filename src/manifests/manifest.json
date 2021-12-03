@@ -68,6 +68,11 @@
               "title": "제작기 - 1",
               "path": "/react/react-simple-image-slider/log-1",
               "editUrl": "/react/react-simple-image-slider/log-1.mdx"
+            },
+            {
+              "title": "제작기 - 2",
+              "path": "/react/react-simple-image-slider/log-2",
+              "editUrl": "/react/react-simple-image-slider/log-2.mdx"
             }
           ]
         }

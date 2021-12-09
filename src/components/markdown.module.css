@@ -27,8 +27,17 @@
 }
 
 .markdown > h1,
+.markdown > div > h1,
 .markdown > a > h1 {
-  @apply mb-6 text-4xl font-semibold leading-snug tracking-tighter text-gray-900;
+  @apply text-4xl font-semibold leading-snug tracking-tighter text-gray-900;
+}
+
+.markdown > div {
+  @apply mb-6;
+}
+
+.markdown > div > p {
+  @apply text-base tracking-tighter text-gray-500;
 }
 
 .markdown > h2,

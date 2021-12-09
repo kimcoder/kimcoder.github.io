@@ -1,17 +1,8 @@
 ---
 id: react-simple-image-slider-1
-title: "React 컴포넌트 제작기 1 / 3"
-categories:
-  - react
-tags:
-  - reactjs
-  - react-component
-  - rollup
-  - webpack
-  - babel
+title: 'React 컴포넌트 제작기 1 / 3'
+createdAt: 2018.09.21
 ---
-
-2018-09-21
 
 react 컴포넌트 제작부터 배포까지의 과정을 다뤄보고자 한다.
 
@@ -67,16 +58,16 @@ babel에 대한 자세한 설정은 아래에서 다시 다루겠다.
 rollup config 파일을 아래와 같이 작성하였다.
 
 ```js
-import babel from "rollup-plugin-babel";
-import pkg from "./package.json";
+import babel from 'rollup-plugin-babel';
+import pkg from './package.json';
 
-const external = (id) => !id.startsWith("/") && !id.startsWith(".");
+const external = (id) => !id.startsWith('/') && !id.startsWith('.');
 
 export default {
-  input: "./src/ImageSlider.jsx",
+  input: './src/ImageSlider.jsx',
   output: {
     file: pkg.main,
-    format: "cjs",
+    format: 'cjs',
   },
   plugins: [babel({ runtimeHelpers: true })],
   external,
@@ -93,7 +84,7 @@ export default {
 여기서 이러한 external한 외부 모듈들은 번들링 결과물에 포함이 되지 않는다.
 
 ```js
-external: ["react"];
+external: ['react'];
 ```
 
 위와 같이 직접 모듈명을 작성해주어도 되지만, 외부 모듈들이 많아지면 번거롭게 다 지정해주어야 하기 때문에,
@@ -101,9 +92,9 @@ external: ["react"];
 아래와 같이 import하는 모듈들의 경로를 기준으로 판단하면 쉽게 외부 모듈인지 확인이 가능하다.
 
 ```js
-import React from "react";
-import ImageSliderPropTypes from "./ImageSliderPropTypes";
-import ImagePreLoader from "./ImageSliderPreLoader";
+import React from 'react';
+import ImageSliderPropTypes from './ImageSliderPropTypes';
+import ImagePreLoader from './ImageSliderPreLoader';
 ```
 
 **package.json**
@@ -201,30 +192,30 @@ webpack 4.x버전부터는 webpack-cli를 같이 설치해줘야 커맨드라인
 **webpack.config.js**
 
 ```js
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   entry: {
-    index: ["@babel/polyfill", "./example/App.jsx"],
+    index: ['@babel/polyfill', './example/App.jsx'],
   },
   output: {
-    filename: "[name].js",
-    path: path.join(__dirname, "example"),
+    filename: '[name].js',
+    path: path.join(__dirname, 'example'),
   },
   module: {
     rules: [
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: 'babel-loader',
       },
     ],
   },
-  mode: "production",
+  mode: 'production',
   plugins: [],
   devServer: {
-    contentBase: "./example",
-    host: "0.0.0.0",
+    contentBase: './example',
+    host: '0.0.0.0',
   },
 };
 ```
@@ -240,9 +231,9 @@ module.exports = {
 간략하게 React 소스의 index부분만 잠깐 살펴보자.
 
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
-import ImageSlider from "..";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ImageSlider from '..';
 
 class App extends React.Component {
   render() {
@@ -255,7 +246,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("App"));
+ReactDOM.render(<App />, document.getElementById('App'));
 ```
 
 `import ImageSlider from "..";`를 보면 상위 디렉토리( =컴포넌트 루트 디렉토리 )에서 모듈을 import하는 것을

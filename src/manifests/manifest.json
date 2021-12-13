@@ -1,22 +1,16 @@
 {
   "routes": [
     {
-      "title": "Getting Started",
-      "heading": true,
-      "routes": [
-        {
-          "title": "Overview",
-          "path": "/overview",
-          "editUrl": "/overview.md"
-        }
-      ]
+      "title": "javascript",
+      "open": true,
+      "routes": []
     },
     {
       "title": "react.js",
-      "heading": true,
+      "open": true,
       "routes": [
         {
-          "title": "react-simple-image-slider",
+          "title": "React 컴포넌트 제작기",
           "open": true,
           "routes": [
             {
@@ -35,6 +29,22 @@
               "editUrl": "/react/react-simple-image-slider/log-3.mdx"
             }
           ]
+        }
+      ]
+    },
+    {
+      "title": "books",
+      "open": true,
+      "routes": []
+    },
+    {
+      "title": "performance",
+      "open": true,
+      "routes": [
+        {
+          "title": "image optimizing",
+          "path": "/performance/image-optimize",
+          "editUrl": "/performance/image-optimize.mdx"
         }
       ]
     }

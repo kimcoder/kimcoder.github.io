@@ -189,9 +189,8 @@ details > summary {
   padding: initial;
 }
 #carbonads {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
 }
 #carbonads {
   display: flex;
@@ -244,4 +243,26 @@ details > summary {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+#page-title::after {
+  content: '_';
+  animation-duration: 0.7s;
+  animation-timing-function: ease;
+  animation-delay: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: Blink;
+}
+
+@keyframes Blink {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

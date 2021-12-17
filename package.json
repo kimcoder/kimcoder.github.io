@@ -5,7 +5,7 @@
   "author": "Jared Palmer <jared@palmer.net>",
   "license": "MIT",
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 1234",
     "build": "next build",
     "start": "next start",
     "index-docs": "node ./.next/serverless/scripts/index-docs.js"

@@ -3,7 +3,13 @@
     {
       "title": "javascript",
       "open": true,
-      "routes": []
+      "routes": [
+        {
+          "title": "temporal dead zone",
+          "path": "/javascript/tdz",
+          "editUrl": "/javascript/tdz.mdx"
+        }
+      ]
     },
     {
       "title": "react.js",

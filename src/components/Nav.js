@@ -11,7 +11,7 @@ export const Nav = () => (
         <div className='w-60 flex items-center h-16 pt-4 md:pt-0'>
           <Link href='/' as='/'>
             <a>
-              <h1>@kimcoder</h1>
+              <h1 id='page-title'>@kimcoder</h1>
             </a>
           </Link>
         </div>

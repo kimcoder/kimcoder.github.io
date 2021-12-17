@@ -24,7 +24,7 @@ export const Nav = () => (
           <div className='flex space-x-4 md:space-x-8 text-sm md:text-base'>
             <div>
               <Link href='/overview'>
-                <a className='leading-6 font-medium'>Blogs</a>
+                <a className='leading-6 font-medium'>Blog</a>
               </Link>
             </div>
             <div>
@@ -33,7 +33,7 @@ export const Nav = () => (
               </Link>
             </div>
           </div>
-          <div>
+          <div className='flex'>
             <a href={siteConfig.repoUrl} target='_blank' rel='noopener noreferrer'>
               <span className='sr-only'>GitHub</span>
               <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
@@ -44,7 +44,23 @@ export const Nav = () => (
                 />
               </svg>
             </a>
+            <a className='ml-2.5' href={siteConfig.facebook} target='_blank' rel='noopener noreferrer'>
+              <span className='sr-only'>LinkedIn</span>
+              <svg width='24' height='24' viewBox='0 0 30 30' fill='#1877f2'>
+                <path
+                  d='M30 15.091C30 6.756 23.285 0 15 0S0 6.756 0 15.091C0 22.625 5.484 28.868 12.656 30V19.454H8.848V15.09h3.808v-3.324c0-3.782 2.239-5.872 5.666-5.872 1.64 0 3.358.295 3.358.295v3.714h-1.893c-1.863 0-2.443 1.164-2.443 2.358v2.83h4.16l-.665 4.362h-3.495V30C24.516 28.868 30 22.625 30 15.091z'
+                  fill='#1877f2'></path>
+              </svg>
+            </a>
+            <a className='ml-2.5' href={siteConfig.linkedIn} target='_blank' rel='noopener noreferrer'>
+              <span className='sr-only'>Facebook</span>
+              <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='#0073b1'>
+                <path d='M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z' />
+              </svg>
+            </a>
           </div>
+          <div></div>
+          <div></div>
         </div>
       </div>
     </div>

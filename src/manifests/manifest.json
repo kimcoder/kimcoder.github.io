@@ -41,7 +41,24 @@
     {
       "title": "books",
       "open": true,
-      "routes": []
+      "routes": [
+        {
+          "title": "함수형 사고",
+          "open": true,
+          "routes": [
+            {
+              "title": "소개",
+              "path": "/books/functional-thinking/0",
+              "editUrl": "/books/functional-thinking/0.mdx"
+            },
+            {
+              "title": "1장, 왜",
+              "path": "/books/functional-thinking/1",
+              "editUrl": "/books/functional-thinking/1.mdx"
+            }
+          ]
+        }
+      ]
     },
     {
       "title": "performance",

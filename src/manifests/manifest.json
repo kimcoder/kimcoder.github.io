@@ -43,6 +43,27 @@
       "open": true,
       "routes": [
         {
+          "title": "리팩터링",
+          "open": true,
+          "routes": [
+            {
+              "title": "1장, 리팩터링: 첫 번째 예시",
+              "path": "/books/refactoring/1",
+              "editUrl": "/books/refactoring/1.mdx"
+            },
+            {
+              "title": "2장, 리팩터링 원칙",
+              "path": "/books/refactoring/2",
+              "editUrl": "/books/refactoring/2.mdx"
+            },
+            {
+              "title": "3장, 코드에서 나는 악취",
+              "path": "/books/refactoring/3",
+              "editUrl": "/books/refactoring/3.mdx"
+            }
+          ]
+        },
+        {
           "title": "함수형 사고",
           "open": true,
           "routes": [

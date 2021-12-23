@@ -60,6 +60,16 @@
               "title": "3장, 코드에서 나는 악취",
               "path": "/books/refactoring/3",
               "editUrl": "/books/refactoring/3.mdx"
+            },
+            {
+              "title": "4장, 테스트 구축하기",
+              "path": "/books/refactoring/4",
+              "editUrl": "/books/refactoring/4.mdx"
+            },
+            {
+              "title": "6장, 기본적인 리팩터링",
+              "path": "/books/refactoring/6",
+              "editUrl": "/books/refactoring/6.mdx"
             }
           ]
         },

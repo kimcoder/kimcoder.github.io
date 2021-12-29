@@ -70,6 +70,11 @@
               "title": "6장, 기본적인 리팩터링",
               "path": "/books/refactoring/6",
               "editUrl": "/books/refactoring/6.mdx"
+            },
+            {
+              "title": "7장, 캡슐화",
+              "path": "/books/refactoring/7",
+              "editUrl": "/books/refactoring/7.mdx"
             }
           ]
         },
@@ -96,7 +101,7 @@
       "open": true,
       "routes": [
         {
-          "title": "image optimizing",
+          "title": "이미지 파일 최적화",
           "path": "/performance/image-optimize",
           "editUrl": "/performance/image-optimize.mdx"
         }

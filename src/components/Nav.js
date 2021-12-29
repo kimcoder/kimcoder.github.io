@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Link from 'next/link';
-import logoSrc from '../images/logo.svg';
 import { siteConfig } from 'siteConfig';
 import { Search } from './Search';
 

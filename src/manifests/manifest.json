@@ -47,6 +47,11 @@
           "open": true,
           "routes": [
             {
+              "title": "소개",
+              "path": "/books/refactoring/0",
+              "editUrl": "/books/refactoring/0.mdx"
+            },
+            {
               "title": "1장, 리팩터링: 첫 번째 예시",
               "path": "/books/refactoring/1",
               "editUrl": "/books/refactoring/1.mdx"
@@ -100,6 +105,22 @@
               "title": "12장, 상속 다루기",
               "path": "/books/refactoring/12",
               "editUrl": "/books/refactoring/12.mdx"
+            }
+          ]
+        },
+        {
+          "title": "클린 아키텍처",
+          "open": true,
+          "routes": [
+            {
+              "title": "소개",
+              "path": "/books/clean-architecture/0",
+              "editUrl": "/books/clean-architecture/0.mdx"
+            },
+            {
+              "title": "1장, 왜",
+              "path": "/books/functional-thinking/1",
+              "editUrl": "/books/functional-thinking/1.mdx"
             }
           ]
         },

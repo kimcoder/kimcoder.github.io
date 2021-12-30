@@ -118,9 +118,14 @@
               "editUrl": "/books/clean-architecture/0.mdx"
             },
             {
-              "title": "1장, 왜",
-              "path": "/books/functional-thinking/1",
-              "editUrl": "/books/functional-thinking/1.mdx"
+              "title": "1부, 소개",
+              "path": "/books/clean-architecture/1",
+              "editUrl": "/books/clean-architecture/1.mdx"
+            },
+            {
+              "title": "2부, 벽돌부터 시작하기: 프로그래밍 패러다임",
+              "path": "/books/clean-architecture/2",
+              "editUrl": "/books/clean-architecture/2.mdx"
             }
           ]
         },

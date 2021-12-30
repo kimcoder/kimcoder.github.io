@@ -75,6 +75,31 @@
               "title": "7장, 캡슐화",
               "path": "/books/refactoring/7",
               "editUrl": "/books/refactoring/7.mdx"
+            },
+            {
+              "title": "8장, 기능 이동",
+              "path": "/books/refactoring/8",
+              "editUrl": "/books/refactoring/8.mdx"
+            },
+            {
+              "title": "9장, 데이터 조직화",
+              "path": "/books/refactoring/9",
+              "editUrl": "/books/refactoring/9.mdx"
+            },
+            {
+              "title": "10장, 조건부 로직 간소화",
+              "path": "/books/refactoring/10",
+              "editUrl": "/books/refactoring/10.mdx"
+            },
+            {
+              "title": "11장, API 리팩터링",
+              "path": "/books/refactoring/11",
+              "editUrl": "/books/refactoring/11.mdx"
+            },
+            {
+              "title": "12장, 상속 다루기",
+              "path": "/books/refactoring/12",
+              "editUrl": "/books/refactoring/12.mdx"
             }
           ]
         },

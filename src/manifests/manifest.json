@@ -126,6 +126,11 @@
               "title": "2부, 벽돌부터 시작하기: 프로그래밍 패러다임",
               "path": "/books/clean-architecture/2",
               "editUrl": "/books/clean-architecture/2.mdx"
+            },
+            {
+              "title": "3부, 설계 원칙",
+              "path": "/books/clean-architecture/3",
+              "editUrl": "/books/clean-architecture/3.mdx"
             }
           ]
         },

@@ -1,12 +1,12 @@
 ---
-layout: post
-title: "프로토타입과 프로토타입 체인(Prototype & Prototype Chain)"
-categories:
-  - javascript
-tags:
-  - javascript
-  - prototype
-  - oop
+# layout: post
+# title: "프로토타입과 프로토타입 체인(Prototype & Prototype Chain)"
+# categories:
+#   - javascript
+# tags:
+#   - javascript
+#   - prototype
+#   - oop
 ---
 
 <hr/>

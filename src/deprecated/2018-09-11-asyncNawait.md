@@ -1,15 +1,15 @@
 ---
-layout: post
-title: "Async/Await를 사용한 비동기처리"
-categories:
-  - javascript
-tags:
-  - javascript
-  - es5+
-  - asynchronous
-  - async
-  - await
-  - babel
+# layout: post
+# title: "Async/Await를 사용한 비동기처리"
+# categories:
+#   - javascript
+# tags:
+#   - javascript
+#   - es5+
+#   - asynchronous
+#   - async
+#   - await
+#   - babel
 ---
 
 <hr/>

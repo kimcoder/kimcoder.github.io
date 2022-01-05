@@ -1,13 +1,13 @@
 ---
-layout: post
-title: "모듈 패턴(Module Pattern)"
-categories:
-  - javascript
-tags:
-  - javascript
-  - namespace
-  - module
-  - designpattern
+# layout: post
+# title: "모듈 패턴(Module Pattern)"
+# categories:
+#   - javascript
+# tags:
+#   - javascript
+#   - namespace
+#   - module
+#   - designpattern
 ---
 
 <hr/>

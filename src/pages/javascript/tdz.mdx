@@ -13,35 +13,55 @@ TDZ에 대해 알려면, 호이스팅과 let, const, scope 등에 대한 기본�
 
 ### 호이스팅
 
-호이스팅은 이전에도 간략히 설명한 적이 있긴 하지만, 다시 이야기하자면,<br/>
-인터프린터가 자바스크립트 코드를 해석함에 있어서 선언된 변수나 함수를 해당 Scope의 최상단으로 끌어올리는 것을 말한다.<br/>
+호이스팅은 인터프리터가 변수와 함수의 메모리 공간을 선언 전에 미리 할당하는 것을 의미한다.<br/>
+`var`로 선언한 변수의 경우 호이스팅 시 undefined로 변수를 초기화하게 된다.
 
 ### let & const
 
-`let`과 `const`는 ES5+부터 사용할 수 있는 변수타입이다.<br/>
-마찬가지로 이전에 간략히 이야기하였지만, 기존 `var`과는 달리 block scope 기반으로 동작한다.<br/>
+`let`과 `const`는 ES5+부터 사용할 수 있고 block scope 기반으로 동작하는 변수타입이다.<br/>
 아래 코드를 보자.
 
 ```js
-console.log(x); // undefined console.log(y); // ReferenceError
+console.log(x); // undefined
+console.log(y); // ReferenceError
 
 var x = 'x';
 let y = 'y';
 ```
 
-일반적인 호이스팅과 관련된 상식이면 변수의 선언부는 해당 scope의 최상단으로 끌어올려져 해석된다.<br/>
-하지만 위의 코드에서 `let`으로 선언한 변수 y는 `ReferenceError`를 내뱉는다.<br/><br/>
+변수의 선언부는 해당 scope의 최상단으로 끌어올려져 해석된다.<br/>
+하지만 위의 코드에서 `let`으로 선언한 변수 y에 접근시에는 `ReferenceError`를 내뱉는다.<br/><br/>
 
 그럼 let은 호이스팅이 되지 않는 것인가?<br/>
-그렇지 않다. let과 const 호이스팅의 영향을 받아, 모두 스코프의 최상단에서 끌어올려진다.<br/>
-block 스코프 기반이니, block의 최상단이라고 생각하면 된다.<br/><br/>
+그렇지 않다. `let`과 `const`도 마찬가지로 호이스팅되지만, 변수의 초기화가 실행되지 않는다.<br/>
 
-위의 코드에서 let변수에 접근이 불가능한 이유가 바로 <b>TDZ</b>때문이다.<br/>
+위의 코드에서 let변수에 접근이 불가능한 이유가 바로 **TDZ**때문이다.<br/>
 MDN문서의 내용을 참고하자면, 아래와 같이 한마디로 정의할 수 있다.<br/>
-let과 const는 블록의 시작부터 초기화가 실행되기전까지 TDZ에 존재하게 된다는 것.<br/>
-TDZ에 존재하면 위와 같이 접근을 할 수 없다.<br/>
+`let`과 `const`는 블록의 시작부터 초기화가 실행되기전까지 TDZ에 존재하게 된다는 것.<br/>
+따라서, TDZ에 존재하면 위와 같이 접근을 할 수 없다.<br/>
+
+### Temporal
+
+DeadZone 형성이 **시간상**(Temporal)인 이유는 이유는<br/>
+사각지대가 코드의 작성 순서(위치)가 아니라 코드의 실행 순서(시간)에 의해 형성되기 때문이다.
+
+```js
+{
+  // TDZ가 스코프 맨 위에서부터 시작
+  const func = () => console.log(letVar); // OK
+
+  // TDZ 안에서 letVar에 접근하면 ReferenceError
+
+  let letVar = 3; // letVar의 TDZ 종료
+  func(); // TDZ 밖에서 호출함
+}
+```
+
+위 코드의 경우 let 변수 선언 코드가 그 변수에 접근하는 함수보다 아래에 위치하지만, 함수의 호출 시점이 사각지대 밖이므로 정상 동작한다.
 
 ## 여러가지 상황들
+
+### TDZ with Lexical Scope
 
 ```js
 function test() {
@@ -57,6 +77,8 @@ test();
 MDN에 있는 예제 소스이다.<br/>
 함수 내부의 조건문 block의 소스에서, foo 참조시 TDZ로 인한 `ReferenceError`가 발생한다.<br/>
 foo의 초기화 구문에서 (foo + 55)의 foo가 TDZ에 있기(아직 초기화가 되지 않았기) 때문이다.
+
+### TDZ with Default Function Parameter
 
 ```js
 (function (a = b, b) {})(undefined, 1); // ReferenceError
@@ -74,9 +96,8 @@ foo의 초기화 구문에서 (foo + 55)의 foo가 TDZ에 있기(아직 초기�
 
 ## 마치며
 
-TDZ에 대해서는 헷갈릴 수 있을거라고 생각한다.(자바스크립트의 호이스팅때문에)<br/>
 var로 변수를 선언하고 사용할 때도 마찬가지이지만, 초기화 후 사용에 대한 안전한 방식의 코딩스타일을 지향하는 것이 좋다.<br/>
-확실한 것은, let과 const를 사용하고 TDZ에 대한 개념을 잘 알고 있다면, 여러 부작용을 방지할 수 있을것이다.<br/>
+확실한 것은, `let`과 `const`를 사용하고 `TDZ`에 대한 개념을 잘 알고 있다면, 여러 부작용을 방지할 수 있을것이다.<br/>
 
 ## References
 

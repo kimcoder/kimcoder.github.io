@@ -15,9 +15,9 @@ export const Nav = () => (
           </Link>
         </div>
 
-        <div className='flex-grow hidden lg:block ml-8'>
+        {/* <div className='flex-grow hidden lg:block ml-8'>
           <Search />
-        </div>
+        </div> */}
 
         <div className='flex flex-grow items-center justify-between w-3/4 md:w-auto md:justify-end space-x-4 md:space-x-8 h-16'>
           <div className='flex space-x-4 md:space-x-8 text-sm md:text-base'>

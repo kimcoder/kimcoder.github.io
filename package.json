@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next -p 1234",
+    "prebuild": "rm -rf node_modules/.cache",
     "build": "next build",
     "start": "next start",
     "index-docs": "node ./.next/serverless/scripts/index-docs.js"

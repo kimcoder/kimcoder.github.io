@@ -12,6 +12,17 @@
       ]
     },
     {
+      "title": "typescript",
+      "open": true,
+      "routes": [
+        {
+          "title": "Interfaces vs Type Aliases",
+          "path": "/typescript/interface-vs-type",
+          "editUrl": "/typescript/interface-vs-type.mdx"
+        }
+      ]
+    },
+    {
       "title": "react.js",
       "open": true,
       "routes": [

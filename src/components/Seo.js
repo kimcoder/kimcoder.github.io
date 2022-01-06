@@ -19,7 +19,7 @@ export const Seo = withRouter(({ title, description, image = ogImage, router, ch
     <meta property='og:url' key='og:url' content={`https://github.com/kimcoder`} />
     {title != undefined && <meta property='og:title' content={title} key='og:title' />}
     {description != undefined && <meta property='og:description' key='og:description' content={description} />}
-    {image != undefined && <meta property='og:image' key='og:image' content={`https://github.com/kimcoder`} />}
+    {image != undefined && <meta property='og:image' key='og:image' content={image} />}
 
     {/* TWITTER */}
     <meta name='twitter:card' key='twitter:card' content='summary_large_image' />
@@ -27,7 +27,7 @@ export const Seo = withRouter(({ title, description, image = ogImage, router, ch
     <meta name='twitter:creator' key='twitter:creator' content='@kimcoder' />
     {title != undefined && <meta name='twitter:title' key='twitter:title' content={title} />}
     {description != undefined && <meta name='twitter:description' key='twitter:description' content={description} />}
-    {image != undefined && <meta name='twitter:image' key='twitter:image' content={`https://github.com/kimcoder`} />}
+    {image != undefined && <meta name='twitter:image' key='twitter:image' content={image} />}
 
     {children}
   </Head>

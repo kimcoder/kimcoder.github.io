@@ -266,3 +266,18 @@ details > summary {
     opacity: 0;
   }
 }
+
+.overview-author-thumbnail {
+  border-radius: 9999px;
+  width: 4rem;
+  height: 4rem;
+  overflow: hidden;
+  -webkit-border-radius: 9999px;
+  -moz-border-radius: 9999px;
+  -ms-border-radius: 9999px;
+  -o-border-radius: 9999px;
+}
+
+.overview-author-text {
+  margin: 1rem;
+}

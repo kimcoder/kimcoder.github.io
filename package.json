@@ -65,7 +65,7 @@
     "@babel/core": "^7.11.6",
     "@babel/plugin-transform-typescript": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
-    "@tailwindcss/ui": "^0.3.0",
+    "@tailwindcss/ui": "^0.7.2",
     "algoliasearch": "3.35.1",
     "babel-preset-react-app": "^9.1.2",
     "dotenv-load": "^2.0.0",
@@ -74,11 +74,11 @@
     "mdast-util-to-string": "^1.1.0",
     "postcss-preset-env": "^6.7.0",
     "remark-parse": "^8.0.3",
-    "tailwindcss": "^1.8.10",
+    "tailwindcss": "^1.9.6",
     "unified": "^9.2.0",
     "webp-loader": "^0.6.0"
   },
   "engines": {
-    "node": ">=12.x"
+    "node": ">=14.x"
   }
 }

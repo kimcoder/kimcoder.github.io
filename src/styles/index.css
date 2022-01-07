@@ -281,3 +281,7 @@ details > summary {
 .overview-author-text {
   margin: 1rem;
 }
+
+#references + ul {
+  word-break: break-all;
+}

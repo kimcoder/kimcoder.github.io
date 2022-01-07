@@ -1,6 +1,6 @@
 // tailwind.config.js
 
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   corePlugins: {
@@ -11,7 +11,7 @@ module.exports = {
     enabled: process.env.NODE_ENV !== 'development',
     content: ['./src/**/*.js'],
     options: {
-      defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
+      defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
     },
   },
   theme: {
@@ -41,7 +41,7 @@ module.exports = {
     container: {
       padding: '1rem',
     },
-    customForms: theme => ({
+    customForms: (theme) => ({
       sm: {
         'input, textarea, multiselect, select': {
           fontSize: theme('fontSize.sm'),
@@ -59,4 +59,4 @@ module.exports = {
   },
   variants: {},
   plugins: [require('@tailwindcss/ui')],
-}
+};

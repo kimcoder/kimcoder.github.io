@@ -20,7 +20,7 @@ const remarkPlugins = [
   require('remark-emoji'),
   require('remark-footnotes'),
   require('remark-images'),
-  [require('remark-github'), { repository: 'https://github.com/tannerlinsley/react-query' }],
+  [require('remark-github'), { repository: 'https://github.com/kimcoder/kimcoder.github.io' }],
   require('remark-unwrap-images'),
   [
     require('remark-toc'),

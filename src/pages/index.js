@@ -1,17 +1,15 @@
-import * as React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 const Home = () => {
-  return <></>;
-};
+  const router = useRouter();
 
-// export async function getStaticProps(context) {
-//   return {
-//     redirect: {
-//       destination: '/overview',
-//       permanent: true,
-//     },
-//   };
-// }
+  useEffect(() => {
+    router.replace('/overview');
+  }, []);
+
+  return <div>HOME</div>;
+};
 
 export default Home;
 

@@ -35,6 +35,7 @@ module.exports = optimizedImages({
   pageExtensions: ['jsx', 'js', 'mdx', 'md'],
   env: {
     NEXT_PUBLIC_GA_TRACKING_ID: 'UA-122659594-1',
+    NEXT_PUBLIC_GTM_ID: 'GTM-MKLQHRB',
     SENTRY_RELEASE: process.env.VERCEL_GITHUB_COMMIT_SHA || '',
   },
   async redirects() {

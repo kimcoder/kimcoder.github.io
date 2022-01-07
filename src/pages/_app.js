@@ -1,5 +1,5 @@
 import React from 'react';
-import '@docsearch/react/dist/style.css';
+import '@docsearch/css/dist/style.css';
 import '../styles/index.css';
 import Head from 'next/head';
 import { SearchProvider } from 'components/useSearch';

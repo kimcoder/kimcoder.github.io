@@ -2,8 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
 
-const ogImage = require('images/kimcoder-og.png?url');
-const favicon = require('images/favicon.png?url');
+const ogImage = '/kimcoder-og.png';
+const favicon = '/favicon.png';
 
 export const Seo = withRouter(({ title, description, image = ogImage, router, children }) => (
   <Head>

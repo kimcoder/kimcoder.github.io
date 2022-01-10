@@ -163,6 +163,11 @@
               "title": "1장, 왜",
               "path": "/books/functional-thinking/1",
               "editUrl": "/books/functional-thinking/1.mdx"
+            },
+            {
+              "title": "2장, 전환",
+              "path": "/books/functional-thinking/2",
+              "editUrl": "/books/functional-thinking/2.mdx"
             }
           ]
         }

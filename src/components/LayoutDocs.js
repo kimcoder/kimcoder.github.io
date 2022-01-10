@@ -63,9 +63,9 @@ export const LayoutDocs = (props) => {
           <>
             <Nav />
             <Sticky shadow>
-              <SidebarMobile>
-                <SidebarRoutes isMobile={true} routes={routes} />
-              </SidebarMobile>
+              {/* <SidebarMobile> */}
+              <SidebarRoutes isMobile={true} routes={routes} />
+              {/* </SidebarMobile> */}
             </Sticky>
           </>
         ) : (

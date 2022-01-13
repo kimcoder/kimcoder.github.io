@@ -41,6 +41,21 @@ module.exports = optimizedImages({
   async redirects() {
     return [
       {
+        source: '/react-sequence-player',
+        destination: 'https://kimcoder.s3.ap-northeast-2.amazonaws.com/demo/react-sequence-player/index.html',
+        permanent: true,
+      },
+      {
+        source: '/demo/react-simple-image-slider',
+        destination: 'https://kimcoder.s3.ap-northeast-2.amazonaws.com/demo/react-simple-image-slider/index.html',
+        permanent: true,
+      },
+      {
+        source: '/react-simple-image-slider',
+        destination: 'https://kimcoder.s3.ap-northeast-2.amazonaws.com/demo/react-simple-image-slider/index.html',
+        permanent: true,
+      },
+      {
         source: '/docs/:any*',
         destination: '/:any*', // Matched parameters can be used in the destination
         permanent: true,

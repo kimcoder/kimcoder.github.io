@@ -50,6 +50,8 @@ export const LayoutDocs = (props) => {
   const isMobile = useIsMobile();
   const { route, prevRoute, nextRoute } = getRouteContext(_route, routes);
   const title = route && `${route.title}`;
+  const seoMetaTitle = router.pathname.includes('books') ? `${props.meta.id} - ${props.meta.title}` : props.meta.title;
+  const seoTitle = seoMetaTitle || title;
 
   return (
     <>
@@ -73,7 +75,7 @@ export const LayoutDocs = (props) => {
             <Nav />
           </Sticky>
         )}
-        <Seo title={props.meta.title || title} description={props.meta.description} />
+        <Seo title={seoTitle} description={props.meta.description} />
         <div className='block'>
           <>
             <div className='container mx-auto pb-12 pt-6 content'>

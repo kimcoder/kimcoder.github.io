@@ -168,6 +168,11 @@
               "title": "2장, 전환",
               "path": "/books/functional-thinking/2",
               "editUrl": "/books/functional-thinking/2.mdx"
+            },
+            {
+              "title": "3장, 양도하라",
+              "path": "/books/functional-thinking/3",
+              "editUrl": "/books/functional-thinking/3.mdx"
             }
           ]
         }

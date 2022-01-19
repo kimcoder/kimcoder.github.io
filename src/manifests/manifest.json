@@ -8,6 +8,11 @@
           "title": "temporal dead zone",
           "path": "/javascript/tdz",
           "editUrl": "/javascript/tdz.mdx"
+        },
+        {
+          "title": "JavaScript Pass By Value Function Parameters",
+          "path": "/javascript/javascript-pass-by-value-function-parameters",
+          "editUrl": "/javascript/passByValueFunctionParameter.mdx"
         }
       ]
     },

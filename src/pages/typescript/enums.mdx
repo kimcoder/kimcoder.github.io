@@ -1,0 +1,86 @@
+---
+id: enum
+title: 'Enum에 대한 고찰'
+createdAt: 2022.01.21
+---
+
+`enum`은 자바스크립트의 타입 레벨에서는 존재하지 않지만 타입스크립트에서는 존재하는 몇 안되는 기능 중 하나이다.
+흔히 프로그래밍 중 연관된 상수들을 묶을때 열거형이라고 불리우는 `enum`을 통해 표현하고 한다.
+
+```js
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+
+function moveTo(direction: Direciton) {
+  if (direction === Direciton.UP) {
+    // Do something..
+  }
+
+  // Do something..
+}
+```
+
+타입스크립트로 개발을 하다보면 위와 같은 코드를 흔히 작성하게 된다.<br/>
+앞서 말한것 처럼, `enum`은 자바스크립트에서는 존재하지 않기 때문에 타입스크립트로 `enum`을 사용했을 때, 이 코드가 컴파일이 된 후 자바스크립트에서는 어떤식으로 표현이 되는지 고찰을 해보고 사용하는 것이 좋겠다.
+
+## Enum을 사용하는 여러가지 방법
+
+- Enum은 값으로 아래와 같은 타입들을 가질 수 있다.
+  - 문자열 리터럴 ( e.g. `'hello'`, `'a'`, `'bye'` )
+  - 숫자 리터럴 ( e.g. `0`, `1`, `0.2`, `1000` )
+  - 부호가 있는 숫자( 음수 ) 리터럴 ( e.g. `-1`, `-0.2`, `-1000` )
+
+### Numeric enums
+
+`enum`은 선언시 따로 값을 할당해 주지 않으면, 기본적으로 **그 전의 속성으로부터 1씩 증가되는 숫자가 값으로 할당**된다. 아래 코드를 보면 확실하게 이해할 수 있다.
+
+```js
+enum Direction {
+  Up,    // 0
+  Down,  // 1
+  Left,  // 2
+  Right, // 3
+}
+
+enum Speed {
+  VeryLow = -1,     // -1
+  Low,              // 0
+  Normal = -0.2,    // -0.2
+  Fast,             // 0.8
+  VeryFast          // 1.8
+  SuperFast = 100,  // 100
+  UltraFast         // 101
+}
+```
+
+### String enums
+
+```js
+enum Direction {
+  Up = 'UP',
+  Down = 'Down',
+  Left = 'Left',
+  Right = 'Right',
+}
+```
+
+### Heterogeneous enums
+
+```js
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+```
+
+## 마치며
+
+## References
+
+- https://www.typescriptlang.org/docs/handbook/enums.html#reverse-mappings

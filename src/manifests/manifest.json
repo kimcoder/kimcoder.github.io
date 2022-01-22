@@ -24,6 +24,11 @@
           "title": "Interfaces vs Type Aliases",
           "path": "/typescript/interface-vs-type",
           "editUrl": "/typescript/interface-vs-type.mdx"
+        },
+        {
+          "title": "Enum",
+          "path": "/typescript/enum",
+          "editUrl": "/typescript/enums.mdx"
         }
       ]
     },

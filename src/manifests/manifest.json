@@ -183,6 +183,11 @@
               "title": "3장, 양도하라",
               "path": "/books/functional-thinking/3",
               "editUrl": "/books/functional-thinking/3.mdx"
+            },
+            {
+              "title": "4장, 열심히보다는 현명하게",
+              "path": "/books/functional-thinking/4",
+              "editUrl": "/books/functional-thinking/4.mdx"
             }
           ]
         }

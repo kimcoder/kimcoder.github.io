@@ -26,9 +26,9 @@
           "editUrl": "/typescript/interface-vs-type.mdx"
         },
         {
-          "title": "Enum",
+          "title": "Enums",
           "path": "/typescript/enum",
-          "editUrl": "/typescript/enums.mdx"
+          "editUrl": "/typescript/enum.mdx"
         }
       ]
     },

@@ -17,8 +17,8 @@ createdAt: 2022.01.03
 - **Interface 선언은 Object Type의 이름을 지정하는 또 다른 방식이다.**
   > 이는 Object Type으로 표현 가능한 타입에 대해서만 interface로의 선언이 가능하다는 것을 의미한다.
 
-```js
-function track(point: { x: number, y: number }) {
+```ts
+function track(point: { x: number; y: number }) {
   // ..
 }
 
@@ -38,7 +38,7 @@ function track(point: Point) {
 
 - `interface`는 `extends` 키워드를 통해 **타입의 확장**이 가능하다.
 
-```js
+```ts
 interface Point {
   x: number;
   y: number;
@@ -72,7 +72,7 @@ function getPointer({ x, y }: Point) {
 - `interface`는 동일한 이름으로 추가 선언을 통해 **병합**이 가능하다.
   - 여기서 동일한 이름의 선언한 `interface` 갯수는 중요하지 않다. 모두 병합이 된다.
 
-```js
+```ts
 interface Point {
   x: number;
   y: number;
@@ -95,7 +95,7 @@ const pointA: Point = {
 >
 > namespace는 class, function, enum, interface, type aliasing과도 이름이 같다면 선언 병합이 된다.
 
-```js
+```ts
 interface Point {
   x: number;
   y: number;
@@ -111,7 +111,7 @@ interface Point {
 선언 병합시, 같은 이름으로 되어있는 속성 중복된다면, 타입이 변해서는 안된다.<br/>
 [개방 폐쇄 원칙](https://ko.wikipedia.org/wiki/%EA%B0%9C%EB%B0%A9-%ED%8F%90%EC%87%84_%EC%9B%90%EC%B9%99)을 준수한 것이라고 생각해도 좋을 것 같다.
 
-```js
+```ts
 interface Point {
   x: number;
   y: number;
@@ -130,10 +130,10 @@ interface Point {
 - **Type Aliasing은 특정 타입에 대해 다른 이름을 지어주는 것이다.**
 - 타입 종류에 대한 제약은 없다.
 
-```js
+```ts
 type Point = {
-  x: number,
-  y: number,
+  x: number;
+  y: number;
 };
 
 type Name = string;
@@ -149,7 +149,7 @@ type SomeFunction = () => any;
 
 - **Type Aliasing은 단지 다른 이름일 뿐이다.**
 
-```js
+```ts
 type UserInputSanitizedString = string;
 
 function sanitizeInput(str: string): UserInputSanitizedString {
@@ -169,13 +169,13 @@ userInput = 'new input';
 
 - `Type Aliasing`는 `intersection`을 통해 **타입의 확장**이 가능하다.
 
-```js
+```ts
 type Animal = {
-  name: string,
+  name: string;
 };
 
 type Bear = Animal & {
-  honey: boolean,
+  honey: boolean;
 };
 
 const bear = getBear();
@@ -187,13 +187,13 @@ bear.honey;
   - 따라서, 동일한 이름의 `Type`에 새로운 속성을 추가 할 수 없다.
   - 이는 `interface`와 가장 큰 차이라고 볼 수 있다.
 
-```js
+```ts
 type Window = {
-  title: string,
+  title: string;
 };
 
 type Window = {
-  ts: TypeScriptAPI,
+  ts: TypeScriptAPI;
 };
 // Error: Duplicate identifier 'Window'.
 ```
@@ -202,10 +202,10 @@ type Window = {
 
 - `Type Aliasing`은 Object Type일 경우에 `Extends`, `implements` 키워드와도 같이 사용이 가능하다.
 
-```js
+```ts
 type Point = {
-  x: number,
-  y: number,
+  x: number;
+  y: number;
 };
 
 interface Point3D extends Point {

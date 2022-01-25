@@ -7,7 +7,7 @@ createdAt: 2022.01.21
 `enum`은 자바스크립트의 타입 레벨에서는 존재하지 않지만 타입스크립트에서는 존재하는 몇 안되는 기능 중 하나이다.
 흔히 프로그래밍 중 연관된 상수들을 묶을때 열거형이라고 불리우는 `enum`을 통해 표현하고 한다.
 
-```js
+```ts
 enum Direction {
   Up,
   Down,
@@ -27,18 +27,22 @@ function moveTo(direction: Direciton) {
 타입스크립트로 개발을 하다보면 위와 같은 코드를 흔히 작성하게 된다.<br/>
 앞서 말한것 처럼, `enum`은 자바스크립트에서는 존재하지 않기 때문에 타입스크립트로 `enum`을 사용했을 때, 이 코드가 컴파일이 된 후 자바스크립트에서는 어떤식으로 표현이 되는지 고찰을 해보고 사용하는 것이 좋겠다.
 
-## Enum을 사용하는 여러가지 방법
+## Enum의 특징과 분류
 
-- Enum은 값으로 아래와 같은 타입들을 가질 수 있다.
+- Enum은 값으로 아래와 같은 값들을 가질 수 있다.
   - 문자열 리터럴 ( e.g. `'hello'`, `'a'`, `'bye'` )
   - 숫자 리터럴 ( e.g. `0`, `1`, `0.2`, `1000` )
   - 부호가 있는 숫자( 음수 ) 리터럴 ( e.g. `-1`, `-0.2`, `-1000` )
+- 이 값들은 또한, 모두 계산되어진 값들이어야 한다.
 
 ### Numeric enums
 
-`enum`은 선언시 따로 값을 할당해 주지 않으면, 기본적으로 **그 전의 속성으로부터 1씩 증가되는 숫자가 값으로 할당**된다. 아래 코드를 보면 확실하게 이해할 수 있다.
+- `numeric enum`의 멤버는 초기값을 할당해 주지 않으면, 기본적으로 **그 전의 멤버로부터 1씩 증가되는 숫자가 값으로 할당**된다.
+- 첫 멤버가 값을 할당받지 않았다면 `0`을 값으로 가지게 된다.
 
-```js
+아래 코드를 보면 확실하게 이해할 수 있다.
+
+```ts
 enum Direction {
   Up,    // 0
   Down,  // 1
@@ -57,9 +61,48 @@ enum Speed {
 }
 ```
 
+**`numeric enum`은 컴파일 시, `reverse mapping`이 된다.**
+
+#### after compile
+
+```ts
+// before compile
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+
+let up = Direction.Up; // 0
+let nameOfUp = Direction[up]; // 'Up'
+
+// after compile
+var Direction;
+(function (Direction) {
+  Direction[(Direction['Up'] = 0)] = 'Up';
+  Direction[(Direction['Down'] = 1)] = 'Down';
+  Direction[(Direction['Left'] = 2)] = 'Left';
+  Direction[(Direction['Right'] = 3)] = 'Right';
+})(Direction || (Direction = {}));
+```
+
+```ts
+console.log(Direciton);
+
+{0: 'Up', 1: 'Down', 2: 'Left', 3: 'Right', Up: 0, Down: 1, Left: 2, Right: 3}
+```
+
+- reverse mapping이 된 후의 실제 `Direction`은 위와 같은 형태를 이룬다.
+- **숫자를 값으로 가지는 enum의 멤버들은 모두 `reverse mapping`이 된다.**
+
 ### String enums
 
-```js
+- `string enum`의 멤버들은 모두 초기 값을 할당 받아야 한다.
+- `numeric enum`처럼 자동 증가되는 값을 가지지 않지만, 직렬화가 잘 된다는 장점이 있다.
+  - 멤버의 이름에 관계 없이, **코드 동작시 의미 있고 읽을 수 있는 값을 제공할 수 있다.**
+
+```ts
 enum Direction {
   Up = 'UP',
   Down = 'Down',
@@ -68,19 +111,175 @@ enum Direction {
 }
 ```
 
+#### after compile
+
+```ts
+var Direction;
+(function (Direction) {
+  Direction['Up'] = 'UP';
+  Direction['Down'] = 'Down';
+  Direction['Left'] = 'Left';
+  Direction['Right'] = 'Right';
+})(Direction || (Direction = {}));
+```
+
 ### Heterogeneous enums
 
-```js
+- 기술적으로 `enum`은 `string enum`과 `numeric enum`의 멤버가 혼합이 될 수 있지만, 목적이 불분명한 코드가 될 수 있다.
+- 자바스크립트 런타임의 동작을 영리한 방법으로 활용하는 이유가 아니라면 **사용하지 않는 것을 권장한다.**
+- 혼합하여 사용할때도 마찬가지로 `numeric enum`의 자동 증가되는 값 할당, `reverse mapping` 등의 특징은 동일하다.
+
+```ts
 enum Direction {
+  Up,
+  Down = 'Down',
+  Left = 1,
+  Right,
+}
+```
+
+#### after compile
+
+```ts
+var Direction;
+(function (Direction) {
+  Direction[(Direction['Up'] = 0)] = 'Up';
+  Direction['Down'] = 'Down';
+  Direction[(Direction['Left'] = 1)] = 'Left';
+  Direction[(Direction['Right'] = 2)] = 'Right';
+})(Direction || (Direction = {}));
+```
+
+### Declaration Merging
+
+- `enum`도 **declaration merging(선언 병합)**의 대상이 된다.
+- `numeric enum`의 선언 병합시, 2번째 enum은 초기 값을 항상 가져야 한다.
+
+```ts
+enum Direction {
+  Up,
+  Down,
+  Left,
+}
+
+enum Direciton {
+  Right = 4,
+}
+```
+
+#### after compile
+
+```ts
+var Direction;
+(function (Direction) {
+  Direction[(Direction['Up'] = 0)] = 'Up';
+  Direction[(Direction['Down'] = 1)] = 'Down';
+  Direction[(Direction['Left'] = 2)] = 'Left';
+})(Direction || (Direction = {}));
+(function (Direction) {
+  Direction[(Direction['Right'] = 4)] = 'Right';
+})(Direction || (Direction = {}));
+
+console.log(Direciton);
+
+{0: 'Up', 1: 'Down', 2: 'Left', 3: 'Right', Up: 0, Down: 1, Left: 2, Right: 3}
+```
+
+### Immediately invoked function expression
+
+- 모든 `enum`은 컴파일 후 **즉시실행 함수 표현식(IIFE)**의 형식으로 코드가 변환된다.
+- rollup과 같은 번들러는 IIFE의 사용 여부를 판단할 수 없기 때문에, Tree-shaking 되지 않는다.
+  - `enum`이 죽은 코드가 되더라도 컴파일된 코드의 번들에는 존재하게 된다.
+  - [여기서](https://rollupjs.org/repl/?version=2.26.11&shareable=JTdCJTIybW9kdWxlcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJtYWluLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmltcG9ydCUyMCU3QkRpcmVjdGlvbiU3RCUyMGZyb20lMjAnLiUyRmVudW0uanMnJTVDbmltcG9ydCUyMCU3QmhlbGxvJTdEJTIwZnJvbSUyMCcuJTJGdHJlZXNoYWtlZCclNUNuaW1wb3J0JTIwJTdCaGklN0QlMjBmcm9tJTIwJy4lMkZub3RUcmVlc2hha2VkJyU1Q24lNUNuY29uc29sZS5sb2coaGVsbG8pJTVDbiUyMiUyQyUyMmlzRW50cnklMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMmVudW0uanMlMjIlMkMlMjJjb2RlJTIyJTNBJTIyJ3VzZSUyMHN0cmljdCclNUNuZXhwb3J0JTIwdmFyJTIwRGlyZWN0aW9uJTVDbiUzQihmdW5jdGlvbiUyMChEaXJlY3Rpb24pJTIwJTdCJTVDbiUyMCUyMERpcmVjdGlvbiU1QidVcCclNUQlMjAlM0QlMjAnVVAnJTVDbiUyMCUyMERpcmVjdGlvbiU1QidEb3duJyU1RCUyMCUzRCUyMCdET1dOJyU1Q24lMjAlMjBEaXJlY3Rpb24lNUInTGVmdCclNUQlMjAlM0QlMjAnTEVGVCclNUNuJTIwJTIwRGlyZWN0aW9uJTVCJ1JpZ2h0JyU1RCUyMCUzRCUyMCdSSUdIVCclNUNuJTdEKShEaXJlY3Rpb24lMjAlN0MlN0MlMjAoRGlyZWN0aW9uJTIwJTNEJTIwJTdCJTdEKSklMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIydHJlZXNoYWtlZC5qcyUyMiUyQyUyMmNvZGUlMjIlM0ElMjJleHBvcnQlMjB2YXIlMjBoZWxsbyUyMCUzRCUyMCdoZWxsbyclMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIybm90VHJlZXNoYWtlZC5qcyUyMiUyQyUyMmNvZGUlMjIlM0ElMjJleHBvcnQlMjB2YXIlMjBoaSUyMCUzRCUyMCdoaSclMjIlN0QlNUQlMkMlMjJvcHRpb25zJTIyJTNBJTdCJTIyZm9ybWF0JTIyJTNBJTIyZXMlMjIlMkMlMjJuYW1lJTIyJTNBJTIybXlCdW5kbGUlMjIlMkMlMjJhbWQlMjIlM0ElN0IlMjJpZCUyMiUzQSUyMiUyMiU3RCUyQyUyMmdsb2JhbHMlMjIlM0ElN0IlN0QlN0QlMkMlMjJleGFtcGxlJTIyJTNBbnVsbCU3RA==) 직접 확인할 수 있다.
+
+## const enum
+
+- `enum`의 추가 코드 생성과 간접 참조 코드를 피하고 싶으면 `const enum`을 사용하는게 방안이 될 수 있다.
+- `const enum`은 컴파일 중에 완전히 제거되고, 참조하는 코드영역에서 값만 인라인되어진다.
+
+```ts
+const enum Direction {
   Up,
   Down,
   Left,
   Right,
 }
+
+console.log(Direction.Up);
+```
+
+위와 같은 코드가 컴파일이 되면, 아래와 같이 인라인된 코드만 남게 된다.
+
+```ts
+console.log(0 /* Up */);
+```
+
+기본 `enum`과 비교했을 때, 컴파일 후에는 많은 차이가 생기는 것으로 볼 수 있다.<br/>
+불필요한 코드들이 생성되지 않아, 메모리와 번들링 된 코드의 사이즈가 조금 더 줄어든다는 이점이 있다.<br/>
+하지만 `d.ts` 파일을 생성해야하거나, 라이브러리로써 제공해야 될 경우에는 타입추론이 불가하다는 단점도 있다.<br/>
+이럴 경우엔, `tsconfig`의 [preserveConstEnums](https://www.typescriptlang.org/tsconfig#preserveConstEnums) 옵션을 `true`로 설정하여 해결할 수 있다.<br/><br/>
+
+또, `tsconfig`의 [isolatedModules](https://www.typescriptlang.org/tsconfig#isolatedModules) 옵션을 `true`로 설정하고
+`cosnt enum`을 사용하면 컴파일시 오류가 나게 되니, 사용 전에 이러한 부분을 꼭 숙지하여야 한다.
+
+## Object Literal const assertions
+
+타입스크립트 3.4 버전에 나온 **const assertions**을 사용하면 `enum`을 사용하지 않아도 동일하게 상수들을 열거하는 표현을 쉽게 할 수 있다.
+
+```ts
+const Direction = {
+  Up: 'Up',
+  Down: 'Down',
+  Left: 'Left',
+  Right: 'Right',
+} as const;
+
+type EnumerateDirection = typeof Direction[keyof typeof Direction];
+// EnumerateDirection = 'Up' | 'Down' | 'Left' | 'Right'
+
+function moveTo(direction: EnumerateDirection) {
+  if (direction === 'Up') {
+    // Do something..
+  }
+}
+```
+
+위의 코드와 같이 타입을 추론하기 위해 type aliasing을 한 번 해주어야하는 번거로움이 있지만, `enum`으로부터 얻을 수 없는 몇 가지의 장점이 존재한다.
+
+1. 컴파일을 하면 타입스크립트에서 작성한 형식이 유지된 채로 자바스크립트로 변환된다.
+2. Tree-shaking이 적용된다.
+3. (의도하지 않은)선언 병합의 대상이 되지 않는다.
+
+#### after compile
+
+```ts
+const Direction = {
+  Up: 'Up',
+  Down: 'Down',
+  Left: 'Left',
+  Right: 'Right',
+};
+
+// EnumerateDirection = 'Up' | 'Down' | 'Left' | 'Right'
+function moveTo(direction) {
+  if (direction === 'Up') {
+    // Do something..
+  }
+}
 ```
 
 ## 마치며
 
+위의 내용을 요약하자면,
+
+1. `enum` 멤버들의 값은 계산된 문자열 혹은 숫자만 할당될 수 있다.
+2. `enum`도 선언 병합이 가능하다.
+3. `numeric enum`은 컴파일 후 `reverse mapping`이 된다.
+4. `enum`은 IIFE로 변환되기 때문에 Tree-shaking이 되지 않는다.
+5. `const enum`은 해당 값을 참조하는 부분의 코드만 인라인된다.
+6. TS 3.4 이상의 버전은 객체 리터럴을 `const assertions` 해주는 것으로 상수의 열거를 표현할 수 있다.
+
 ## References
 
-- https://www.typescriptlang.org/docs/handbook/enums.html#reverse-mappings
+- https://www.typescriptlang.org/docs/handbook/enums.html
+- https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions

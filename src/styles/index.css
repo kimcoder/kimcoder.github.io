@@ -89,6 +89,7 @@ h6:hover .anchor::after {
   --hover-overlay: rgba(0, 0, 0, 0.05);
   --fds-animation-fade-in: cubic-bezier(0, 0, 1, 1);
   --fds-animation-fade-out: cubic-bezier(0, 0, 1, 1);
+  --nav-height: 4rem;
 }
 
 .DocSearch--active #__next {
@@ -284,4 +285,12 @@ details > summary {
 
 #references + ul {
   word-break: break-all;
+}
+
+.nav-height {
+  height: var(--nav-height);
+}
+
+.on-this-page {
+  max-height: calc(100vh - var(--nav-height));
 }

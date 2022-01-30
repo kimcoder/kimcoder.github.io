@@ -7,7 +7,7 @@ export const Nav = () => (
   <div className='bg-white border-b border-gray-200'>
     <div className='container mx-auto'>
       <div className='flex flex-wrap items-center'>
-        <div className='w-60 flex items-center h-16 pt-4 md:pt-0'>
+        <div className='w-60 flex items-center nav-height pt-4 md:pt-0'>
           <Link href='/' as='/'>
             <a>
               <h1 id='page-title'>@kimcoder</h1>
@@ -19,7 +19,7 @@ export const Nav = () => (
           <Search />
         </div> */}
 
-        <div className='flex flex-grow items-center justify-between w-3/4 md:w-auto md:justify-end space-x-4 md:space-x-8 h-16'>
+        <div className='flex flex-grow items-center justify-between w-3/4 md:w-auto md:justify-end space-x-4 md:space-x-8 nav-height'>
           <div className='flex space-x-4 md:space-x-8 text-sm md:text-base'>
             <div>
               <Link href='/overview'>

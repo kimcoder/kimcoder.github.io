@@ -157,6 +157,11 @@
               "title": "4부, 컴포넌트 원칙",
               "path": "/books/clean-architecture/4",
               "editUrl": "/books/clean-architecture/4.mdx"
+            },
+            {
+              "title": "5부, 아키텍처",
+              "path": "/books/clean-architecture/5",
+              "editUrl": "/books/clean-architecture/5.mdx"
             }
           ]
         },

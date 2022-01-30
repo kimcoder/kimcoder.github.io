@@ -99,7 +99,7 @@ export const LayoutDocs = (props) => {
                     style={{
                       width: 200,
                     }}>
-                    <div className='sticky top-24'>
+                    <div className='on-this-page sticky top-24 pb-16 overflow-y-auto'>
                       <h4 className='font-semibold uppercase text-sm mb-2 mt-2 text-gray-500'>On this page</h4>
                       <Toc title={props.meta.title} />
                     </div>

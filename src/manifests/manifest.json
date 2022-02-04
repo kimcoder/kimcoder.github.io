@@ -193,6 +193,11 @@
               "title": "4장, 열심히보다는 현명하게",
               "path": "/books/functional-thinking/4",
               "editUrl": "/books/functional-thinking/4.mdx"
+            },
+            {
+              "title": "5장, 진화하라",
+              "path": "/books/functional-thinking/5",
+              "editUrl": "/books/functional-thinking/5.mdx"
             }
           ]
         }

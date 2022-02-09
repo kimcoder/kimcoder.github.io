@@ -13,6 +13,11 @@
           "title": "JavaScript Pass By Value Function Parameters",
           "path": "/javascript/javascript-pass-by-value-function-parameters",
           "editUrl": "/javascript/javascript-pass-by-value-function-parameters.mdx"
+        },
+        {
+          "title": "eslint import ordering and sorting",
+          "path": "/javascript/eslint-import-order",
+          "editUrl": "/javascript/eslint-import-order"
         }
       ]
     },

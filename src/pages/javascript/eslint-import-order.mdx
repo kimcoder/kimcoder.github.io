@@ -1,0 +1,150 @@
+---
+id: eslint import/order
+title: 'eslint import rule 설정의 이점'
+createdAt: 2022.02.07
+---
+
+자바스크립트 개발을 하는 많은 조직과 팀들이 코드 정적 분석 도구로 `eslint`를 사용 중에 있을 것이다.<br/>
+또한, 여러 코드 컨벤션을 만들고 이를 준수하고자 많은 노력들을 하고 있을거라고 생각한다.<br/>
+코드 정적 분석이 CI/CD 단계에 자동화되어 자연스럽게 녹아있으면 더할 나위 없이 좋을 것이다.<br/>
+여러 컨벤션 중에서도 **`import`구문의 정렬** 규칙 적용의 이점에 대해 소개해보고자 한다.
+
+## import rule?
+
+`import` 구문의 **정렬 규칙**에 대한 조건들은 아래 내용들을 제어한다.
+
+- 임포트 구문들에 대해 순서 적용을 할 것이냐.
+- 임포트 구문의 멤버 변수들에 대해 순서 적용을 할 것이냐.
+- 임포트 구문 그룹에 대한 순서와 이를 공백을 통해 분리할 것이냐.
+  - 그룹화에 설정은 `eslint`의 기본 규칙, 플러그인마다 다르다.
+
+여기서 순서는 `alphabetize` 되는 것을 말하며, [eslint의 기본 규칙인 sort-imports](https://eslint.org/docs/rules/sort-imports) 외에 정렬에 관련된 여러 플러그인들의 제어 조건들도 유사하다.
+
+## 컨벤션과 적용
+
+팀내에 아래와 같은 컨벤션이 있다고 가정해 보자.
+
+### 컨벤션
+
+| 우선순위 | 임포트 그룹                                   | 비고                                                          |
+| -------- | --------------------------------------------- | ------------------------------------------------------------- |
+| 1        | react, next.js와 같은 메인 프레임워크 모듈    | react-router와 같은 react에 의존이 있는 외부 모듈도 포함한다. |
+| 2        | node_modules에 있는 외부 모듈                 |                                                               |
+| 3        | node_modules에 있지만 팀에서 개발한 외부 모듈 | ex) 디자인시스템, 플랫폼 관련 모듈                            |
+| 4        | 절대 경로로 임포트한 프로젝트 내 모듈         |                                                               |
+| 5        | 상대 경로로 임포트한 프로젝트 내 모듈         | ex) 이미지, CSS                                               |
+
+- 위와 같이 임포트 구문들을 그룹화하고 우선 순위대로 정렬한다.
+- 각 그룹 사이에는 개행 문자를 넣는다.<br/>
+
+코드로 표현된 모습은 아래와 같을 것이다.
+
+```js
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import A from 'moduleA';
+import B from 'moduleB';
+
+import { Button, ButtonProps } from '@MyDesignSystem/Button';
+
+import Thumbnail from 'src/components/Thumbnail';
+
+import image from './a.png';
+import style from './style.module.css';
+```
+
+위와 같은 컨벤션은 그룹화를 커스터마이즈할 수 있는 플러그인을 추가로 설치해야 한다.<br/>
+이 글에서는 [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import)를 예시로 하겠다.
+
+### 적용
+
+아래와 같이 `import` 컨벤션에 대한 내용을 `eslint` 설정에 추가한다.<br/>
+설정에 대한 자세한 내용은 [import/order의 문서](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md)에서 참조할 수 있다.
+
+```js
+// .eslintrc
+{
+  // ...
+  "plugins": [ /*... ,*/ "import"],
+  "rules": {
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "allowSeparatedGroups": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": [["builtin", "external"], "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "next",
+            "group": "builtin"
+          },
+          {
+            "pattern": "react",
+            "group": "builtin"
+          },
+          {
+            "pattern": "@MyDesignSystem/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "src/**",
+            "group": "internal"
+          },
+        ],
+        "pathGroupsExcludedImportTypes": ["src/**", "@MyDesignSystem/**"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}
+```
+
+### 적용의 이점
+
+필자가 생각하는 컨벤션 적용의 이점은 **코드 리뷰시 diff가 발생하지 않는다**는 점이다.<br/>
+물론, `import 구문`이 정말로 변경된 것이라면 합당한 diff가 발생하는 것이 맞겠지만,<br/>
+여러명과 협업하는 경우에는 개인마다 사용하는 IDE도 다르고, 설정 값들이 다 다를 수 있다.<br/>
+**이로인해 코드리뷰시 의도치 않은 diff를 보여주고 또 봐야할 수 있는 상황이 발생할 수 있다.**<br/>
+
+아래 코드리뷰 이미지를 확인해보자.
+
+<img src='/assets/images/eslint-import-example2.png' alt='컨벤션 룰이 적용 안 된 코드 리뷰 예제' />
+<br />
+개발자 A가 아래와 같은 순서로 작업을 하였다고 가정해 보자.
+<br />
+<br />
+
+1. 커밋 1에서 `useCallback`을 사용을 하지 않게 되어, 해당 import member 삭제.
+2. 커밋 3에서 다시 `useCallback`를 사용하게 됨.
+3. 정렬되지 않은 채 import member가 추가 됨.
+4. import한 멤버들은 변함이 없는 상태이지만 정렬이 바뀌었다는 이유로 **불필요한 diff 발생**.
+5. ( ImagePreLoader도 비슷한 맥락에서 순서가 변경 됨. )
+
+<br />
+예시를 위해 극단적인 상황을 만든 것으로 보일 수도 있으나,
+<br />
+단순히 개인 IDE 설정 값이 실행되어 정렬 순서가 언제나 바뀔 수 있는 상황도 있다.
+<br />
+
+## 마치며
+
+사실, `import` 구문 순서가 비지니스 로직에 영향을 끼친다거나 예기치 못한 상황을 발생시킬 일은 없다고 생각한다.<br/>
+순서는 중요하지 않다.<br />
+생산성이 좋은 개발 문화를 지향한다면, `import` 구문 정렬에 대한 규칙도 lint할 수 있도록 하자!
+
+## References
+
+- https://eslint.org/docs/rules/sort-imports
+- https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md

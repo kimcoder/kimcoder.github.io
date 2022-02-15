@@ -203,6 +203,11 @@
               "title": "5장, 진화하라",
               "path": "/books/functional-thinking/5",
               "editUrl": "/books/functional-thinking/5.mdx"
+            },
+            {
+              "title": "6장, 전진하라",
+              "path": "/books/functional-thinking/6",
+              "editUrl": "/books/functional-thinking/6.mdx"
             }
           ]
         }

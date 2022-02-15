@@ -1,0 +1,136 @@
+---
+id: 자바스크립트의 데이터 타입과 메모리
+title: '자바스크립트의 데이터 타입과 메모리'
+createdAt: 2022.02.13
+---
+
+자바스크립트는 **느슨한 타입(loosely typed)의 동적(dynamic) 언어**이다.<br/>
+언어에서 사용할 수 있는 데이터 타입의 종류와 몇가지 특징들을 알아보자.
+
+## 데이터 타입 종류
+
+자바스크립트의 데이터 타입은 크게 2가지로 나눌 수 있다.
+
+- **원시형 타입(Primitive type)**
+- **참조형 타입(Reference type)**
+
+위의 2가지를 나누는 기준은 **할당이나 연산시 값을 복제하냐 혹은 참조하냐**라고 볼 수 있겠다.<br/>
+엄격하게 말하면 사실 둘 다 복제를 하지만, 복제를 하는 대상이 다르다.<br/>
+이는 아래에서 조금씩 더 다뤄보도록 하겠다.
+
+### 원시형
+
+원시형으로 다뤄지는 타입들은 아래와 같다.<br/>
+`Number`, `String`, `Boolean`, `null`, `undefined`, `Symbol`, `BigInt`<br/>
+이들은 일반적으로 **불변성**을 가지는 데이터 타입이라고 표현된다.<br/><br/>
+
+원시형 타입들의 불변성이 메모리상에서 어떻게 처리되는지 이해하면 조금 더 좋을 것 같다.
+
+#### 원시형 타입 변수의 메모리 영역 변화
+
+원시형 타입 변수의 할당과 연산시, 메모리의 변화를 파악해보자.
+
+```js
+var name = '김대현'; // 변수 선언과 값 할당
+name = 'kimcoder'; // 변수 값 재할당
+```
+
+위의 코드에서 `name`이라는 변수 선언시에는 메모리에서 2개의 주소를 할당한다.<br/>
+하나는 **변수 식별자(변수명)**을 위한 것이고, 하나는 **변수 값(데이터)**를 위한 것이다.
+
+<table>
+  <tr>
+    <th className='w-28 p-1.5 text-center border border-gray-500 bg-gray-300' rowspan={2}>
+      변수 영역
+    </th>
+    <th className='w-28 p-1.5 text-center border border-gray-300 bg-gray-100'>주소</th>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1002</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1003</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1004</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>...</td>
+  </tr>
+  <tr>
+    <th className='p-1.5 border border-gray-300 bg-gray-100'>데이터</th>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 border border-gray-300'>
+      이름 : name
+      <br /> 값: @5003
+    </td>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 border border-gray-300'></td>
+  </tr>
+  <tr>
+    <th className='p-1.5 text-center border border-gray-500 bg-gray-300' rowspan={2}>
+      데이터 영역
+    </th>
+    <th className='p-1.5 text-center border border-gray-300 bg-gray-100'>주소</th>
+    <td className='p-1.5 text-center border border-gray-300'>5002</td>
+    <td className='p-1.5 text-center border border-gray-300'>5003</td>
+    <td className='p-1.5 text-center border border-gray-300'>5004</td>
+    <td className='p-1.5 text-center border border-gray-300'>...</td>
+  </tr>
+  <tr>
+    <th className='p-1.5 border border-gray-300 bg-gray-100'>데이터</th>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 text-center border border-gray-300'>'김대현'</td>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 border border-gray-300'></td>
+  </tr>
+</table>
+
+1003의 식별자는 `name`이고, 데이터는 `김대현`이라는 값의 메모리 상 주소(`@5003`)이다.<br/><br/>
+이제, 변수 값을 `kimcoder`로 재할당시 변화를 확인해 보자.
+
+<table>
+  <tr>
+    <th className='w-28 p-1.5 text-center border border-gray-500 bg-gray-300' rowspan={2}>
+      변수 영역
+    </th>
+    <th className='w-28 p-1.5 text-center border border-gray-300 bg-gray-100'>주소</th>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1002</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1003</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>1004</td>
+    <td className='w-28 p-1.5 text-center border border-gray-300'>...</td>
+  </tr>
+  <tr>
+    <th className='p-1.5 border border-gray-300 bg-gray-100'>데이터</th>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 border border-gray-300'>
+      이름 : name
+      <br /> 값: @5004
+    </td>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 border border-gray-300'></td>
+  </tr>
+  <tr>
+    <th className='p-1.5 text-center border border-gray-500 bg-gray-300' rowspan={2}>
+      데이터 영역
+    </th>
+    <th className='p-1.5 text-center border border-gray-300 bg-gray-100'>주소</th>
+    <td className='p-1.5 text-center border border-gray-300'>5002</td>
+    <td className='p-1.5 text-center border border-gray-300'>5003</td>
+    <td className='p-1.5 text-center border border-gray-300'>5004</td>
+    <td className='p-1.5 text-center border border-gray-300'>...</td>
+  </tr>
+  <tr>
+    <th className='p-1.5 border border-gray-300 bg-gray-100'>데이터</th>
+    <td className='p-1.5 border border-gray-300'></td>
+    <td className='p-1.5 text-center border border-gray-300'>'김대현'</td>
+    <td className='p-1.5 text-center border border-gray-300'>'kimcoder'</td>
+    <td className='p-1.5 border border-gray-300'></td>
+  </tr>
+</table>
+
+`console.log(name)`으로 확인해보면 `kimcoder`가 출력되므로 의도한대로 변수 값의 변화가 되었다고 보인다!<br/>
+하지만 실제 `@5003`에 저장된 문자열 값의 변화는 일어나지 않았다. 단지 변수 `name`의 값(메모리 주소)이 `@5003` 에서 `@5004`으로 변한 것이다.
+`name`에, `kimcoder`라는 갑을 할당하기 전에 이미 `kimcoder`라는 값을 사용하여서 메모리에 저장이 되어있는 상황이라면 그 주소로 변하게 된다.
+
+만약, `김대현`이란 값을 더 이상 사용하지 않게되면, 가바지 콜렉션의 대상이 된다.
+
+### 참조형
+
+## 마치며
+
+## References
+
+- https://developer.mozilla.org/ko/docs/Web/JavaScript/Data_structures

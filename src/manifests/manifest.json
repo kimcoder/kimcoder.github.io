@@ -213,6 +213,11 @@
               "title": "6장, 전진하라",
               "path": "/books/functional-thinking/6",
               "editUrl": "/books/functional-thinking/6.mdx"
+            },
+            {
+              "title": "7장, 실용적 사고",
+              "path": "/books/functional-thinking/7",
+              "editUrl": "/books/functional-thinking/7.mdx"
             }
           ]
         }

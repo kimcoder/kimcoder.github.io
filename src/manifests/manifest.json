@@ -218,6 +218,11 @@
               "title": "7장, 실용적 사고",
               "path": "/books/functional-thinking/7",
               "editUrl": "/books/functional-thinking/7.mdx"
+            },
+            {
+              "title": "8장, 폴리글랏과 폴리패러다임",
+              "path": "/books/functional-thinking/8",
+              "editUrl": "/books/functional-thinking/8.mdx"
             }
           ]
         }

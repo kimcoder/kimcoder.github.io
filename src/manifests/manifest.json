@@ -246,6 +246,22 @@
               "editUrl": "/books/clean-code/2.mdx"
             }
           ]
+        },
+        {
+          "title": "단위 테스트",
+          "open": true,
+          "routes": [
+            {
+              "title": "소개",
+              "path": "/books/unit-testing/0",
+              "editUrl": "/books/clean-code/0.mdx"
+            },
+            {
+              "title": "1장, 단위 테스트의 목표",
+              "path": "/books/unit-testing/1",
+              "editUrl": "/books/clean-code/1.mdx"
+            }
+          ]
         }
       ]
     },

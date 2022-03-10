@@ -259,12 +259,17 @@
             {
               "title": "소개",
               "path": "/books/unit-testing/0",
-              "editUrl": "/books/clean-code/0.mdx"
+              "editUrl": "/books/unit-testing/0.mdx"
             },
             {
               "title": "1장, 단위 테스트의 목표",
               "path": "/books/unit-testing/1",
-              "editUrl": "/books/clean-code/1.mdx"
+              "editUrl": "/books/unit-testing/1.mdx"
+            },
+            {
+              "title": "2장, 단위 테스트란 무엇인가",
+              "path": "/books/unit-testing/2",
+              "editUrl": "/books/unit-testing/2.mdx"
             }
           ]
         }

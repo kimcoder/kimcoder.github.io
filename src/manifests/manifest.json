@@ -249,6 +249,11 @@
               "title": "3장, 함수",
               "path": "/books/clean-code/3",
               "editUrl": "/books/clean-code/3.mdx"
+            },
+            {
+              "title": "4장, 주석",
+              "path": "/books/clean-code/4",
+              "editUrl": "/books/clean-code/4.mdx"
             }
           ]
         },

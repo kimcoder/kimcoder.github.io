@@ -1,2 +1,9 @@
+# *
 User-agent: *
 Allow: /
+
+# Host
+Host: https://www.kimcoder.io
+
+# Sitemaps
+Sitemap: https://www.kimcoder.io/sitemap.xml

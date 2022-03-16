@@ -75,7 +75,7 @@ export const LayoutDocs = (props) => {
             <Nav />
           </Sticky>
         )}
-        <Seo title={seoTitle} description={props.meta.description} />
+        <Seo title={seoTitle} description={props.meta.description} keywords={props.meta.keywords} />
         <div className='block'>
           <>
             <div className='container mx-auto pb-12 pt-6 content'>

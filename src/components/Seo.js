@@ -5,12 +5,13 @@ import { withRouter } from 'next/router';
 const ogImage = '/kimcoder-og.png';
 const favicon = '/favicon.png';
 
-export const Seo = withRouter(({ title, description, image = ogImage, router, children }) => (
+export const Seo = withRouter(({ title, description, keywords, image = ogImage, router, children }) => (
   <Head>
     {/* DEFAULT */}
 
     {title != undefined && <title key='title'>{title} | kimcoder</title>}
     {description != undefined && <meta name='description' key='description' content={description} />}
+    {keywords != undefined && <meta name='keywords' key='keywords' content={keywords} />}
     <link rel='icon' type='image/x-icon' href={favicon} />
     <link rel='apple-touch-icon' href={favicon} />
 

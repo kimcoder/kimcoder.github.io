@@ -280,6 +280,11 @@
               "title": "3장, 단위 테스트 구조",
               "path": "/books/unit-testing/3",
               "editUrl": "/books/unit-testing/3.mdx"
+            },
+            {
+              "title": "4장, 좋은 단위 테스트의 4대 요소",
+              "path": "/books/unit-testing/4",
+              "editUrl": "/books/unit-testing/4.mdx"
             }
           ]
         }

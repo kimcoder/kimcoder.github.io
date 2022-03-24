@@ -254,6 +254,11 @@
               "title": "4장, 주석",
               "path": "/books/clean-code/4",
               "editUrl": "/books/clean-code/4.mdx"
+            },
+            {
+              "title": "5장, 형식 맞추기",
+              "path": "/books/clean-code/5",
+              "editUrl": "/books/clean-code/5.mdx"
             }
           ]
         },

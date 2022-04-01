@@ -57,7 +57,7 @@ createdAt: 2022.03.19
 
 **거짓 양성이 생길 가능성을 줄이는 방법은 해당 구현 세부 사항에서 테스트를 분리하는 것뿐이다.**
 
-```charp
+```csharp
 [Fact]
 public void MessageRenderer_uses_correct_sub_renderers()
 {
@@ -86,7 +86,7 @@ public void MessageRenderer_uses_correct_sub_renderers()
 
 ### 4.1.4 구현 세부 사항 대신 최종 결과를 목표로 하기
 
-```charp
+```csharp
 [Fact]
 public void Rendering_a_message()
 {
@@ -200,7 +200,7 @@ HTML 출력을 똑같이 지키는 한, SUT의 변경 사항은 테스트에 영
 
 ### 4.4.3 극단적인 사례 2: 간단한 테스트
 
-```charp
+```csharp
 public class User
 {
   public string Name { get; set; }
@@ -227,7 +227,7 @@ public void Test()
 
 실행이 빠르고 회귀를 잡을 가능성이 높지만 거짓 양성이 많은 테스트를 **깨지기 쉬운 테스트(brittle test)**라고 한다.
 
-```charp
+```csharp
 [Fact]
 public void GetByid_executes_correct_SQL_code()
 {

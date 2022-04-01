@@ -290,6 +290,11 @@
               "title": "4장, 좋은 단위 테스트의 4대 요소",
               "path": "/books/unit-testing/4",
               "editUrl": "/books/unit-testing/4.mdx"
+            },
+            {
+              "title": "5장, 목과 테스트 취약성",
+              "path": "/books/unit-testing/5",
+              "editUrl": "/books/unit-testing/5.mdx"
             }
           ]
         }

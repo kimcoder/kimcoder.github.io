@@ -259,6 +259,11 @@
               "title": "5장, 형식 맞추기",
               "path": "/books/clean-code/5",
               "editUrl": "/books/clean-code/5.mdx"
+            },
+            {
+              "title": "6장, 객체와 자료 구조",
+              "path": "/books/clean-code/6",
+              "editUrl": "/books/clean-code/6.mdx"
             }
           ]
         },

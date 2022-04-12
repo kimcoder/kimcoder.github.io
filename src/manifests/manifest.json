@@ -264,6 +264,11 @@
               "title": "6장, 객체와 자료 구조",
               "path": "/books/clean-code/6",
               "editUrl": "/books/clean-code/6.mdx"
+            },
+            {
+              "title": "7장, 오류 처리",
+              "path": "/books/clean-code/7",
+              "editUrl": "/books/clean-code/7.mdx"
             }
           ]
         },

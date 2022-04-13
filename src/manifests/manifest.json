@@ -310,6 +310,11 @@
               "title": "6장, 단위 테스트 스타일",
               "path": "/books/unit-testing/6",
               "editUrl": "/books/unit-testing/6.mdx"
+            },
+            {
+              "title": "7장, 가치 있는 단위 테스트를 위한 리팩터링",
+              "path": "/books/unit-testing/7",
+              "editUrl": "/books/unit-testing/7.mdx"
             }
           ]
         }

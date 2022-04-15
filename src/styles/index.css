@@ -294,3 +294,15 @@ details > summary {
 .on-this-page {
   max-height: calc(100vh - var(--nav-height));
 }
+
+.flex {
+  display: 'flex';
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-images {
+  flex: 1;
+}

@@ -315,6 +315,11 @@
               "title": "7장, 가치 있는 단위 테스트를 위한 리팩터링",
               "path": "/books/unit-testing/7",
               "editUrl": "/books/unit-testing/7.mdx"
+            },
+            {
+              "title": "8장, 통합 테스트를 하는 이유",
+              "path": "/books/unit-testing/8",
+              "editUrl": "/books/unit-testing/8.mdx"
             }
           ]
         }

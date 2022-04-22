@@ -15,7 +15,7 @@ createdAt: 2022.03.28
 
 **테스트 대역에는 더미(dummy), 스텁(stub), 스파이(spy), 목(mock), 페이크(fake)라는 다섯 가지**가 있다.<br/> **실제로는 목과 스텁의 두 가지 유형으로 나눌 수 있다.**<br/>
 
-<img src='/assets/images/unit-testing-10.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-10.jpg' />
 <br />
 
 - 목은 외부로 나가는 상호 작용을 모방하고 검사하는데 도움이 된다.
@@ -126,7 +126,7 @@ Public void Purchase_fails_when_not_enough_inventory()
 이 원칙에 따르면 모든 메서드는 명령이거나 조회여야 하며, 이 둘을 혼용해서는 안 된다.<br/>
 **명령을 대체하는 테스트 대역은 목이고, 조회를 대체하는 테스트대역은 스텁이다.**<br/>
 
-<img src='/assets/images/unit-testing-11.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-11.jpg' />
 <br />
 
 ## 5.2 식별할 수 있는 동작과 구현 세부 사항
@@ -253,7 +253,7 @@ user.Name = newName;
 
 ### 5.3.1 육각형 아키텍처 정의
 
-<img src='/assets/images/unit-testing-13.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-13.jpg' />
 <br />
 
 육각형 아키텍처의 목적은 아래 세 가지 중요한 지침을 강조한다.
@@ -273,7 +273,7 @@ user.Name = newName;
 애플리케이션 서비스를 다루는 테스트는 해당 서비스가 외부 클라이언트에게 매우 중요하고 큰 목표를 어떻게 이루는지 확인한다.<br/>
 도메인 클래스 테스트는 그 큰 목표의 하위 목표를 검증한다.
 
-<img src='/assets/images/unit-testing-14.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-14.jpg' />
 <br />
 
 코드베이스의 공개 API를 항상 비지니스 요구 사항에 따라 추적하라는 이 지침은 대부분의 도메인 클래스와 애플리케이션 서비스에 적용되지만,
@@ -303,7 +303,7 @@ user.Name = newName;
 
 이 시스템의 목표는 구매를 하는 것이며, 고객이 성공적인 결과로서 이메일로 확인 내역을 받는 것을 기대한다.
 
-<img src='/assets/images/unit-testing-15.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-15.jpg' />
 <br />
 육각형 간의 통신은 시스템 간의 통신, 육각형 내부의 통신은 시스템 내부 통신이다.
 <br />

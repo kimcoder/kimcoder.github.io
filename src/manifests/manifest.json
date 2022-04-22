@@ -269,6 +269,11 @@
               "title": "7장, 오류 처리",
               "path": "/books/clean-code/7",
               "editUrl": "/books/clean-code/7.mdx"
+            },
+            {
+              "title": "8장, 경계",
+              "path": "/books/clean-code/8",
+              "editUrl": "/books/clean-code/8.mdx"
             }
           ]
         },

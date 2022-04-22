@@ -106,7 +106,7 @@ public void Rendering_a_message()
 결과적으로 테스트는 리팩터링 내성이 부쩍 늘어났다.<br/>
 HTML 출력을 똑같이 지키는 한, SUT의 변경 사항은 테스트에 영향을 미치지 않는다.
 
-<img src='/assets/images/unit-testing-3.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-3.jpg' />
 <br />
 
 하지만 이와 같은 테스트도 거짓 양성이 있을 수 있다.<br />
@@ -127,7 +127,7 @@ HTML 출력을 똑같이 지키는 한, SUT의 변경 사항은 테스트에 영
 
 코드 정확도와 테스트 결과에 대해서는 아래와 같이 네 가지 결과가 있을 수 있다.
 
-<img src='/assets/images/unit-testing-4.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-4.jpg' />
 <br />
 
 **거짓 양성과 거짓 음성의 확률은 테스트의 수준을 나타낸다.** 즉, **확률이 낮을 수록 테스트가 더 정확하다.**<br/>
@@ -144,7 +144,7 @@ HTML 출력을 똑같이 지키는 한, SUT의 변경 사항은 테스트에 영
 
 ### 4.2.2 거짓 양성과 거짓 음성의 중요성: 역학 관계
 
-<img src='/assets/images/unit-testing-5.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-5.jpg' />
 <br />
 
 프로젝트 초기에는 거짓 양성이 중요하지 않다. 초기에는 리팩터링(코드 정리)을 할 필요가 없기 때문이다.<br/>
@@ -190,7 +190,7 @@ HTML 출력을 똑같이 지키는 한, SUT의 변경 사항은 테스트에 영
 
 ### 4.4.2 극단적인 사례 1: 엔드 투 엔드 테스트
 
-<img src='/assets/images/unit-testing-6.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-6.jpg' />
 <br />
 
 엔드 투 엔드 테스트는 **많은 코드를 테스트하므로 회귀 방지를 훌륭히 해낸다.**<br/>
@@ -220,7 +220,7 @@ public void Test()
 간단한 테스트는 매우 빠르게 실행되고 거짓 양성이 생길 가능성이 상당히 낮기 때문에 리팩터링 내성도 우수하다.<br/>
 그러나 기반 코드에 실수할 여지가 많지 않기 때문에 간단한 테스트는 회귀를 나타내지 않을 것이다.
 
-<img src='/assets/images/unit-testing-7.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-7.jpg' />
 <br />
 
 ### 4.4.4 극단적인 사례 3: 깨지기 쉬운 테스트
@@ -256,7 +256,7 @@ SELECT UserID, Name, Email FROM dbo.[User] WHERE UserID = 5
 좋은 단위 테스트의 처음 세가지 특성(회귀 방지, 리팩터링 내성, 빠른 피드백)은 상호 베타적이다.<br/>
 두 가지를 극대화하는 테스트를 만들기는 매우 쉽지만, 나머지 특성 한 가지를 희생해야 한다.
 
-<img src='/assets/images/unit-testing-8.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-8.jpg' />
 <br />
 
 **리팩터링 내성을 포기할 수 없는 이유는 테스트가 이 특성을 갖고 있는지의 여부는 대부분 이진 선택이기 때문이다. 즉, 테스트에 리팩터링 내성이 있거나 없거나 둘 중 하나다.**<br/>
@@ -266,7 +266,7 @@ SELECT UserID, Name, Email FROM dbo.[User] WHERE UserID = 5
 
 ### 4.5.1 테스트 피라미드 분해
 
-<img src='/assets/images/unit-testing-9.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-9.jpg' />
 <br />
 
 테스트 피라미드 상단의 테스트는 회귀 방지에 유리한 반면, 하단은 실행 속도를 강조한다.<br/>

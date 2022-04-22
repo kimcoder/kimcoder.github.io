@@ -37,7 +37,7 @@ createdAt: 2022.03.28
 - **컨트롤러**
 - **지나치게 복잡한 코드**
 
-<img src='/assets/images/unit-testing-20.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-20.jpg' />
 <br />
 
 **가장 문제가 되는 코드 유형은 지나치게 복잡한 코드다.**<br/>
@@ -50,12 +50,12 @@ createdAt: 2022.03.28
 
 **지나치게 복잡한 코드를 쪼개려면, 험블 객체 패턴(Humeble Object)을 써야한다.**
 
-<img src='/assets/images/unit-testing-21.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-21.jpg' />
 <br />
 
 테스트 대상 코드의 로직을 테스트하려면, 테스트가 가능한 부분을 추출해야 한다. 결과적으로 코드는 테스트 가능한 부분을 둘러싼 얇은 험블 래퍼(humble wrapper)가 된다.
 
-<img src='/assets/images/unit-testing-22.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-22.jpg' />
 <br />
 
 사실 육각형 아키텍처와 함수형 아키텍처 모두 정확히 이 패턴을 구현한다.<br/>
@@ -82,7 +82,7 @@ createdAt: 2022.03.28
 User 클래스에는 네 개의 의존성이 있으며, 그중 두개는 명시적이고 나머지 두개는 암시적이다. 명시적 의존성은 userId와 newEmail 인수다. 이 둘은 값이므로 클래스의 협력자 수에는 포함되지 않는다.
 암시적인 것은 Database와 MessageBus이다. 이 둘은 프로세스 외부 협력자다. **도메인 유의성이 높은 코드에서 프로세스 외부 협력자는 사용하면 안 된다.**
 
-<img src='/assets/images/unit-testing-23.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-23.jpg' />
 <br />
 
 도메인 클래스가 스스로 데이터베이스를 검색하고, 다시 지정하는 이러한 방식을 활성 레코드 패턴(Active Record)이라고 한다. 단순 프로젝트나 단기 프로젝트에서는 잘 작동하지만 코드베이스가 커지면 확장하지 못하는 경우가 많다.
@@ -102,7 +102,7 @@ User 클래스에는 네 개의 의존성이 있으며, 그중 두개는 명시�
 도메인 모델이 외부 시스템과 직접 통신하는 문제를 극복하려면 다른 클래스인 **험블 컨트롤러(humble controller, 육각형 아키텍처 분류상 애플리케이션 서비스)**로 책임을 옮겨야 한다.
 일반적으로 도메인 클래스는 다른 도메인 클래스나 단순 값과 같은 프로세스 내부 의존성에만 의존해야 한다.
 
-<img src='/assets/images/unit-testing-24.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-24.jpg' />
 <br />
 
 ### 7.2.4 3단계: 애플리케이션 서비스 복잡도 낮추기
@@ -114,7 +114,7 @@ ORM을 사용하지 않거나 사용할 수 없으면, 도메인 모델에 원�
 
 ### 7.2.5 4단계: 새 Company 클래스 소개
 
-<img src='/assets/images/unit-testing-25.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-25.jpg' />
 <br />
 
 모든 복잡도가 팩토리로 이동했기 때문에 UserController는 확실히 컨트롤러 사분면에 속한다. 이 클래스가 담당하는 것은 모든 협력자를 한데 모으는 것이다.<br/>
@@ -172,7 +172,7 @@ public void ChageNumberOfEmployess(int delta)
 
 조건부 로직을 처리하면서 동시에 프로세스 외부 협력자 없이 도메인 계층을 유지 보수하는 것은 까다롭고 절충이 있기 마련이다.
 
-<img src='/assets/images/unit-testing-26.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-26.jpg' />
 <br />
 
 육각형 아케턱처와 함수형 아키텍처는 프로세스 외부 의존성에 대한 모든 참조가 비지니스 연산의 가장자리로 밀려났을 때 가장 효과적이다.<br/>
@@ -183,7 +183,7 @@ public void ChageNumberOfEmployess(int delta)
 - **컨트롤러 단순성** : 의사 결정(분기) 지점이 있는지에 따라 따름
 - **성능** : 프로세스 외부 의존성에 대한 호출 수로 정의
 
-<img src='/assets/images/unit-testing-27.jpg' />
+<img className='w-8/12 m-auto' src='/assets/images/unit-testing-27.jpg' />
 <br />
 
 위의 세 가지 특성을 모두 충족하는 해법은 없다. 따라서 세 가지 중 두 가지를 선택해야 한다.<br/>

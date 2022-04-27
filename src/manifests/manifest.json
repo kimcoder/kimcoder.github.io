@@ -325,6 +325,11 @@
               "title": "8장, 통합 테스트를 하는 이유",
               "path": "/books/unit-testing/8",
               "editUrl": "/books/unit-testing/8.mdx"
+            },
+            {
+              "title": "9장, 목 처리에 대한 모범 사례",
+              "path": "/books/unit-testing/9",
+              "editUrl": "/books/unit-testing/9.mdx"
             }
           ]
         }

@@ -306,3 +306,11 @@ details > summary {
 .flex-images {
   flex: 1;
 }
+
+.w-8\/12 {
+  width: 66%;
+}
+
+.m-auto {
+  margin: auto;
+}

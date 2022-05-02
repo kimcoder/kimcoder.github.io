@@ -1,0 +1,71 @@
+---
+id: 단위 테스트
+description: '단위 테스트 책을 읽고 내용을 정리합니다.'
+keywords: 'unit testing, book, study'
+createdAt: 2022.05.02
+---
+
+## 11.1 비공개 메서드 단위 테스트
+
+### 11.1.1 비공개 메서드와 테스트 취약성
+
+단위 테스트를 하려고 비공개 메서드를 노출하는 경우에는 기본 원칙 중 하나인 식별할 수 있는 동작만 테스트하는 것을 위반한다. 비공개 메서드를 노출하면 테스트가 구현 세부 사항과 결합되고 결과적으로 리팩터링 내성이 떨어진다.
+**비공개 메서드를 직접 테스트하는 대신, 포괄적인 식별할 수 있는 동작으로서 간접적으로 테스트하는 것이 좋다.**
+
+### 11.1.2 비공개 메서드와 불필요한 커버리지
+
+비공개 메서드가 너무 복잡해서 식별할 수 있는 동작으로 테스트하기에 충분히 커버리지를 얻을 수 없는 경우가 있다. 식별할 수 있는 동작에 이미 합리적인 테스트 커버리지가 있다고 가정하면 다음 두 가지 문제가 발생할 수 있다.
+
+- 죽은 코드. 테스트에서 벗어난 코드가 어디에도 사용되지 않는다면 리팩터링 후에도 남아서 관계없는 코드 일 수 있다.
+- 추상화가 누락돼 있다. 비공개 메서드가 너무 복잡하면 추상화가 누락됐다는 징후다.
+
+```csharp
+public cass Order
+{
+  public string GenerateDescription()
+  {
+    return $"Customer name: {_customer.Name}, " +
+      $"total number of products: {_products.Count}, " +
+      $"total price: {GetPrice()}"; // <- 복잡한 비공개 메서드를 간단한 공개 메서드에서 사용하고 있음
+  }
+
+  private decimal GetPrice()  // <- 복잡한 비공개 메서드
+  {
+    decimal basePrice = /* _producuts에 기반한 계산 */;
+    decimal discounts = /* _producuts에 기반한 계산 */;
+    decimal taxes = /* _producuts에 기반한 계산 */;
+    return basePrice - discounts + taxes;
+  }
+}
+```
+
+위의 로직은 추상화가 누락됐다. `GetPrice` 메서드를 노출하기보다는 다음 예제와 같이 추상화를 별도의 클래스로 도출해서 명시적으로 작성하는 것이 좋다.
+
+```csharp
+public class PriceCalculator
+{
+  public decimal Calculate(Customer customer, List<Product> products)
+  {
+    decimal basePrice = /* _producuts에 기반한 계산 */;
+    decimal discounts = /* _producuts에 기반한 계산 */;
+    decimal taxes = /* _producuts에 기반한 계산 */;
+    return basePrice - discounts + taxes;
+  }
+}
+```
+
+이제 `Order`와 별개로 `PriceCalculator`를 테스트할 수 있다. `PriceCalculator`에는 숨은 입출력이 없으므로 출력 기반(함수형) 스타일의 단위 테스트를 사용할 수도 있다.
+
+### 11.1.3 비공개 메서드 테스트가 타당한 경우
+
+비공개 메서드를 절대 테스트하지 말라는 규칙에도 예외가 있다. 예외를 이해하려면 코드의 공개 여부와 목적 간의 관계를 다시 살펴봐야 한다.
+
+|        | 식별할 수 있는 동작 | 구현 세부 사항 |
+| ------ | ------------------- | -------------- |
+| 공개   | 좋음                | 나쁨           |
+| 비공개 | 해당 없음           | 좋음           |
+
+비공개 메서드를 테스트하는 것 자체는 나쁘지 않다. 비공개 메서드가 구현 세부 사항의 프록시에 해당하므로 나쁜 것이다. 구현 세부 사항을 테스트하면 궁극적으로 테스트가 깨지기 쉽다.
+그렇기는 해도 메서드가 비공개이면서 식별할 수 있는 동작인 경우는 드물다.
+
+## 11.2 비공개 상태 노출

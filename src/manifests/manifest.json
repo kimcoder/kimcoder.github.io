@@ -330,6 +330,11 @@
               "title": "9장, 목 처리에 대한 모범 사례",
               "path": "/books/unit-testing/9",
               "editUrl": "/books/unit-testing/9.mdx"
+            },
+            {
+              "title": "11장, 단위 테스트 안티 패턴",
+              "path": "/books/unit-testing/11",
+              "editUrl": "/books/unit-testing/11.mdx"
             }
           ]
         }

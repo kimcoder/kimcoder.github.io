@@ -274,6 +274,11 @@
               "title": "8장, 경계",
               "path": "/books/clean-code/8",
               "editUrl": "/books/clean-code/8.mdx"
+            },
+            {
+              "title": "9장, 단위 테스트",
+              "path": "/books/clean-code/9",
+              "editUrl": "/books/clean-code/9.mdx"
             }
           ]
         },

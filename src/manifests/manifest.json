@@ -342,6 +342,22 @@
               "editUrl": "/books/unit-testing/11.mdx"
             }
           ]
+        },
+        {
+          "title": "소프트웨어 아키텍처 101",
+          "open": true,
+          "routes": [
+            {
+              "title": "소개",
+              "path": "/books/software-architecture-101/0",
+              "editUrl": "/books/software-architecture-101/0.mdx"
+            },
+            {
+              "title": "1장, 서론",
+              "path": "/books/software-architecture-101/1",
+              "editUrl": "/books/software-architecture-101/1.mdx"
+            }
+          ]
         }
       ]
     },

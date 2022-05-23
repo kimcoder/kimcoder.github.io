@@ -361,6 +361,11 @@
               "title": "1장, 서론",
               "path": "/books/software-architecture-101/1",
               "editUrl": "/books/software-architecture-101/1.mdx"
+            },
+            {
+              "title": "2장, 아키텍처 사고",
+              "path": "/books/software-architecture-101/2",
+              "editUrl": "/books/software-architecture-101/2.mdx"
             }
           ]
         }

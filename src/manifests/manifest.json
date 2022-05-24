@@ -366,6 +366,11 @@
               "title": "2장, 아키텍처 사고",
               "path": "/books/software-architecture-101/2",
               "editUrl": "/books/software-architecture-101/2.mdx"
+            },
+            {
+              "title": "3장, 모듈성",
+              "path": "/books/software-architecture-101/3",
+              "editUrl": "/books/software-architecture-101/3.mdx"
             }
           ]
         }

@@ -371,6 +371,11 @@
               "title": "3장, 모듈성",
               "path": "/books/software-architecture-101/3",
               "editUrl": "/books/software-architecture-101/3.mdx"
+            },
+            {
+              "title": "4장, 아키텍처 특성 정의",
+              "path": "/books/software-architecture-101/4",
+              "editUrl": "/books/software-architecture-101/4.mdx"
             }
           ]
         }

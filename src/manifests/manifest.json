@@ -386,6 +386,11 @@
               "title": "6장, 아키텍처 특성의 측정 및 거버넌스",
               "path": "/books/software-architecture-101/6",
               "editUrl": "/books/software-architecture-101/6.mdx"
+            },
+            {
+              "title": "7장, 아키텍처 특성 범위",
+              "path": "/books/software-architecture-101/7",
+              "editUrl": "/books/software-architecture-101/7.mdx"
             }
           ]
         }

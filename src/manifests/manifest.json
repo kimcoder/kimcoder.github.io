@@ -284,6 +284,11 @@
               "title": "9장, 단위 테스트",
               "path": "/books/clean-code/9",
               "editUrl": "/books/clean-code/9.mdx"
+            },
+            {
+              "title": "10장, 클래스",
+              "path": "/books/clean-code/10",
+              "editUrl": "/books/clean-code/10.mdx"
             }
           ]
         },

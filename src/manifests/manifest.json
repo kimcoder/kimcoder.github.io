@@ -406,6 +406,11 @@
               "title": "9장, 기초",
               "path": "/books/software-architecture-101/9",
               "editUrl": "/books/software-architecture-101/9.mdx"
+            },
+            {
+              "title": "10장, 레이어드 아키텍처 스타일",
+              "path": "/books/software-architecture-101/10",
+              "editUrl": "/books/software-architecture-101/10.mdx"
             }
           ]
         }

@@ -289,6 +289,16 @@
               "title": "10장, 클래스",
               "path": "/books/clean-code/10",
               "editUrl": "/books/clean-code/10.mdx"
+            },
+            {
+              "title": "11장, 시스템",
+              "path": "/books/clean-code/11",
+              "editUrl": "/books/clean-code/11.mdx"
+            },
+            {
+              "title": "12장, 창발성",
+              "path": "/books/clean-code/12",
+              "editUrl": "/books/clean-code/12.mdx"
             }
           ]
         },

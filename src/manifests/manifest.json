@@ -421,6 +421,11 @@
               "title": "10장, 레이어드 아키텍처 스타일",
               "path": "/books/software-architecture-101/10",
               "editUrl": "/books/software-architecture-101/10.mdx"
+            },
+            {
+              "title": "11장, 파이프라인 아키텍처 스타일",
+              "path": "/books/software-architecture-101/11",
+              "editUrl": "/books/software-architecture-101/11.mdx"
             }
           ]
         }

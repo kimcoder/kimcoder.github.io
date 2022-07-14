@@ -426,6 +426,11 @@
               "title": "11장, 파이프라인 아키텍처 스타일",
               "path": "/books/software-architecture-101/11",
               "editUrl": "/books/software-architecture-101/11.mdx"
+            },
+            {
+              "title": "12장, 마이크로커널 아키텍처 스타일",
+              "path": "/books/software-architecture-101/12",
+              "editUrl": "/books/software-architecture-101/12.mdx"
             }
           ]
         }

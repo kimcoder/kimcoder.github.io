@@ -436,6 +436,11 @@
               "title": "13장, 서비스 기반 아키텍처 스타일",
               "path": "/books/software-architecture-101/13",
               "editUrl": "/books/software-architecture-101/13.mdx"
+            },
+            {
+              "title": "14장, 이벤트 기반 아키텍처 스타일",
+              "path": "/books/software-architecture-101/14",
+              "editUrl": "/books/software-architecture-101/14.mdx"
             }
           ]
         }

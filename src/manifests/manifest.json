@@ -441,6 +441,11 @@
               "title": "14장, 이벤트 기반 아키텍처 스타일",
               "path": "/books/software-architecture-101/14",
               "editUrl": "/books/software-architecture-101/14.mdx"
+            },
+            {
+              "title": "15장, 공간 기반 아키텍처 스타일",
+              "path": "/books/software-architecture-101/15",
+              "editUrl": "/books/software-architecture-101/15.mdx"
             }
           ]
         }

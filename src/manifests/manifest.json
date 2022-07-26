@@ -446,6 +446,11 @@
               "title": "15장, 공간 기반 아키텍처 스타일",
               "path": "/books/software-architecture-101/15",
               "editUrl": "/books/software-architecture-101/15.mdx"
+            },
+            {
+              "title": "16장, 오케스트레이션 기반 서비스 지향 아키텍처 스타일",
+              "path": "/books/software-architecture-101/16",
+              "editUrl": "/books/software-architecture-101/16.mdx"
             }
           ]
         }

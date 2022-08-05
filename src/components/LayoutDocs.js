@@ -128,7 +128,9 @@ function getCategoryPath(routes) {
 function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
   const { asPath } = useRouter();
   let { slug, tag } = getSlugAndTag(asPath);
-  return currentRoutes.map(({ path, title, routes, heading, open }) => {
+  return currentRoutes.map(({ path, title, routes, heading, open }, idx) => {
+    const key = `${idx}_${title}_${heading}`;
+
     if (routes) {
       const pathname = getCategoryPath(routes);
       const selected = slug.startsWith(pathname);
@@ -136,20 +138,14 @@ function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
 
       if (heading) {
         return (
-          <SidebarHeading key={'parent' + pathname} title={title}>
+          <SidebarHeading key={key} title={title}>
             <SidebarRoutes isMobile={isMobile} routes={routes} level={level + 1} />
           </SidebarHeading>
         );
       }
 
       return (
-        <SidebarCategory
-          key={pathname}
-          isMobile={isMobile}
-          level={level}
-          title={title}
-          selected={selected}
-          opened={opened}>
+        <SidebarCategory key={key} isMobile={isMobile} level={level} title={title} selected={selected} opened={opened}>
           <SidebarRoutes isMobile={isMobile} routes={routes} level={level + 1} />
         </SidebarCategory>
       );
@@ -165,7 +161,7 @@ function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
       pathname,
       selected,
     };
-    return <SidebarPost key={title} isMobile={isMobile} level={level} route={route} />;
+    return <SidebarPost key={key} isMobile={isMobile} level={level} route={route} />;
   });
 }
 

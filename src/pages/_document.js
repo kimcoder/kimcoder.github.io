@@ -19,6 +19,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');`,
             }}
           />
+          <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
         </Head>
         <body className='font-sans antialiased text-gray-900'>
           <Main />

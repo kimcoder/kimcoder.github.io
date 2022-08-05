@@ -456,6 +456,11 @@
               "title": "17장, 마이크로서비스 아키텍처 스타일",
               "path": "/books/software-architecture-101/17",
               "editUrl": "/books/software-architecture-101/17.mdx"
+            },
+            {
+              "title": "18장, 최적의 아키텍처 스타일 선정",
+              "path": "/books/software-architecture-101/18",
+              "editUrl": "/books/software-architecture-101/18.mdx"
             }
           ]
         }

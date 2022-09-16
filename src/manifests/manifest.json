@@ -466,6 +466,11 @@
               "title": "19장, 아키텍처 결정",
               "path": "/books/software-architecture-101/19",
               "editUrl": "/books/software-architecture-101/19.mdx"
+            },
+            {
+              "title": "20장, 아키텍처 리스크 분석",
+              "path": "/books/software-architecture-101/20",
+              "editUrl": "/books/software-architecture-101/20.mdx"
             }
           ]
         }

@@ -478,6 +478,11 @@
               "editUrl": "/books/software-architecture-101/21.mdx"
             },
             {
+              "title": "22장, 개발팀을 효율적으로",
+              "path": "/books/software-architecture-101/22",
+              "editUrl": "/books/software-architecture-101/22.mdx"
+            },
+            {
               "title": "24장, 커리어패스 개발",
               "path": "/books/software-architecture-101/24",
               "editUrl": "/books/software-architecture-101/24.mdx"

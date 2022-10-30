@@ -12,7 +12,6 @@ import Link from 'next/link';
 import path from 'path';
 
 export default function Index({ posts }: any) {
-  console.log('-=', posts);
   return (
     <>
       <div className='h-full min-h-full'>
@@ -29,29 +28,8 @@ export default function Index({ posts }: any) {
               </h1>
               <div className='mt-3 sm:mt-4 lg:grid lg:grid-cols-2 lg:gap-5 lg:items-center'>
                 <p className='text-xl leading-7 text-gray-500'>
-                  Stories, tips, and tools to inspire you to build better software. Subscribe for updates.
+                  흘러가는 지식, 학습의 과정, 경험 정리를 위주로 작성되는 글들입니다.
                 </p>
-                <form
-                  action='https://api.formik.com/submit/palmerhq/formik-newsletter'
-                  method='post'
-                  className='flex mt-6 lg:mt-0 lg:justify-end'>
-                  <input type='hidden' name='_honeypot' value='' />
-                  <input
-                    aria-label='Email address'
-                    type='email'
-                    name='email'
-                    required={true}
-                    className='w-full px-4 py-2 text-base leading-6 text-gray-900 placeholder-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring focus:ring-blue focus:border-blue-300 lg:max-w-xs'
-                    placeholder='Enter your email'
-                  />
-                  <span className='inline-flex flex-shrink-0 ml-3 rounded-md shadow-sm'>
-                    <button
-                      type='button'
-                      className='inline-flex items-center px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue active:bg-blue-700'>
-                      Notify me
-                    </button>
-                  </span>
-                </form>
               </div>
             </div>
             <div className={markdownStyles['markdown']}>
@@ -60,9 +38,9 @@ export default function Index({ posts }: any) {
                 {posts.map((post: any) => {
                   return (
                     <div key={post.filePath} className='pb-6 space-y-2'>
-                      {post.data.date && (
+                      {post.data.createdAt && (
                         <div className='text-sm leading-5 text-gray-500 posted'>
-                          <time dateTime={post.data.date}>{post.data.date}</time>
+                          <time dateTime={post.data.createdAt.replaceAll('.', '-')}>{post.data.createdAt}</time>
                         </div>
                       )}
                       <h3 className='mt-2 text-2xl font-semibold leading-7 text-gray-900'>
@@ -104,15 +82,17 @@ export default function Index({ posts }: any) {
 }
 
 export function getStaticProps() {
-  const posts = blogFilePaths.map((filePath) => {
-    const source = fs.readFileSync(path.join(BLOG_PATH, filePath));
-    const { content, data } = matter(source);
-    return {
-      content,
-      data,
-      filePath,
-    };
-  });
-  console.log('posts', posts);
+  const posts = blogFilePaths
+    .map((filePath) => {
+      const source = fs.readFileSync(path.join(BLOG_PATH, filePath));
+      const { content, data } = matter(source);
+      return {
+        content,
+        data,
+        filePath,
+      };
+    })
+    .sort((a, b) => Number(new Date(b.data.createdAt)) - Number(new Date(a.data.createdAt)));
+
   return { props: { posts } };
 }

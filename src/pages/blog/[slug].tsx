@@ -24,10 +24,8 @@ export default function PostPage({ source, frontMatter }: any) {
         <div className='container max-w-3xl px-4 pt-6 pb-12 mx-auto sm:px-6 lg:px-8 max-w-screen'>
           <div className='my-10 space-y-4'>
             <div className='flex items-center '>
-              {frontMatter.authors && frontMatter.authors.length > 0 && (
-                <div className='mr-1 text-gray-700 authors'>By {frontMatter.authors.join(' ')} </div>
-              )}
-              {frontMatter.date && <div className='text-gray-700 posted'> • {frontMatter.date}</div>}
+              <div className='mr-1 text-gray-700 authors'>By kimcoder</div>
+              {frontMatter.createdAt && <div className='text-gray-700 posted'> • {frontMatter.createdAt}</div>}
             </div>
             <h1 className='max-w-3xl text-5xl font-semibold leading-snug tracking-tighter text-gray-900'>
               {frontMatter.title || ''}
@@ -67,7 +65,7 @@ export const getStaticPaths = async () => {
     .map((path) => path.replace(/\.mdx?$/, ''))
     // Map the path into the static paths object required by Next.js
     .map((slug) => ({ params: { slug } }));
-  console.log('paths', paths);
+
   return {
     paths,
     fallback: false,

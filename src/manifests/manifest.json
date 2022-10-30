@@ -1,80 +1,6 @@
 {
   "routes": [
     {
-      "title": "javascript",
-      "open": true,
-      "routes": [
-        {
-          "title": "temporal dead zone",
-          "path": "/javascript/tdz",
-          "editUrl": "/javascript/tdz.mdx"
-        },
-        {
-          "title": "JavaScript Pass By Value Function Parameters",
-          "path": "/javascript/javascript-pass-by-value-function-parameters",
-          "editUrl": "/javascript/javascript-pass-by-value-function-parameters.mdx"
-        },
-        {
-          "title": "eslint import rule 설정의 이점",
-          "path": "/javascript/eslint-import-order",
-          "editUrl": "/javascript/eslint-import-order"
-        },
-        {
-          "title": "자바스크립트의 데이터 타입",
-          "path": "/javascript/data-type",
-          "editUrl": "/javascript/data-type.mdx"
-        }
-      ]
-    },
-    {
-      "title": "typescript",
-      "open": true,
-      "routes": [
-        {
-          "title": "Interfaces vs Type Aliases",
-          "path": "/typescript/interface-vs-type",
-          "editUrl": "/typescript/interface-vs-type.mdx"
-        },
-        {
-          "title": "Enum",
-          "path": "/typescript/enum",
-          "editUrl": "/typescript/enum.mdx"
-        }
-      ]
-    },
-    {
-      "title": "react.js",
-      "open": true,
-      "routes": [
-        {
-          "title": "클린한 프론트엔드 아키텍처를 향한 첫 걸음",
-          "path": "/react/clean-frontend-architecture",
-          "editUrl": "/react/clean-frontend-architecture.mdx"
-        },
-        {
-          "title": "React 컴포넌트 제작기",
-          "open": true,
-          "routes": [
-            {
-              "title": "제작기 - 1",
-              "path": "/react/react-simple-image-slider/log-1",
-              "editUrl": "/react/react-simple-image-slider/log-1.mdx"
-            },
-            {
-              "title": "제작기 - 2",
-              "path": "/react/react-simple-image-slider/log-2",
-              "editUrl": "/react/react-simple-image-slider/log-2.mdx"
-            },
-            {
-              "title": "제작기 - 3",
-              "path": "/react/react-simple-image-slider/log-3",
-              "editUrl": "/react/react-simple-image-slider/log-3.mdx"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "title": "books",
       "open": true,
       "routes": [
@@ -463,17 +389,6 @@
               "editUrl": "/books/software-architecture-101/18.mdx"
             }
           ]
-        }
-      ]
-    },
-    {
-      "title": "performance",
-      "open": true,
-      "routes": [
-        {
-          "title": "이미지 파일 최적화",
-          "path": "/performance/image-optimize",
-          "editUrl": "/performance/image-optimize.mdx"
         }
       ]
     }

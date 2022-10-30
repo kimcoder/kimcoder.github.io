@@ -22,7 +22,7 @@ export const Nav = () => (
         <div className='flex flex-grow items-center justify-between w-3/4 md:w-auto md:justify-end space-x-4 md:space-x-8 nav-height'>
           <div className='flex space-x-4 md:space-x-8 text-sm md:text-base'>
             <div>
-              <Link href='/overview'>
+              <Link href='/blog'>
                 <a className='leading-6 font-medium'>Blog</a>
               </Link>
             </div>

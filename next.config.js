@@ -60,19 +60,6 @@ module.exports = optimizedImages({
         destination: '/:any*', // Matched parameters can be used in the destination
         permanent: true,
       },
-      {
-        source: '/',
-        destination: '/overview',
-        permanent: true,
-      },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/overview',
-      },
     ];
   },
   experimental: {

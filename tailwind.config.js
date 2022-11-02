@@ -8,7 +8,7 @@ module.exports = {
     float: false,
   },
   purge: {
-    enabled: process.env.NODE_ENV !== 'development',
+    enabled: false,
     content: ['./src/**/*.js'],
     options: {
       defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],

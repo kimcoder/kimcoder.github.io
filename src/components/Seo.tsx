@@ -1,11 +1,16 @@
-import React from 'react';
+import { WithRouterProps } from 'next/dist/client/with-router';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
+import { PropsWithChildren } from 'react';
 
 const ogImage = '/kimcoder-og.png';
 const favicon = '/favicon.png';
 
-export const Seo = withRouter(({ title, description, keywords, image = ogImage, router, children }) => (
+type Props = PropsWithChildren<
+  { title?: string; description?: string; keywords?: string; image?: string } & WithRouterProps
+>;
+
+export const Seo = withRouter(({ title, description, keywords, image = ogImage, router, children }: Props) => (
   <Head>
     {/* DEFAULT */}
 

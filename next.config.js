@@ -32,7 +32,7 @@ const remarkPlugins = [
 ];
 
 module.exports = optimizedImages({
-  pageExtensions: ['jsx', 'js', 'mdx', 'md'],
+  pageExtensions: ['jsx', 'js', 'ts', 'tsx', 'mdx', 'md'],
   env: {
     NEXT_PUBLIC_GA_TRACKING_ID: 'UA-122659594-1',
     NEXT_PUBLIC_GTM_ID: 'GTM-MKLQHRB',
@@ -59,19 +59,6 @@ module.exports = optimizedImages({
         source: '/docs/:any*',
         destination: '/:any*', // Matched parameters can be used in the destination
         permanent: true,
-      },
-      {
-        source: '/',
-        destination: '/overview',
-        permanent: true,
-      },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/overview',
       },
     ];
   },

@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
 
 const Home = () => {
   const router = useRouter();
@@ -8,7 +8,7 @@ const Home = () => {
     router.replace('/overview');
   }, []);
 
-  return <div>HOME</div>;
+  return <div />;
 };
 
 export default Home;

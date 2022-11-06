@@ -4,10 +4,10 @@ import { siteConfig } from 'siteConfig';
 import { Search } from './Search';
 
 export const Nav = () => (
-  <div className='bg-white border-b border-gray-200'>
+  <div className='border-b border-gray-200 bg-white'>
     <div className='container mx-auto'>
       <div className='flex flex-wrap items-center'>
-        <div className='w-60 flex items-center nav-height pt-4 md:pt-0'>
+        <div className='nav-height flex w-60 items-center pt-4 md:pt-0'>
           <Link href='/' as='/'>
             <a>
               <h1 id='page-title'>@kimcoder</h1>
@@ -19,16 +19,16 @@ export const Nav = () => (
           <Search />
         </div> */}
 
-        <div className='flex flex-grow items-center justify-between w-3/4 md:w-auto md:justify-end space-x-4 md:space-x-8 nav-height'>
-          <div className='flex space-x-4 md:space-x-8 text-sm md:text-base'>
+        <div className='flex-grow nav-height flex w-3/4 items-center justify-between space-x-4 md:w-auto md:justify-end md:space-x-8'>
+          <div className='flex space-x-4 text-sm md:space-x-8 md:text-base'>
             <div>
               <Link href='/blog'>
-                <a className='leading-6 font-medium'>Blog</a>
+                <a className='font-medium leading-6'>Blog</a>
               </Link>
             </div>
             <div>
               <Link href='/books/refactoring/0'>
-                <a className='leading-6 font-medium'>Books</a>
+                <a className='font-medium leading-6'>Books</a>
               </Link>
             </div>
           </div>
@@ -58,8 +58,6 @@ export const Nav = () => (
               </svg>
             </a>
           </div>
-          <div></div>
-          <div></div>
         </div>
       </div>
     </div>

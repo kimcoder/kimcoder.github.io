@@ -10,63 +10,51 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/refactoring/0",
-              "editUrl": "/books/refactoring/0.mdx"
+              "path": "/books/refactoring/0"
             },
             {
               "title": "1장, 리팩터링: 첫 번째 예시",
-              "path": "/books/refactoring/1",
-              "editUrl": "/books/refactoring/1.mdx"
+              "path": "/books/refactoring/1"
             },
             {
               "title": "2장, 리팩터링 원칙",
-              "path": "/books/refactoring/2",
-              "editUrl": "/books/refactoring/2.mdx"
+              "path": "/books/refactoring/2"
             },
             {
               "title": "3장, 코드에서 나는 악취",
-              "path": "/books/refactoring/3",
-              "editUrl": "/books/refactoring/3.mdx"
+              "path": "/books/refactoring/3"
             },
             {
               "title": "4장, 테스트 구축하기",
-              "path": "/books/refactoring/4",
-              "editUrl": "/books/refactoring/4.mdx"
+              "path": "/books/refactoring/4"
             },
             {
               "title": "6장, 기본적인 리팩터링",
-              "path": "/books/refactoring/6",
-              "editUrl": "/books/refactoring/6.mdx"
+              "path": "/books/refactoring/6"
             },
             {
               "title": "7장, 캡슐화",
-              "path": "/books/refactoring/7",
-              "editUrl": "/books/refactoring/7.mdx"
+              "path": "/books/refactoring/7"
             },
             {
               "title": "8장, 기능 이동",
-              "path": "/books/refactoring/8",
-              "editUrl": "/books/refactoring/8.mdx"
+              "path": "/books/refactoring/8"
             },
             {
               "title": "9장, 데이터 조직화",
-              "path": "/books/refactoring/9",
-              "editUrl": "/books/refactoring/9.mdx"
+              "path": "/books/refactoring/9"
             },
             {
               "title": "10장, 조건부 로직 간소화",
-              "path": "/books/refactoring/10",
-              "editUrl": "/books/refactoring/10.mdx"
+              "path": "/books/refactoring/10"
             },
             {
               "title": "11장, API 리팩터링",
-              "path": "/books/refactoring/11",
-              "editUrl": "/books/refactoring/11.mdx"
+              "path": "/books/refactoring/11"
             },
             {
               "title": "12장, 상속 다루기",
-              "path": "/books/refactoring/12",
-              "editUrl": "/books/refactoring/12.mdx"
+              "path": "/books/refactoring/12"
             }
           ]
         },
@@ -76,33 +64,27 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/clean-architecture/0",
-              "editUrl": "/books/clean-architecture/0.mdx"
+              "path": "/books/clean-architecture/0"
             },
             {
               "title": "1부, 소개",
-              "path": "/books/clean-architecture/1",
-              "editUrl": "/books/clean-architecture/1.mdx"
+              "path": "/books/clean-architecture/1"
             },
             {
               "title": "2부, 벽돌부터 시작하기: 프로그래밍 패러다임",
-              "path": "/books/clean-architecture/2",
-              "editUrl": "/books/clean-architecture/2.mdx"
+              "path": "/books/clean-architecture/2"
             },
             {
               "title": "3부, 설계 원칙",
-              "path": "/books/clean-architecture/3",
-              "editUrl": "/books/clean-architecture/3.mdx"
+              "path": "/books/clean-architecture/3"
             },
             {
               "title": "4부, 컴포넌트 원칙",
-              "path": "/books/clean-architecture/4",
-              "editUrl": "/books/clean-architecture/4.mdx"
+              "path": "/books/clean-architecture/4"
             },
             {
               "title": "5부, 아키텍처",
-              "path": "/books/clean-architecture/5",
-              "editUrl": "/books/clean-architecture/5.mdx"
+              "path": "/books/clean-architecture/5"
             }
           ]
         },
@@ -112,48 +94,39 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/functional-thinking/0",
-              "editUrl": "/books/functional-thinking/0.mdx"
+              "path": "/books/functional-thinking/0"
             },
             {
               "title": "1장, 왜",
-              "path": "/books/functional-thinking/1",
-              "editUrl": "/books/functional-thinking/1.mdx"
+              "path": "/books/functional-thinking/1"
             },
             {
               "title": "2장, 전환",
-              "path": "/books/functional-thinking/2",
-              "editUrl": "/books/functional-thinking/2.mdx"
+              "path": "/books/functional-thinking/2"
             },
             {
               "title": "3장, 양도하라",
-              "path": "/books/functional-thinking/3",
-              "editUrl": "/books/functional-thinking/3.mdx"
+              "path": "/books/functional-thinking/3"
             },
             {
               "title": "4장, 열심히보다는 현명하게",
-              "path": "/books/functional-thinking/4",
-              "editUrl": "/books/functional-thinking/4.mdx"
+              "path": "/books/functional-thinking/4"
             },
             {
               "title": "5장, 진화하라",
-              "path": "/books/functional-thinking/5",
-              "editUrl": "/books/functional-thinking/5.mdx"
+              "path": "/books/functional-thinking/5"
             },
             {
               "title": "6장, 전진하라",
-              "path": "/books/functional-thinking/6",
-              "editUrl": "/books/functional-thinking/6.mdx"
+              "path": "/books/functional-thinking/6"
             },
             {
               "title": "7장, 실용적 사고",
-              "path": "/books/functional-thinking/7",
-              "editUrl": "/books/functional-thinking/7.mdx"
+              "path": "/books/functional-thinking/7"
             },
             {
               "title": "8장, 폴리글랏과 폴리패러다임",
-              "path": "/books/functional-thinking/8",
-              "editUrl": "/books/functional-thinking/8.mdx"
+              "path": "/books/functional-thinking/8"
             }
           ]
         },
@@ -163,68 +136,55 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/clean-code/0",
-              "editUrl": "/books/clean-code/0.mdx"
+              "path": "/books/clean-code/0"
             },
             {
               "title": "1장, 깨끗한 코드",
-              "path": "/books/clean-code/1",
-              "editUrl": "/books/clean-code/1.mdx"
+              "path": "/books/clean-code/1"
             },
             {
               "title": "2장, 의미 있는 이름",
-              "path": "/books/clean-code/2",
-              "editUrl": "/books/clean-code/2.mdx"
+              "path": "/books/clean-code/2"
             },
             {
               "title": "3장, 함수",
-              "path": "/books/clean-code/3",
-              "editUrl": "/books/clean-code/3.mdx"
+              "path": "/books/clean-code/3"
             },
             {
               "title": "4장, 주석",
-              "path": "/books/clean-code/4",
-              "editUrl": "/books/clean-code/4.mdx"
+              "path": "/books/clean-code/4"
             },
             {
               "title": "5장, 형식 맞추기",
-              "path": "/books/clean-code/5",
-              "editUrl": "/books/clean-code/5.mdx"
+              "path": "/books/clean-code/5"
             },
             {
               "title": "6장, 객체와 자료 구조",
-              "path": "/books/clean-code/6",
-              "editUrl": "/books/clean-code/6.mdx"
+              "path": "/books/clean-code/6"
             },
             {
               "title": "7장, 오류 처리",
-              "path": "/books/clean-code/7",
-              "editUrl": "/books/clean-code/7.mdx"
+              "path": "/books/clean-code/7"
             },
             {
               "title": "8장, 경계",
-              "path": "/books/clean-code/8",
-              "editUrl": "/books/clean-code/8.mdx"
+              "path": "/books/clean-code/8"
             },
             {
               "title": "9장, 단위 테스트",
-              "path": "/books/clean-code/9",
-              "editUrl": "/books/clean-code/9.mdx"
+              "path": "/books/clean-code/9"
             },
             {
               "title": "10장, 클래스",
-              "path": "/books/clean-code/10",
-              "editUrl": "/books/clean-code/10.mdx"
+              "path": "/books/clean-code/10"
             },
             {
               "title": "11장, 시스템",
-              "path": "/books/clean-code/11",
-              "editUrl": "/books/clean-code/11.mdx"
+              "path": "/books/clean-code/11"
             },
             {
               "title": "12장, 창발성",
-              "path": "/books/clean-code/12",
-              "editUrl": "/books/clean-code/12.mdx"
+              "path": "/books/clean-code/12"
             }
           ]
         },
@@ -234,58 +194,47 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/unit-testing/0",
-              "editUrl": "/books/unit-testing/0.mdx"
+              "path": "/books/unit-testing/0"
             },
             {
               "title": "1장, 단위 테스트의 목표",
-              "path": "/books/unit-testing/1",
-              "editUrl": "/books/unit-testing/1.mdx"
+              "path": "/books/unit-testing/1"
             },
             {
               "title": "2장, 단위 테스트란 무엇인가",
-              "path": "/books/unit-testing/2",
-              "editUrl": "/books/unit-testing/2.mdx"
+              "path": "/books/unit-testing/2"
             },
             {
               "title": "3장, 단위 테스트 구조",
-              "path": "/books/unit-testing/3",
-              "editUrl": "/books/unit-testing/3.mdx"
+              "path": "/books/unit-testing/3"
             },
             {
               "title": "4장, 좋은 단위 테스트의 4대 요소",
-              "path": "/books/unit-testing/4",
-              "editUrl": "/books/unit-testing/4.mdx"
+              "path": "/books/unit-testing/4"
             },
             {
               "title": "5장, 목과 테스트 취약성",
-              "path": "/books/unit-testing/5",
-              "editUrl": "/books/unit-testing/5.mdx"
+              "path": "/books/unit-testing/5"
             },
             {
               "title": "6장, 단위 테스트 스타일",
-              "path": "/books/unit-testing/6",
-              "editUrl": "/books/unit-testing/6.mdx"
+              "path": "/books/unit-testing/6"
             },
             {
               "title": "7장, 가치 있는 단위 테스트를 위한 리팩터링",
-              "path": "/books/unit-testing/7",
-              "editUrl": "/books/unit-testing/7.mdx"
+              "path": "/books/unit-testing/7"
             },
             {
               "title": "8장, 통합 테스트를 하는 이유",
-              "path": "/books/unit-testing/8",
-              "editUrl": "/books/unit-testing/8.mdx"
+              "path": "/books/unit-testing/8"
             },
             {
               "title": "9장, 목 처리에 대한 모범 사례",
-              "path": "/books/unit-testing/9",
-              "editUrl": "/books/unit-testing/9.mdx"
+              "path": "/books/unit-testing/9"
             },
             {
               "title": "11장, 단위 테스트 안티 패턴",
-              "path": "/books/unit-testing/11",
-              "editUrl": "/books/unit-testing/11.mdx"
+              "path": "/books/unit-testing/11"
             }
           ]
         },
@@ -295,128 +244,103 @@
           "routes": [
             {
               "title": "소개",
-              "path": "/books/software-architecture-101/0",
-              "editUrl": "/books/software-architecture-101/0.mdx"
+              "path": "/books/software-architecture-101/0"
             },
             {
               "title": "1장, 서론",
-              "path": "/books/software-architecture-101/1",
-              "editUrl": "/books/software-architecture-101/1.mdx"
+              "path": "/books/software-architecture-101/1"
             },
             {
               "title": "2장, 아키텍처 사고",
-              "path": "/books/software-architecture-101/2",
-              "editUrl": "/books/software-architecture-101/2.mdx"
+              "path": "/books/software-architecture-101/2"
             },
             {
               "title": "3장, 모듈성",
-              "path": "/books/software-architecture-101/3",
-              "editUrl": "/books/software-architecture-101/3.mdx"
+              "path": "/books/software-architecture-101/3"
             },
             {
               "title": "4장, 아키텍처 특성 정의",
-              "path": "/books/software-architecture-101/4",
-              "editUrl": "/books/software-architecture-101/4.mdx"
+              "path": "/books/software-architecture-101/4"
             },
             {
               "title": "5장, 아키텍처 특성 식별",
-              "path": "/books/software-architecture-101/5",
-              "editUrl": "/books/software-architecture-101/5.mdx"
+              "path": "/books/software-architecture-101/5"
             },
             {
               "title": "6장, 아키텍처 특성의 측정 및 거버넌스",
-              "path": "/books/software-architecture-101/6",
-              "editUrl": "/books/software-architecture-101/6.mdx"
+              "path": "/books/software-architecture-101/6"
             },
             {
               "title": "7장, 아키텍처 특성 범위",
-              "path": "/books/software-architecture-101/7",
-              "editUrl": "/books/software-architecture-101/7.mdx"
+              "path": "/books/software-architecture-101/7"
             },
             {
               "title": "8장, 컴포넌트 기반 사고",
-              "path": "/books/software-architecture-101/8",
-              "editUrl": "/books/software-architecture-101/8.mdx"
+              "path": "/books/software-architecture-101/8"
             },
             {
               "title": "9장, 기초",
-              "path": "/books/software-architecture-101/9",
-              "editUrl": "/books/software-architecture-101/9.mdx"
+              "path": "/books/software-architecture-101/9"
             },
             {
               "title": "10장, 레이어드 아키텍처 스타일",
-              "path": "/books/software-architecture-101/10",
-              "editUrl": "/books/software-architecture-101/10.mdx"
+              "path": "/books/software-architecture-101/10"
             },
             {
               "title": "11장, 파이프라인 아키텍처 스타일",
-              "path": "/books/software-architecture-101/11",
-              "editUrl": "/books/software-architecture-101/11.mdx"
+              "path": "/books/software-architecture-101/11"
             },
             {
               "title": "12장, 마이크로커널 아키텍처 스타일",
-              "path": "/books/software-architecture-101/12",
-              "editUrl": "/books/software-architecture-101/12.mdx"
+              "path": "/books/software-architecture-101/12"
             },
             {
               "title": "13장, 서비스 기반 아키텍처 스타일",
-              "path": "/books/software-architecture-101/13",
-              "editUrl": "/books/software-architecture-101/13.mdx"
+              "path": "/books/software-architecture-101/13"
             },
             {
               "title": "14장, 이벤트 기반 아키텍처 스타일",
-              "path": "/books/software-architecture-101/14",
-              "editUrl": "/books/software-architecture-101/14.mdx"
+              "path": "/books/software-architecture-101/14"
             },
             {
               "title": "15장, 공간 기반 아키텍처 스타일",
-              "path": "/books/software-architecture-101/15",
-              "editUrl": "/books/software-architecture-101/15.mdx"
+              "path": "/books/software-architecture-101/15"
             },
             {
               "title": "16장, 오케스트레이션 기반 서비스 지향 아키텍처 스타일",
-              "path": "/books/software-architecture-101/16",
-              "editUrl": "/books/software-architecture-101/16.mdx"
+              "path": "/books/software-architecture-101/16"
             },
             {
               "title": "17장, 마이크로서비스 아키텍처 스타일",
-              "path": "/books/software-architecture-101/17",
-              "editUrl": "/books/software-architecture-101/17.mdx"
+              "path": "/books/software-architecture-101/17"
             },
             {
               "title": "18장, 최적의 아키텍처 스타일 선정",
-              "path": "/books/software-architecture-101/18",
-              "editUrl": "/books/software-architecture-101/18.mdx"
+              "path": "/books/software-architecture-101/18"
             },
             {
               "title": "19장, 아키텍처 결정",
-              "path": "/books/software-architecture-101/19",
-              "editUrl": "/books/software-architecture-101/19.mdx"
+              "path": "/books/software-architecture-101/19"
             },
             {
               "title": "20장, 아키텍처 리스크 분석",
-              "path": "/books/software-architecture-101/20",
-              "editUrl": "/books/software-architecture-101/20.mdx"
+              "path": "/books/software-architecture-101/20"
             },
             {
               "title": "21장, 아키텍처 도식화 및 프레젠테이션",
-              "path": "/books/software-architecture-101/21",
-              "editUrl": "/books/software-architecture-101/21.mdx"
+              "path": "/books/software-architecture-101/21"
             },
             {
               "title": "22장, 개발팀을 효율적으로",
-              "path": "/books/software-architecture-101/22",
-              "editUrl": "/books/software-architecture-101/22.mdx"
+              "path": "/books/software-architecture-101/22"
             },
             {
               "title": "23장, 협상과 리더십 스킬",
-              "path": "/books/software-architecture-101/23",
-              "editUrl": "/books/software-architecture-101/23.mdx"
+              "path": "/books/software-architecture-101/23"
             },
             {
               "title": "24장, 커리어패스 개발",
-              "path": "/books/software-architecture-101/24",
-              "editUrl": "/books/software-architecture-101/24.mdx"
+              "path": "/books/software-architecture-101/24"
             }
           ]
         }

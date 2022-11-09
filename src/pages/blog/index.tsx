@@ -19,7 +19,7 @@ export default function Index({ posts }: any) {
         <Sticky>
           <Nav />
         </Sticky>
-        <Seo title='Blog' description='The latest Formik news, announcements, articles, and resources.' />
+        <Seo title='Blog' description='흘러가는 지식, 학습의 과정, 경험 정리를 위주로 작성되는 글들입니다.' />
         <div className='container mx-auto bg-white px-4 pt-16 pb-20 lg:pt-24 lg:pb-28'>
           <div className='relative '>
             <div>

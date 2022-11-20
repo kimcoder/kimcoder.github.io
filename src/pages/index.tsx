@@ -11,7 +11,7 @@ const Index = () => {
       <Sticky>
         <Nav />
       </Sticky>
-      <Seo title='Home' description='Personal blog by kimcoder' />
+      <Seo title='Home' description='Personal blog by kimcoder' keywords='kimcoder, blog, frontend engineer' />
       <div className='max-w-screen container mx-auto max-w-3xl px-4 pt-6 pb-12 sm:px-6 lg:px-8'>
         <h2 id='author' className='mt-12 mb-4 text-2xl font-semibold text-gray-900'>
           Author

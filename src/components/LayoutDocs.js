@@ -13,7 +13,7 @@ import { removeFromLast } from 'lib/docs/utils';
 import { getRouteContext } from 'lib/get-route-context';
 import { useRouter } from 'next/router';
 import { Toc } from './Toc';
-import s from './markdown.module.css';
+import markdown from './markdown.module.css';
 import { Footer } from './Footer';
 import { DocsPageFooter } from './DocsPageFooter';
 import { Seo } from './Seo';
@@ -78,14 +78,14 @@ export const LayoutDocs = (props) => {
         <Seo title={seoTitle} description={props.meta.description} keywords={props.meta.keywords} />
         <div className='block'>
           <>
-            <div className='container mx-auto pb-12 pt-6 content'>
-              <div className='flex relative'>
+            <div className='content container mx-auto pb-12 pt-6'>
+              <div className='relative flex'>
                 {!isMobile && (
                   <Sidebar fixed>
                     <SidebarRoutes routes={routes} />
                   </Sidebar>
                 )}
-                <div className={s['markdown'] + ' w-full docs'}>
+                <div className={markdown['markdown'] + ' docs w-full'}>
                   <div>
                     <h1 id='_top'>{props.meta.title}</h1>
                     {props.meta.createdAt && <p id='_date'>{props.meta.createdAt}</p>}
@@ -94,13 +94,9 @@ export const LayoutDocs = (props) => {
                   <DocsPageFooter href={route?.path || ''} route={route} prevRoute={prevRoute} nextRoute={nextRoute} />
                 </div>
                 {props.meta.toc === false ? null : (
-                  <div
-                    className='hidden xl:block ml-10 flex-shrink-0'
-                    style={{
-                      width: 200,
-                    }}>
-                    <div className='on-this-page sticky top-24 pb-16 overflow-y-auto'>
-                      <h4 className='font-semibold uppercase text-sm mb-2 mt-2 text-gray-500'>On this page</h4>
+                  <div className='ml-10 hidden w-52 flex-shrink-0 xl:block'>
+                    <div className='on-this-page sticky top-24 overflow-y-auto pb-16'>
+                      <h4 className='mb-2 mt-2 text-sm font-semibold uppercase text-gray-500'>On this page</h4>
                       <Toc title={props.meta.title} />
                     </div>
                   </div>

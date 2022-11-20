@@ -5,14 +5,20 @@ import MDXComponents from 'components/MDXComponents';
 import { Nav } from 'components/Nav';
 import { Seo } from 'components/Seo';
 import { Sticky } from 'components/Sticky';
+import { Toc } from 'components/Toc';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { blogFilePaths, BLOG_PATH } from 'lib/blog/mdxUtils';
-import { MDXRemote } from 'next-mdx-remote';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
 
-export default function PostPage({ source, frontMatter }: any) {
+type Props = {
+  mdxSource: MDXRemoteSerializeResult<BlogMetaData>;
+  blogMetadata: BlogMetaData;
+};
+
+export default function PostPage({ mdxSource, blogMetadata }: Props) {
   return (
     <>
       <div className='h-full min-h-full'>
@@ -20,22 +26,37 @@ export default function PostPage({ source, frontMatter }: any) {
         <Sticky className='z-20'>
           <Nav />
         </Sticky>
-        <Seo title={frontMatter.title + ' | Blog'} />
-        <div className='container max-w-3xl px-4 pt-6 pb-12 mx-auto sm:px-6 lg:px-8 max-w-screen'>
-          <div className='my-10 space-y-4'>
-            <div className='flex items-center '>
-              <div className='mr-1 text-gray-700 authors'>By kimcoder</div>
-              {frontMatter.createdAt && <div className='text-gray-700 posted'> • {frontMatter.createdAt}</div>}
-            </div>
-            <h1 className='max-w-3xl text-5xl font-semibold leading-snug tracking-tighter text-gray-900'>
-              {frontMatter.title || ''}
-            </h1>
-          </div>
-          <div className='relative'>
-            <div className='mx-auto'>
-              <div className={styles['markdown']}>
-                <MDXRemote {...source} components={MDXComponents} />
+        <Seo
+          title={blogMetadata.title + ' | Blog'}
+          description={blogMetadata.description}
+          keywords={blogMetadata.keywords}
+        />
+        <div className='content container mx-auto flex pb-12 pt-6'>
+          <div className='w-full max-w-4xl xl:ml-52'>
+            <div className='my-10 space-y-4'>
+              <div className='flex items-center '>
+                <div className='authors mr-1 text-gray-700'>By kimcoder</div>
+                {blogMetadata.createdAt && <div className='posted text-gray-700'> • {blogMetadata.createdAt}</div>}
               </div>
+              <h1
+                id={blogMetadata.title.replace(/\s/g, '-')}
+                className='text-5xl font-semibold leading-snug tracking-tighter text-gray-900'>
+                {blogMetadata.title || ''}
+                <a href={`#${blogMetadata.title.replace(/\s/g, '-')}`} />
+              </h1>
+            </div>
+            <div className='relative'>
+              <div className='mx-auto'>
+                <div className={styles['markdown']}>
+                  <MDXRemote {...mdxSource} components={MDXComponents} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='ml-10 hidden w-52 flex-shrink-0 xl:block'>
+            <div className='on-this-page sticky top-24 overflow-y-auto pb-16'>
+              <h4 className='mb-2 mt-2 text-sm font-semibold uppercase text-gray-500'>On this page</h4>
+              <Toc title={blogMetadata.title} />
             </div>
           </div>
         </div>
@@ -53,8 +74,8 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-      source: mdxSource,
-      frontMatter: data,
+      mdxSource,
+      blogMetadata: data,
     },
   };
 };

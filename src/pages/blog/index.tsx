@@ -21,12 +21,12 @@ export default function Index({ posts }: any) {
         </Sticky>
         <Seo title='Blog' description='흘러가는 지식, 학습의 과정, 경험 정리를 위주로 작성되는 글들입니다.' />
         <div className='container mx-auto bg-white px-4 pt-16 pb-20 lg:pt-24 lg:pb-28'>
-          <div className='relative '>
+          <div className='relative'>
             <div>
               <h1 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 lg:text-5xl '>
-                Blog
+                Blog 📝
               </h1>
-              <div className='mt-3 sm:mt-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-5'>
+              <div className='mt-3 sm:mt-4 lg:grid lg:items-center lg:gap-5'>
                 <p className='text-xl leading-7 text-gray-500'>
                   흘러가는 지식, 학습의 과정, 경험 정리를 위주로 작성되는 글들입니다.
                 </p>

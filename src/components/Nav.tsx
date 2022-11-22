@@ -27,7 +27,7 @@ export const Nav = () => (
               </Link>
             </div>
             <div>
-              <Link href='/books/refactoring/0'>
+              <Link href='/books'>
                 <a className='font-medium leading-6'>Books</a>
               </Link>
             </div>

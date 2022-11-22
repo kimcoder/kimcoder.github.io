@@ -1,21 +1,26 @@
-import { useState } from "react";
-import cn from "classnames";
-import { Search } from "./Search";
-export const Sidebar = ({ active, children, fixed }) => {
+import { PropsWithChildren, useState } from 'react';
+import cn from 'classnames';
+import { Search } from './Search';
+
+type Props = PropsWithChildren<{
+  active?: boolean;
+  fixed: boolean;
+}>;
+
+export const Sidebar = ({ active = false, children, fixed }: Props) => {
   const [searching, setSearching] = useState(false);
   return (
     <aside
-      className={cn("sidebar bg-white top-24 flex-shrink-0 pr-2", {
+      className={cn('sidebar top-24 flex-shrink-0 bg-white pr-2', {
         active,
-        "pb-0 flex flex-col z-1 sticky": fixed,
+        'z-1 sticky flex flex-col pb-0': fixed,
         fixed,
         searching,
-      })}
-    >
-      <div className="sidebar-search my-2 lg:hidden">
+      })}>
+      <div className='sidebar-search my-2 lg:hidden'>
         <Search />
       </div>
-      <div className="sidebar-content overflow-y-auto pb-4">{children}</div>
+      <div className='sidebar-content overflow-y-auto pb-4'>{children}</div>
       <style jsx>{`
         .sidebar {
           -webkit-overflow-scrolling: touch;

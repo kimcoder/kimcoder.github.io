@@ -1,20 +1,23 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import cn from 'classnames'
-export function SidebarNavLink({
-  route: { href, pathname, title, selected },
-  onClick,
-}) {
-  const router = useRouter()
-  const onlyHashChange = pathname === router.pathname
+import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import cn from 'classnames';
+
+type Props = {
+  route: { href: string; pathname: string; title: string; selected: boolean };
+  categorySelected: boolean;
+  level: Number;
+  onClick: () => void;
+};
+export function SidebarNavLink({ route: { href, pathname, title, selected }, onClick }: Props) {
+  const router = useRouter();
+  const onlyHashChange = pathname === router.pathname;
 
   return (
     <div
       className={cn('nav-link', {
         selected,
-      })}
-    >
+      })}>
       {
         // NOTE: use just anchor element for triggering `hashchange` event
         onlyHashChange ? (
@@ -70,6 +73,6 @@ export function SidebarNavLink({
         }
       `}</style>
     </div>
-  )
+  );
 }
-SidebarNavLink.displayName = 'SidebarNavLink'
+SidebarNavLink.displayName = 'SidebarNavLink';

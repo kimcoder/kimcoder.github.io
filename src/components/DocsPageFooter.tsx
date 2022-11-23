@@ -2,11 +2,21 @@ import * as React from 'react';
 import NextLink from 'next/link';
 import { removeFromLast } from '../lib/docs/utils';
 
+type Route = {
+  title: string;
+  path?: string;
+};
+
+type Props = {
+  prevRoute: Route;
+  nextRoute: Route;
+};
+
 function areEqual(prevProps, props) {
   return prevProps.route?.path === props.route?.path;
 }
 
-export const DocsPageFooter = React.memo(({ prevRoute, nextRoute }) => {
+export const DocsPageFooter = React.memo(({ prevRoute, nextRoute }: Props) => {
   return (
     <>
       <div className='py-8'>

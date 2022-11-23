@@ -2,10 +2,8 @@ import * as React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Nav } from 'components/Nav';
 import { Sidebar } from 'components/Sidebar';
-import { SidebarCategory } from 'components/SidebarCategory';
-import { SidebarHeading } from 'components/SidebarHeading';
 import { SidebarMobile } from 'components/SidebarMobile';
-import { SidebarPost } from 'components/SidebarPost';
+import SidebarRoutes from 'components/SidebarRoutes';
 import { Sticky } from 'components/Sticky';
 import { useIsMobile } from 'components/useIsMobile';
 import { findRouteByPath } from 'lib/docs/findRouteByPath';
@@ -34,10 +32,6 @@ const getSlugAndTag = (path) => {
   return {
     slug: path,
   };
-};
-
-const addTagToSlug = (slug, tag) => {
-  return tag ? `/docs/${tag}/${slug.replace('/docs/', '')}` : slug;
 };
 
 export const LayoutDocs = (props) => {
@@ -82,7 +76,7 @@ export const LayoutDocs = (props) => {
               <div className='relative flex'>
                 {!isMobile && (
                   <Sidebar fixed>
-                    <SidebarRoutes routes={routes} />
+                    <SidebarRoutes isMobile={false} routes={routes} />
                   </Sidebar>
                 )}
                 <div className={markdown['markdown'] + ' docs w-full'}>
@@ -91,7 +85,7 @@ export const LayoutDocs = (props) => {
                     {props.meta.createdAt && <p id='_date'>{props.meta.createdAt}</p>}
                   </div>
                   <MDXProvider components={MDXComponents}>{props.children}</MDXProvider>
-                  <DocsPageFooter href={route?.path || ''} route={route} prevRoute={prevRoute} nextRoute={nextRoute} />
+                  <DocsPageFooter prevRoute={prevRoute} nextRoute={nextRoute} />
                 </div>
                 {props.meta.toc === false ? null : (
                   <div className='ml-10 hidden w-52 flex-shrink-0 xl:block'>
@@ -115,50 +109,5 @@ export const LayoutDocs = (props) => {
     </>
   );
 };
-
-function getCategoryPath(routes) {
-  const route = routes.find((r) => r.path);
-  return route && removeFromLast(route.path, '/');
-}
-
-function SidebarRoutes({ isMobile, routes: currentRoutes, level = 1 }) {
-  const { asPath } = useRouter();
-  let { slug, tag } = getSlugAndTag(asPath);
-  return currentRoutes.map(({ path, title, routes, heading, open }, idx) => {
-    const key = `${idx}_${title}_${heading}`;
-
-    if (routes) {
-      const pathname = getCategoryPath(routes);
-      const selected = slug.startsWith(pathname);
-      const opened = selected || isMobile ? false : open;
-
-      if (heading) {
-        return (
-          <SidebarHeading key={key} title={title}>
-            <SidebarRoutes isMobile={isMobile} routes={routes} level={level + 1} />
-          </SidebarHeading>
-        );
-      }
-
-      return (
-        <SidebarCategory key={key} isMobile={isMobile} level={level} title={title} selected={selected} opened={opened}>
-          <SidebarRoutes isMobile={isMobile} routes={routes} level={level + 1} />
-        </SidebarCategory>
-      );
-    }
-
-    const pagePath = removeFromLast(path, '.');
-    const pathname = addTagToSlug(pagePath, tag);
-    const selected = slug === pagePath;
-    const route = {
-      href: pagePath,
-      path,
-      title,
-      pathname,
-      selected,
-    };
-    return <SidebarPost key={key} isMobile={isMobile} level={level} route={route} />;
-  });
-}
 
 LayoutDocs.displayName = 'LayoutDocs';

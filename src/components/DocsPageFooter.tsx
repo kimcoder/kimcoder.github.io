@@ -1,24 +1,31 @@
 import * as React from 'react';
 import NextLink from 'next/link';
 import { removeFromLast } from '../lib/docs/utils';
-import { siteConfig } from 'siteConfig';
-import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
-import { TWButton } from './TWButton';
+
+type Route = {
+  title: string;
+  path?: string;
+};
+
+type Props = {
+  prevRoute: Route;
+  nextRoute: Route;
+};
 
 function areEqual(prevProps, props) {
   return prevProps.route?.path === props.route?.path;
 }
 
-export const DocsPageFooter = React.memo(({ route, prevRoute, nextRoute }) => {
+export const DocsPageFooter = React.memo(({ prevRoute, nextRoute }: Props) => {
   return (
     <>
       <div className='py-8'>
-        <div className='flex space-between items-center'>
+        <div className='space-between flex items-center'>
           {prevRoute && prevRoute.path ? (
             <NextLink href={removeFromLast(prevRoute.path, '.')}>
               <a className='flex-grow  block'>
-                <span className='text-sm block text-gray-500 mb-1 font-semibold'>← Prev</span>
-                <span className='text-xl block text-blue-600 font-semibold'>{prevRoute.title}</span>
+                <span className='mb-1 block text-sm font-semibold text-gray-500'>← Prev</span>
+                <span className='block text-xl font-semibold text-blue-600'>{prevRoute.title}</span>
               </a>
             </NextLink>
           ) : (
@@ -26,9 +33,9 @@ export const DocsPageFooter = React.memo(({ route, prevRoute, nextRoute }) => {
           )}
           {nextRoute && nextRoute.path && (
             <NextLink href={removeFromLast(nextRoute.path, '.')}>
-              <a className='flex-grow text-right block'>
-                <span className='text-sm block text-gray-500 mb-1 font-semibold'>Next →</span>
-                <span className='text-xl block text-blue-600 font-semibold'>{nextRoute.title}</span>
+              <a className='flex-grow block text-right'>
+                <span className='mb-1 block text-sm font-semibold text-gray-500'>Next →</span>
+                <span className='block text-xl font-semibold text-blue-600'>{nextRoute.title}</span>
               </a>
             </NextLink>
           )}

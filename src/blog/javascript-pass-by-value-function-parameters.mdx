@@ -1,0 +1,132 @@
+---
+id: JavaScript Pass By Value Function Parameters
+title: 'JavaScript Pass By Value Function Parameters'
+description: 'Kent C. Dodds의 JavaScript Pass By Value Function Parameters 글을 번역하였습니다.'
+preview: 'Kent C. Dodds의 JavaScript Pass By Value Function Parameters 글을 번역하였습니다.'
+keywords: 'javascript, kent.c.dodds, translate, pass by value'
+slug: javascript-pass-by-value-function-parameters
+createdAt: 2022.01.18
+published: true
+---
+
+> **Kent C. Dodds**의 [JavaScript Pass By Value Function Parameters](https://kentcdodds.com/blog/javascript-pass-by-value-function-parameters) 글을 번역하였습니다.
+
+왜 아래 코드가 동작하지 않을까요?
+
+````js
+function getLogger(arg) {
+  function logger() {
+    console.log(arg);
+  }
+  return logger;
+}
+
+let fruit = 'raspberry';
+const logFruit = getLogger(fruit);
+
+logFruit(); // "raspberry"
+fruit = 'peach';
+logFruit(); // "raspberry" Wait what!? Why is this not "peach"?```
+````
+
+여기서 일어나고 있는 일을 이야기하기 위해, 나는 fruit이라는 변수를 생성했고 문자열 raspberry를 할당했다.
+그런 다음, 나는 호출되었을 때 fruit를 출력하는 logger라고 불리는 함수를 생성하고 반환해주는 함수에 fruit를 전달했다.
+함수를 호출했을 때, 예상대로 raspberry를 console.log 출력 값으로 받는다.<br/>
+
+하지만, 나는 fruit에 peach를 재할당했고 logger를 다시 호출했다. fruit의 새로운 값을 console.log의 출력으로 얻는 것 대신에, fruit의 이전 값을 얻었다!
+getLogger를 다시 호출하여 새로운 logger를 얻는 것으로 이것을 피할 수 있다.
+
+```js
+const logFruit2 = getLogger(fruit);
+logFruit2(); // "peach" what a relief...
+```
+
+하지만 왜 단순히 변수의 값을 바꾸고, logger가 마지막 값을 가져올 수 없는 이유가 뭘까?<br/>
+
+정답은 자바스크립트 안에 있다. 함수를 인자와 함께 호출할 때, 인자는 참조가 아닌 값으로 전달된다는 것이다. 여기서 무슨 일이 일어나는지 간단하게 설명하겠다.
+
+````js
+function getLogger(arg) {
+  function logger() {
+    console.log(arg);
+  }
+  return logger;
+}
+
+// side-note, this could be written like this too
+// and it wouldn't make any difference whatsoever:
+// const getLogger = arg => () => console.log(arg)
+// I just decided to go more verbose to keep it simple```
+````
+
+getLogger가 호출될 때, logger 함수는 생성된다. 이것은 새로운 함수이다. 새로운 함수가 생성될 때, 이것은 접근이 가능한 모든 변수를 둘러보고, closure라고 불리우는 형태로 닫혀진다. 이것은 이 logger 함수가 존재하는동안, 다른 모듈 레벨의 변수들과 부모의 함수 안에 있는 변수들에 접근이 가능하다는 것을 의미한다.<br/>
+
+그래서 logger가 생성될 때, 접근이 가능한 변수가 무엇일까? 예제 코드를 다시 보자. 이것은 fruit, getLogger, arg, logger(자기 자신)에 접근할 수 있다. 목록을 다시 확인해라. 왜냐하면 코드가 동작하는 방법에 매우 중요하기 때문이다. 뭔가 눈치채셨나요? fruit와 arg과 모두 동일한 값임에도 불구하고 둘 다 나열되었다!<br/>
+
+단지 두 개의 변수는 같은 값이 할당 되었지, 같은 변수를 의미하는 것은 아니다. 이 컨셉의 간단한 예제가 여기 있다:
+
+```js
+let a = 1;
+let b = a;
+
+console.log(a, b); // 1, 1
+
+a = 2;
+console.log(a, b); // 2, 1 ‼️
+```
+
+b가 변수 a의 값을 가리키게 만들었음에도 불구하고 변수 a의 값을 바꿀 수 있었고, b가 가리키고 있는 값은 변하지 않았음을 주의해라. 이것은 b를 그 자체로 가리키지 않았기 때문이다. 우리는 그 당시에 a가 가리켰던 값을 b가 가리키도록 했었다!<br/>
+
+나는 변수들을 컴퓨터의 메모리에 있는 공간을 가리키는 작은 화살표로 생각하는 것을 좋아한다. 그래서 let a = 1라고 말하면, 우리는 "자바스크립트 엔진아, 나는 메모리에 값이 1인 장소를 만들고, 메모리의 해당 장소를 기리키는 a라고 부르는 화살표를 생성하기를 원해."라고 말한다.<br/>
+
+같은 방법으로, 우리가 함수를 호출할 때 자바스크립트 엔진은 함수 인자를 위해 새로운 변수를 생성한다. 우리의 경우에, getLogger(fruit)를 호출했고 자바스크립트 엔진은 기본적으로 이것을 수행했다:
+
+```js
+let arg = fruit;
+```
+
+그래서 나중에 fruit = 'peach'를 수행할 때, arg는 fruit과는 완전히 다른 변수이기 때문에 영향을 미치지 않는다.<br/>
+
+이것을 한계로 생각하든 기능으로 생각하든, 사실은 이것이 동작하는 방식이라는 것이다. 만약, 2개의 변수를 각자 최신으로 유지하고 싶다면, 그렇게 하는 방법이 있다! 자. 아이디어는 이와 같다: 화살표가 가리키는 위치를 바꾸는 것 대신에 가르키는 것을 바꿀 수 있다! 예를 들어:<br/>
+
+```js
+let a = { current: 1 };
+let b = a;
+
+console.log(a.current, b.current); // 1, 1
+
+a.current = 2;
+console.log(a.current, b.current); // 2, 2 🎉
+```
+
+이 경우에는, a를 재할당하는 것아 이나리, 가리키고 있는 값을 변경하였다. 그리고 b는 같은 값을 가리키고 있기 때문에, 둘 다 업데이트되었다.
+
+그럼, 우리의 logger 문제를 위해 이 해결책을 적용해보자:
+
+```js
+function getLatestLogger(argRef) {
+  function logger() {
+    console.log(argRef.current);
+  }
+  return logger;
+}
+
+const fruitRef = { current: 'raspberry' };
+
+const latestLogger = getLatestLogger(fruitRef);
+
+latestLogger(); // "raspberry"
+fruitRef.current = 'peach';
+latestLogger(); // "peach" 🎉
+```
+
+## 결론
+
+Ref 접미사는 변수가 가리키고 있는 값이 단순히 다른 값을 참조하는데 사용됨을 말해주는 reference의 줄임말이다. ( 여기서는 오브젝트의 current 속성 값이다. )<br/>
+
+이것은 자연스럽게 절충점이 있지만, 나는 자바스크립트 명세가 함수의 인자들을 참조가 아닌 값으로 전달하여 호출하는 것에 만족한다.
+그리고 해결방법은 필요할 때 큰 문제가 되지 않는다. (가변성은 프로그램을 보통 더 이해하기 어렵게 만들기 때문에 매우 드물다.) 도움이 되었기를 바란다! 굿 럭!
+
+## References
+
+- https://kentcdodds.com/blog/javascript-pass-by-value-function-parameters

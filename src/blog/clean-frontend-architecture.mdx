@@ -1,0 +1,319 @@
+---
+id: clean frontend architecture
+title: '클린한 프론트엔드 아키텍처를 향한 첫 걸음'
+description: '클린한 프론트엔드 아키텍처를 향한 첫 걸음'
+preview: 변경에 유연한 프론트엔드 아키텍처를 구성하는 하나의 방법과 방법의 근거, 그리고 이를 제어해 줄 수 있는 ESLint의 규칙까지 소개하고자 합니다.
+keywords: 'react, next, create-react-app, clean architecture, architecture'
+slug: clean-frontend-architecture
+createdAt: 2022.05.19
+published: true
+---
+
+**_소프트웨어는 항상 부드러워야 한다_**
+
+이 글에서는 위의 인용구처럼 **변경에 유연한 프론트엔드 아키텍처를 구성하는 하나의 방법과 방법의 근거, 그리고 이를 제어해 줄 수 있는 ESLint의 규칙까지 소개하고자 한다.**<br/>
+
+나는 지난 몇 년간 잦은 이직으로 꽤나 많고 다양한 프로젝트를 경험한 바가 있다.<br/>
+대부분은 `React`로 구성이 되어있었고, 이를 개발하고 유지 보수하는 많은 개발자분들도 알게 되었다.<br/>
+웹 애플리케이션의 규모, 운영 기간, 플랫폼, 인프라, 개발 환경, 투입 인력, 컨벤션과 같은 것은 모두 달랐지만,<br/>
+`React` 와 동반되는 라이브러리, 코드 패턴, 그리고 이를 유지 보수하기 위한 개발자들의 열정과 노력들은 비슷한 점이 많았다.<br/>
+
+많은 개발자들이 항상 옳은 선택을 하려고 노력하지만,<br/>
+크고 작은 피쳐들, 유지 보수, 버그/ 장애 대응, 필수적인 플랫폼 버전 대응 등 다양한 업무들과 타이트한 일정 속에 편의적인 선택들을 하는 경우도 많이 보았다.<br/>
+이러한 편의적인 선택은 언젠가 다시 우리들의 발목을 잡게 될 것이다.<br/>
+
+자유로운 발목과 함께 훨훨 날아가기 좋은 아키텍처를 구성해 보자.
+
+## 좋은 아키텍처? 프론트엔드에서는?
+
+`클린 아키텍처 (로버트 C.마틴 )`에서 좋은 아키텍처에 대해 설명한 것 중 몇 가지를 추려보았다.
+
+- **좋은 아키텍처는 세부사항을 정책으로부터 신중하게 가려내고, 둘이 결합되지 않도록 엄격하게 분리한다.**
+- **좋은 아키텍처는 의존성의 방향이 컴포넌트 수준을 기반으로 연결되도록 만들어야 한다.**
+- **좋은 아키텍트는 결정되지 않은 사항의 수를 최대화한다.**
+  - ( 향후 시스템에 변경이 필요할 때 어떤 방향으로든 쉽게 변경할 수 있도록 한다. )
+
+위의 내용과 나의 이해를 바탕으로 어떠한 목적과 원칙을 가지고 프론트엔드 아키텍처에 적용을 하였는지 간략히 정리를 해보자면..
+
+### 목적
+
+> **좋은 아키텍처**의 궁극적인 목적은 소프트웨어를 개발하고 유지 보수하는 데 있어, **최소한의 노력으로 최대의 효율을 얻게 해주는 것**이다.
+
+이는 개발자가 시스템을 쉽게 이해하도록 해주고, 쉽게 개발하게 해주며, 유지 보수 및 배포까지 쉽게 해줄 수 있게 한다는 것으로 풀어서 표현이 가능하다.<br/>
+
+아키텍처 관점에서 쉽게 이해하고, 개발, 유지 보수한다는 것은 어떤 의미일까?<br/>
+적어도 나에게는 애플리케이션의 구조가 한 눈에 드러나 누구나 쉽게 파악할 수 있으며, 기능별 모듈화가 잘 되어 있고, 독립적이며 쉽게 배포까지 할 수 있어야 한다는 것으로 이해하고 있다.<br/>
+
+웹 애플리케이션의 규모에 따라 차이가 있을 수 있고 좋은 아키텍처를 구성하는 여러 선택지가 있겠지만,<br/>
+여기서는 **단일 소스 수준으로 모노리틱한 구조에서 모듈 간 의존성을 제어하는 방식을 통해 구성**해 볼 것이다.<br/>
+
+변화가 많고 기술의 발전 속도도 빠른 생태계 속에서 유연한 아키텍처를 구성하여 최소한의 노력으로 최대의 효율을 가질 수 있도록 해보자.
+
+### 규칙
+
+- 웹 애플리케이션 로직과 세부적인 도메인 로직을 분리한다.
+- 분리된 로직간의 의존 방향을 명확하게 한다.
+- 변화가 많은 외부 모듈을 감추고, 추상화된 인터페이스를 사용할 수 있게한다.
+
+## 디렉토리 구조
+
+이 글에서는 `Next.js` 프로젝트를 대상으로 위의 규칙을 준수하여 구성해 보겠다.<br/>
+[Next.js](https://github.com/vercel/next.js/tree/canary/examples)의 많은 예제들의 수준과 비슷하게 한다면, 아래와 같은 계층을 가진 구조의 모양이 나올 수 있다.
+
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-1.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-1.png)
+
+### Core
+
+입력과 출력으로부터 거리가 멀기 때문에 고수준이라고 볼 수 있는 계층이다.<br/>
+앞서 말한 원칙에서 세부적인 도메인 로직이 아닌, 웹 애플리케이션 로직과 추상화된 코드들이 들어간다.<br/>
+예를 들면 아래와 같은 성격의 코드들이 들어갈 수 있다.
+
+- 애플리케이션이 외부와의 통신을 위해 필요한 구현체
+- 도메인과 연관이 없는 고수준의 유틸리티
+- 재사용가능한 컴포넌트
+  - ex) Button, Input, Select
+- 중요도가 높은 외부 모듈(라이브러리)의 어댑터
+
+**Core 계층에 있는 코드들은 절대 Core 원의 외부에 있는 계층**(lib/components, pages)**을 참조하면 안 된다.**
+
+### Components / Lib
+
+이 계층은 도메인에 종속적이며, Core 계층의 코드들을 참조할 수 있고, 아래 예시와 같은 코드들이 들어간다.<br/>
+( 주문이라는 도메인이 속한 프로젝트라고 가정. )
+
+```tsx
+- src
+	- lib
+		- order
+			- constatns
+			- hooks
+			- mutations
+			- queries
+			- utils
+			- ....
+
+- src
+	- components
+		- order
+			- ItemList.tsx
+			- Price.tsx
+			- Payment.tsx
+			- ...
+```
+
+- **Lib**
+  - 도메인에 관련되어 있는 로직들.
+  - components 계층과 pages 계층에서 참조되어진다.
+- **Components**
+  - 도메인에 관련되어 있는 컴포넌트.
+  - 도메인에 국한되어 재사용성은 낮다.
+  - pages 계층에서 참조되어진다.
+
+### **Pages**
+
+도메인에 의존도가 높은 계층. 입력/출력과 밀접해있으며, 가장 저수준이라고 볼 수 있다.<br/>
+`Next.js`의 기본 설정 값인 파일 시스템 기반으로 라우팅 처리를 하며, **Components**와 **Lib** 계층의 코드들을 참조하여 구성할 수 있다.
+
+```tsx
+- src
+  - pages
+    - api
+      - order
+        - [...slug].tsx  // src/lib/order/.. 참조
+        - ...
+    - order
+      - [id].tsx // src/components/order/.. 참조
+      - _middleware.tsx // src/lib/order/.. 참조
+      - ...
+```
+
+### Dependency diagram
+
+위의 구조와 규칙을 가지고 간략히 의존성 그래프로 표현하면 아래와 같은 모양이 될 것이다.
+
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-2.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-2.png)
+
+의존성은 모두 단방향으로만 흘러가고, 역으로 참조해서는 안 된다.<br/>
+
+예를 들어, core 계층에 API 통신을 위한 구현체가 있다고 가정해 보자.<br/>
+이 구현체는 UI의 형태 혹은 상태, 세부적인 도메인 로직를 알아서는 안되며, 알아도 좋을 게 없다.<br/>
+마찬가지로 도메인에 종속적인 코드들 또한, 이 구현체가 비동기 통신을 위하여 어떤 객체를 사용하여 구현이 되었는지, 어떻게 API 서버와 통신을 하는지 전혀 알 필요가 없다.<br/>
+
+이러한 **관심사의 분리로 인해 각 모듈은 여러 책임에서 벗어나기 쉽고, 테스트하기도 더 쉬워지며, 유지 보수 비용도 줄어들 것**이다.
+
+## ESLint 플러그인 활용
+
+앞서 소개했던 아키텍처의 계층과 경계를 효과적으로 다루기 위해 ESLint를 활용하고, 이것이 개발 주기에 자연스레 녹아들 수 있게 해보자.
+ESLint 기본 규칙에도 참조를 제한할 수 있는 `no-restricted-imports`가 있지만 이것으로는 위의 의존성 규칙을 해결할 수는 없다.<br/>
+
+따라서, `eslint-plugin-import`라는 플러그인을 사용하여 **계층 간의 의존성 제어**를 다뤄보고,<br/>
+추가적으로 **외부 모듈의 의존성 제어**도 같이 다뤄보도록 하겠다.
+
+### 소개
+
+[eslint-plugin-import](https://github.com/import-js/eslint-plugin-import)는 [creact-react-app](https://www.npmjs.com/package/eslint-config-react-app)과 [next.js](https://www.npmjs.com/package/next)에서도 사용하고 있는 플러그인이며,<br/>
+이것으로 ESLint의 import 관련한 기본 규칙들보다 조금 더 확장된 기능들로 린팅을 할 수 있다.<br/>
+플러그인 하위에 여러 룰이 있지만, 이 글에서는 [no-restricted-paths](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-restricted-paths.md)만 다루도록 하겠다.
+
+### 계층 간 의존성 제어
+
+위의 의존성 규칙을 린트 룰로 표현하면 아래와 같다.
+
+```jsx
+"rules": {
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "src/core",
+            "from": "src/components"
+          },
+          {
+            "target": "src/core",
+            "from": "src/lib"
+          },
+          {
+            "target": "src/core",
+            "from": "src/pages"
+          },
+          {
+            "target": "src/lib",
+            "from": "src/pages"
+          },
+          {
+            "target": "src/components",
+            "from": "src/pages"
+          }
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "."
+      }
+    }
+  }
+```
+
+타입스크립트를 사용하는 프로젝트라면 아래 [import/resolver](https://github.com/import-js/eslint-plugin-import#typescript)의 설정이 추가로 필요하다.
+
+### 오류 화면
+
+룰을 지키지 않았을 경우 IDE에서 아래와 같은 모습들을 볼 수 있다.<br/>
+또한, 절대 경로, 상대 경로, 별칭 경로 등 모두 인식이 가능하다.
+
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-3.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-3.png)<br/>
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-5.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-5.png)
+
+코드 편집기에서 보여주는 오류를 예시 화면으로 들었지만, 당연하게도 린트 명령어로도 규칙에 대한 검증을 할 수 있다.
+
+### 오류 메시지 추가
+
+린트 규칙에 아래와 같은 메시지를 추가하여 동료에게 조금 더 개발 친화적인 오류를 안내해 줄 수도 있다.
+
+```rust
+"rules": {
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          ....
+          {
+            "target": "src/core",
+            "from": "src/lib",
+						"message": "\n의존성 규칙에 어긋나는 참조입니다."
+          },
+          ....
+        ]
+      }
+    ]
+  },
+```
+
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-4.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-4.png)
+
+### 외부 모듈 의존성 제어
+
+앞서 설명한 것처럼, core 계층에 API 통신을 위한 구현체가 있으며 `axios`를 사용한다고 가정한 뒤, 아래의 원칙을 바탕으로 린트 규칙 설정을 해 보자.
+
+1. `axios`는 core 계층의 특정한 API 모듈 구현체에서만 존재를 알고 있다.
+2. 특정 구현체는 추상화된 인터페이스를 구현하고 이를 다른 모듈들이 사용할 수 있게 한다.
+3. 다른 모듈들은 `axios`를 알지도 못하고 참조할 수 없으며, 오직 특정 구현체가 제공하는 인터페이스만 알 수있다.
+
+```tsx
+"rules": {
+	"no-restricted-imports": [
+		"error",
+		{
+	    "paths": [{
+	      "name": "axios",
+		    "message": "\naxios는 @core/utils/ApiUtil.ts에서만 참조가 가능합니다."
+			}]
+		}
+	],
+	"import/no-restricted-paths": [
+		"error",
+		{
+	    "zones": [
+				....
+			]
+		}
+	],
+
+	....
+
+"overrides": [
+	{
+		"files": ["src/core/utils/ApiUtil.ts"],
+		"rules": {
+			"no-restricted-imports": "off"
+		}
+	}
+],
+
+....
+```
+
+### 오류 화면과 추가된 메시지
+
+특정 구현체 외에서 axios 참조 시 아래와 같은 오류가 발생한다.<br/>
+또한, 친화적인 오류 메시지를 추가할 수 있다.
+
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-6.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-6.png)<br/>
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-7.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-7.png)<br/>
+![https://www.kimcoder.io/assets/images/clean-architecture-frontend-8.png](https://www.kimcoder.io/assets/images/clean-architecture-frontend-8.png)
+
+예시와 같이 외부 모듈의 의존성을 제어하고 코드를 유지해 나갈 수 있다면,<br/>
+외부 모듈의 버저닝 대응, 모듈 교체와 같은 변화가 생길 시 **최소의 노력으로 최대의 효율**을 낼 수 있을 것이다.
+
+## 마치며
+
+모든 문제 해결에 대한 정답이 정해져있지 않은 것처럼, 아키텍처에 관한 접근도 마찬가지이다.<br/>
+**이 글에서 말하는 내용은 모든 환경과 상황을 만족시키는 정답이 아니다.**<br/>
+
+하지만, 아래와 같은 상황에 놓여있다면 한번 즈음은 고려해 볼 만한 내용이 될 수 있을 것 같다.
+
+- _단일 소스 수준의 모노리스 아키텍처로 프로젝트가 관리되고 있을 경우._
+- _엔터프라이즈급 혹은 어느 정도 규모 있는 웹 애플리케이션._
+- _테스트하기 쉬운 애플리케이션을 만들고 싶은 경우._
+- _계층 간의 의존성 규칙을 개발주기에 자연스레 포함시키고 싶은 경우._
+
+또, **이 글의 내용을 통해 계층 간의 경계는 명확해졌지만, 이 외에도 신경 써야 할 것이 많다.**<br/>
+**도메인 간의 경계를 어떻게 다뤄야 할지, 어떤 외부 모듈을 추상화시키고 기준을 어떻게 세울 것인지, 테스트 경계는 어떻게 다룰지 등.**<br/>
+글의 제목에서 볼 수 있듯이, 여기서는 단지 **첫걸음**을 내딛였을 뿐이다.<br/>
+
+중요한 사실은 **아키텍처는 지속적으로 상황에 맞게 성장해야 하며, 이를 위해 개발자들의 부단한 노력이 필요하다는 것이다.**
+
+## 참고
+
+- [http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [https://github.com/vercel/next.js/tree/canary/examples](https://github.com/vercel/next.js/tree/canary/examples)
+- [https://eslint.org/docs/rules/no-restricted-imports](https://eslint.org/docs/rules/no-restricted-imports)
+- [https://github.com/import-js/eslint-plugin-import](https://github.com/import-js/eslint-plugin-import)
+- [https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-restricted-paths.md](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-restricted-paths.md)
+- [https://github.com/import-js/eslint-plugin-import#typescript](https://github.com/import-js/eslint-plugin-import#typescript)
+- [https://www.npmjs.com/package/eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)
+- [https://www.npmjs.com/package/next](https://www.npmjs.com/package/next)

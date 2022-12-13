@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover'
         />
-        <meta name="google-site-verification" content="vtaBV0ETmVVgtWBi6a2TUBROjDjHCT5hILk7MxdF7B0" />
+        <meta name='google-site-verification' content='vtaBV0ETmVVgtWBi6a2TUBROjDjHCT5hILk7MxdF7B0' />
         <link
           href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
           rel='stylesheet'

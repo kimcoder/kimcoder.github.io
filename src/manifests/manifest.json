@@ -339,6 +339,28 @@
           "path": "/books/software-architecture-101/24"
         }
       ]
+    },
+    {
+      "title": "이펙티브 엔지니어",
+      "open": true,
+      "routes": [
+        {
+          "title": "소개",
+          "path": "/books/effective-engineer/0"
+        },
+        {
+          "title": "1부, 올바른 마인드셋을 갖춰라",
+          "path": "/books/effective-engineer/1"
+        },
+        {
+          "title": "2부, 실행, 실행, 실행",
+          "path": "/books/effective-engineer/2"
+        },
+        {
+          "title": "3부, 장기적인 가치를 구축하라",
+          "path": "/books/effective-engineer/3"
+        }
+      ]
     }
   ]
 }

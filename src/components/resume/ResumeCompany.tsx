@@ -1,10 +1,11 @@
 import { CustomLink } from 'components/CustomLink';
 import { PaperClipIcon } from '@heroicons/react/20/solid';
 import Badge from 'components/Badge';
+import { Fragment } from 'react';
 
 type Props = {
   name: string;
-  team: string;
+  team: string[];
   period: string;
   techStack: string[];
 };
@@ -16,16 +17,23 @@ const ResumeCompany = ({ name, team, period, techStack }: Props) => {
         <h2 className='mt-12 text-3xl font-medium leading-6 text-gray-900'>
           <CustomLink href={`#${name}`}>{name}</CustomLink>
         </h2>
-        <p className='text-i mt-1 max-w-2xl text-sm text-gray-500'>{team}</p>
+        <p className='text-i mt-2 max-w-2xl text-sm text-gray-500'>
+          {team.map((teamName, idx) => (
+            <Fragment key={teamName}>
+              {teamName}
+              <br />
+            </Fragment>
+          ))}
+        </p>
         <p className='mt-1 max-w-2xl text-sm text-gray-900'>{period}</p>
       </div>
       <div className='border-t mt-5 border-gray-200'>
         <div className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5'>
-          <dt className='text-sm font-medium text-gray-500'>사용 기술</dt>
+          <dt className='text-sm font-medium'>사용 기술</dt>
           <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
             <ul role='list' className='flex flex-wrap children:mr-2 children:mt-2'>
               {techStack.map((tech) => (
-                <li>
+                <li key={tech}>
                   <Badge name={tech} />
                 </li>
               ))}
@@ -36,9 +44,7 @@ const ResumeCompany = ({ name, team, period, techStack }: Props) => {
       <div className='border-t mt-5 border-gray-200'>
         <dl className='sm:divide-y sm:divide-gray-200'>
           <div className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-500'>
-              코스피 지수에 따른 인덱스/리버스 펀드 매매 서비스 개발
-            </dt>
+            <dt className='text-sm font-medium'>코스피 지수에 따른 인덱스/리버스 펀드 매매 서비스 개발</dt>
             <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
               <ul className='ml-4 list-disc'>
                 <li>

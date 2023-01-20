@@ -5,8 +5,7 @@ import { Sticky } from 'components/Sticky';
 import { PaperClipIcon } from '@heroicons/react/20/solid';
 import ResumeCompany from 'components/resume/ResumeCompany';
 import { CAREER } from 'lib/resume/career';
-
-// getDateString(new Date(joinDate), 'yyyy-MM');
+import { enrichPeriod } from 'lib/resume/helpers';
 
 type Props = {
   career: typeof CAREER;
@@ -19,7 +18,7 @@ const Resume = ({ career }: Props) => {
       <Sticky>
         <Nav />
       </Sticky>
-      <div className='container mx-auto bg-white px-4 pt-6'>
+      <div className='container mx-auto px-4 pt-6'>
         <div className='shadow overflow-hidden bg-white sm:rounded-lg'>
           <div className='px-4 py-5 sm:px-6'>
             <h3 className='text-xl font-medium leading-6 text-gray-900'>Skills</h3>
@@ -83,16 +82,12 @@ const Resume = ({ career }: Props) => {
             </dl>
           </div>
         </div>
-        {career
-          .map(({ team, beginAt, endAt, ...item }) => ({ ...item, period: 'asdf', team: 'sdf' }))
-          .map(({ name, team, period, techStack }) => {
-            return (
-              <ResumeCompany key={period} name={name} team={team.toString()} period={period} techStack={techStack} />
-            );
-          })}
+        {career.map(enrichPeriod).map(({ name, team, period, techStack }) => {
+          return <ResumeCompany key={name + period} name={name} team={team} period={period} techStack={techStack} />;
+        })}
         <ResumeCompany
           name={'카카오페이'}
-          team={'금용사업클랜 투자파티 / 팀원'}
+          team={['금용사업클랜 투자파티 / 팀원']}
           period={'2020-08-01 - 2020-08-01'}
           techStack={[
             'react',

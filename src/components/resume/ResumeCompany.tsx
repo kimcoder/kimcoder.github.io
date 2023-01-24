@@ -14,7 +14,7 @@ const ResumeCompany = ({ name, team, period, techStack }: Props) => {
   return (
     <section>
       <div>
-        <h2 className='mt-12 text-3xl font-medium leading-6 text-gray-900'>
+        <h2 className='mt-12 text-2xl font-medium leading-6 text-gray-900'>
           <CustomLink href={`#${name}`}>{name}</CustomLink>
         </h2>
         <p className='text-i mt-2 max-w-2xl text-sm text-gray-500'>
@@ -44,7 +44,7 @@ const ResumeCompany = ({ name, team, period, techStack }: Props) => {
       <div className='border-t mt-5 border-gray-200'>
         <dl className='sm:divide-y sm:divide-gray-200'>
           <div className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium'>코스피 지수에 따른 인덱스/리버스 펀드 매매 서비스 개발</dt>
+            <dt className='text-base font-medium'>코스피 지수에 따른 인덱스/리버스 펀드 매매 서비스 개발</dt>
             <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
               <ul className='ml-4 list-disc'>
                 <li>

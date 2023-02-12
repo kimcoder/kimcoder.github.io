@@ -39,9 +39,9 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
             </div>
           </div>
           <div className='mt-5'>
-            <dl className=''>
+            <dl>
               {projects.map(({ title, beginAt, endAt, description }) => (
-                <div className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5'>
+                <div key={title + beginAt} className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5'>
                   <dt className='text-base font-medium'>
                     <h4>- {title}</h4>
                     <p className='text-i text-sm text-gray-500'>{getPeriod(beginAt, endAt)}</p>

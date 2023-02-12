@@ -5,9 +5,9 @@ export const siteConfig = {
   linkedIn: 'https://www.linkedin.com/in/daehyun-kim-b9a26716b/',
   facebook: 'https://www.facebook.com/kimcoder',
   algolia: {
-    appId: 'BH4D9OD16A',
-    apiKey: 'c97369bb0f67e99c8acf34bfd732cca7',
-    indexName: 'tanstack_react-query', // algoliaOptions: {
+    appId: 'KB3ECWAG70',
+    apiKey: 'e695ee02d4487fc488e9698c663ee160',
+    indexName: 'kimcoder', // algoliaOptions: {
     //   facetFilters: ['version:VERSION'],
     // },
   },

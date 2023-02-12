@@ -46,7 +46,9 @@ export function SidebarMobile({ children }) {
   return (
     <div className='lg:hidden'>
       <Container>
-        <div className='sidebar-search py-2 z-10'>{/* <Search /> */}</div>
+        <div className='sidebar-search py-2 z-10'>
+          <Search />
+        </div>
         <label
           htmlFor='dropdown-input'
           className={cn('w-full', {

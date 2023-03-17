@@ -2,7 +2,7 @@
   "routes": [
     {
       "title": "리팩터링",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -56,7 +56,7 @@
     },
     {
       "title": "클린 아키텍처",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -86,7 +86,7 @@
     },
     {
       "title": "함수형 사고",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -128,7 +128,7 @@
     },
     {
       "title": "클린 코드",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -186,7 +186,7 @@
     },
     {
       "title": "단위 테스트",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -236,7 +236,7 @@
     },
     {
       "title": "소프트웨어 아키텍처 101",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -342,7 +342,7 @@
     },
     {
       "title": "이펙티브 엔지니어",
-      "open": true,
+      "open": false,
       "routes": [
         {
           "title": "소개",
@@ -360,6 +360,42 @@
           "title": "3부, 장기적인 가치를 구축하라",
           "path": "/books/effective-engineer/3"
         }
+      ]
+    },
+    {
+      "title": "스태프 엔지니어",
+      "open": false,
+      "routes": [
+        {
+          "title": "소개",
+          "path": "/books/staff-engineer/0"
+        },
+        {
+          "title": "1장 스태프 엔지니어의 유형",
+          "path": "/books/staff-engineer/1"
+        },
+        {
+          "title": "2장 스태프 엔지니어의 실제 업무는 무엇일까?",
+          "path": "/books/staff-engineer/2"
+        },
+        { "title": "3장 직책이 중요한가?", "path": "/books/staff-engineer/3" },
+        { "title": "4장 중요한 일에 집중하자", "path": "/books/staff-engineer/4" },
+        { "title": "5장 엔지니어링 전략의 작성", "path": "/books/staff-engineer/5" },
+        { "title": "6장 기술 품질의 관리", "path": "/books/staff-engineer/6" },
+        { "title": "7장 지휘권을 가진 사람과 긴밀하게 협력하기", "path": "/books/staff-engineer/7" },
+        { "title": "8장 리드하려면 따라야 한다", "path": "/books/staff-engineer/8" },
+        { "title": "9장 절대 틀리지 않는 방법을 배우자", "path": "/books/staff-engineer/9" },
+        { "title": "10장 타인을 위한 공간의 창출", "path": "/books/staff-engineer/10" },
+        { "title": "11장 동료와 네트워크 구축", "path": "/books/staff-engineer/11" },
+        { "title": "12장 임원을 대상으로 하는 프레젠테이션", "path": "/books/staff-engineer/12" },
+        { "title": "13장 승진 자료집", "path": "/books/staff-engineer/13" },
+        { "title": "14장 스폰서 찾기", "path": "/books/staff-engineer/14" },
+        { "title": "15장 스태프 프로젝트", "path": "/books/staff-engineer/15" },
+        { "title": "16장 의사결정 그룹에 합류하고 그 위치를 유지하기", "path": "/books/staff-engineer/16" },
+        { "title": "17장 자신을 드러내는 법", "path": "/books/staff-engineer/17" },
+        { "title": "18장 내게 맞는 회사 찾기", "path": "/books/staff-engineer/18" },
+        { "title": "19장 스태프플러스 직책을 위한 면접", "path": "/books/staff-engineer/19" },
+        { "title": "20장 제안 협상하기", "path": "/books/staff-engineer/20" }
       ]
     }
   ]

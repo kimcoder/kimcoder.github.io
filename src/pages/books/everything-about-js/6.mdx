@@ -1,0 +1,735 @@
+---
+id: 웹 개발자를 위한 자바스크립트의 모든 것
+title: '6장 이터러블, 이터레이터, for-of, 이터러블 스프레드, 제너레이터'
+description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
+keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
+createdAt: 2023.06.16
+---
+
+## 6.1 이터레이터, 이터러블, for-of 루프, 이터러블 스프레드 구문
+
+### 6.1.1 이터레이터, 이터러블, for-of 루프, 이터러블 스프레드 구문
+
+- **이터레이터**는 next 메서드가 있는 객체이다. next를 호출할 때마다 나타내는 시퀀스의 다음 값과 완료 여부를 나타내는 플래그를 반환한다.
+- **이터러블**은 콘텐츠에 대한 이터레이터를 가져오는 표준 메서드가 있는 객체이다.
+- 자바스크립트 표준 라이브러리의 모든 리스트 또는 컬렉션 스타일 객체는 배열, 문자열, 타입이 있는 배열, 맵 및 세트처럼 반복 가능하다. 일반 객체는 반복할 수 없다.
+
+### 6.1.2 for-of루프: 암시적으로 이터레이터 사용하기
+
+> `for-of`가 이터레이터를 암시적으로 사용하는 데 사용할 수 있는 유일한 언어 기능은 아니다. 이터러블 스프레드 구문이, 디스트럭처링, `Promise.all`, `Array.from`, 맵과 세트 등을 비롯하여 이터러블을 사용하는 새로운 기능이 몇 가지 있다.
+
+- `for-of`는 `for-in`과 다르다.
+- 해당 배열에서 `for-in`을 사용하면 배열 엔트리에 대한 속성 이름인 `0`, `1`, `2`가 차례로 나타난다.
+  `for-of`는 배열의 이터레이터에 의해 정의된 엔트리의 **값**을 제공하는데, `for-of`가 배열에 추가했을 수 있는 다른 속성의 값이 아니라 배열 **엔트리**의 값만 제공한다는 것을 의미한다.(배열은 객체이다)
+
+```jsx
+const a = ['a', 'b', 'c'];
+a.extra = 'extra property';
+for (const value of a) {
+  console.log(value);
+}
+// The above produces "a", "b", and "c"
+for (const key in a) {
+  console.log(key);
+}
+// The above produces "0", "1", "2", and "extra"
+```
+
+- `for-of` 또는 `for-in` 루프에서도 마찬가지다. 하지만 `for-of`/ `for-in` 에서는 변수의 값이 루프 문에 의해 수정되지 않으므로 원하는 경우 `const`로 선언할 수 있다. (let 또는 var도 괜찮다.)
+- `for-of`는 매우 편리하여 많이 사용할 것이다.
+- 하지만 `for-of`는 모든 것을 수행하기 때문에 이터레이터의 세부 사항을 이해하는 데 별로 도움이 되지 않는다.
+
+### 6.1.3 이터레이터를 명시적으로 사용하기
+
+- 이터레이터를 명시적으로 아래와 같이 사용할 수 있다.
+
+```jsx
+const a = ['a', 'b', 'c'];
+const it = a[Symbol.iterator](); // Step 1
+let result = it.next(); // Step 2
+while (!result.done) {
+  // Step 3.a
+  console.log(result.value); // Step 3.b
+  result = it.next(); // Step 3.c
+}
+```
+
+- 1단계는 배열에서 이터레이터를 가져온다. 이터러블은 이름이 잘 알려진 심볼인 `Symbol.iterator` 메서드를 제공한다. 이 메서드를 호출하여 이터레이터를 가져온다.
+- 2단계는 이터레이터의 `next` 함수를 호출하여 결과 객체를 가져온다. 결과 객체는 `IteratorResult` 인터페이스를 준수하는 객체이다. 이는 본질적으로 이터레이터가 반복 완료되었는지 여부를 나타내는 `done` 속성과 현재 반복에 대한 값을 포함하는 `value` 속성을 가지고 있음을 의미한다.
+- 3단계는 일련의 하위 단계를 사용하여 루프를 수행한다. 결과 객체의 done 속성이 거짓인 동안, value를 사용하고 next를 다시 호출한다.
+- 두 곳에서 `result = it.next()` 호출을 코딩하면 사소한 코드 유지 관리 위험이 발생한다는 사실을 알고 있을 것이다. 아래처럼 한 곳에서 처리할 수도 있다.
+
+```jsx
+const a = ['a', 'b', 'c'];
+const it = a[Symbol.iterator]();
+let result;
+while (!(result = it.next()).done) {
+  console.log(result.value);
+}
+```
+
+### 6.1.4 반복 중지
+
+- 이터레이터를 사용할 때 일찍 중지해야 할 이유가 있을 수 있다.
+- 이터레이터는 `return`이라는 선택적 메서드를 호출하여 중지할 수 있다.
+
+```jsx
+const a = ['a', 'b', 'c', 'd'];
+const it = a[Symbol.iterator]();
+let result;
+while (!(result = it.next()).done) {
+  if (result.value === 'c') {
+    if (it.return) {
+      it.return();
+    }
+    break;
+  }
+  console.log(result.value);
+}
+```
+
+- 사양에 따르면 `return`은 일반적으로 `true`로 설정된 결과 객체를 반환해야 한다.
+- 인수를 `return` 에 전달하면 결과 객체의 `value`는 일반적으로 해당 인수의 값이어야 하지만 요구 사항이 적용되지 않는다고도 말한다.
+- 자바스크립트 런타임 자체에서 제공하는 이터레이터는 `return`이 있는 경우 이러한 방식으로 작동하지만 그렇게 하는 타사 라이브러리의 이터레이터는 믿을 수 없다.
+- 진짜 이터레이터에 대한 명시적인 참조가 없기 때문에 `for-of`를 사용하는 경우 이터레이터에서 return을 호출하는 방법이 궁금할 수 있다.
+
+```jsx
+const a = ["a", "b", "c", "d"];
+for (const value of a) {
+  if (value === "c") {
+    if(???.return()){
+      ???.return();
+    }
+    break; // 괜찮다. 이터레이터의 return을 호출한다.
+  }
+}
+
+const a = ["a", "b", "c", "d"];
+for (const value of a) {
+  if (value === "c") {
+    break; // 괜찮다. 이터레이터의 return을 호출한다.
+  }
+  console.log(value);
+}
+```
+
+- 두 번째 선택적인 메서드는 `throw`다.
+- 일반적으로 간단한 이터레이터와 함께 사용하지 않으며 `for-of`는 이를 호출하지 않는다.
+
+### 6.1.5 이터레이터 프로로타입 객체
+
+- 자바스크립트 런타임에서 제공하는 모든 이터레이터 객체는 가져온 이터레이터에 대한 적절한 `next` 메서드를 제공하는 프로토타입 객체에서 상속한다.
+- 예를 들어, 배열 이터레이터는 배열에 대한 적절한 `next` 메서드를 제공하는 배열 이터레이터 프로토타입 객체에서 상속한다.
+- 배열 이터레이터 프로토타입은 사양에서 %ArrayIteratorPrototype% 로 알려져 있다.
+- 문자열 이터레이터는 %StringIteratorPrototype% 맵 이터레이터는 %MapIteratorPrototype% 등에서 상속받는다.
+
+> 표준 런타임에서 이들에 대한 직접 참조를 제공하는 공개적으로 정의된 전역 또는 속성은 없지만 배열 이터레이터 같은 원하는 유형의 이터레이터에서 `Object.getPrototype0f`를 사용하여 쉽게 참조를 가져올 수 있다.
+
+- 이러한 모든 이터레이터 프로토타입에는 기본 프로토타입이 있으며 사양에서 %IteratorPrototype%을 호출한다.
+- 아래와 같이 모든 이터레이터에 메서드를 추가할 수 도 있다.
+
+```jsx
+// Adding it
+const iteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
+Object.defineProperty(iteratorPrototype, 'myFind', {
+  value(callback, thisArg) {
+    let result;
+    while (!(result = this.next()).done) {
+      if (callback.call(thisArg, result.value)) {
+        break;
+      }
+    }
+    return result;
+  },
+  writable: true,
+  configurable: true,
+});
+
+// Using it
+const a = ['one', 'two', 'three', 'four', 'five', 'six'];
+const it = a[Symbol.iterator]();
+let result;
+while (!(result = it.myFind((v) => v.includes('e'))).done) {
+  console.log('Found: ' + result.value);
+}
+console.log('Done');
+```
+
+- 위와 같은 확장은 이터레이터가 명시적으로 사용될 때만 유용하다.
+- 제너레이터 함수에서는 더 간단하게 수행할 수 있다.
+
+### 6.1.6 무엇이든 반복 가능하게 만들기
+
+- 무언가를 반복 가능하게 하려면 `Symbol.iterator` 메서드를 제공하고, 이터레이터 프로토타입 속성을 상속하면 된다.
+
+```jsx
+// Basic iterator example when not using a generator function
+const a = {
+  0: 'a',
+  1: 'b',
+  2: 'c',
+  length: 3,
+  [Symbol.iterator]() {
+    let index = 0;
+    const itPrototype = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
+    const it = Object.assign(Object.create(itPrototype), {
+      next: () => {
+        if (index < this.length) {
+          return { value: this[index++], done: false };
+        }
+        return { value: undefined, done: true };
+      },
+    });
+    return it;
+  },
+};
+for (const value of a) {
+  console.log(value);
+}
+```
+
+- 위는 단일 객체에 대한 것이지만 객체 클래스를 정의하고 싶으면 아래와 같이 할 수 있다.
+- 일반적인 방법은 객체 클래스가 사용하는 프로토타입 객체에 `Symbol.Iterator`함수를 배치하는 것이다.
+
+```jsx
+// Basic iterator example on a class when not using a generator function
+class LinkedList {
+  constructor() {
+    this.head = this.tail = null;
+  }
+
+  add(value) {
+    const entry = { value, next: null };
+    if (!this.tail) {
+      this.head = this.tail = entry;
+    } else {
+      this.tail = this.tail.next = entry;
+    }
+  }
+
+  [Symbol.iterator]() {
+    let current = this.head;
+    const itPrototype = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
+    const it = Object.assign(Object.create(itPrototype), {
+      next() {
+        if (current) {
+          const value = current.value;
+          current = current.next;
+          return { value, done: false };
+        }
+        return { value: undefined, done: true };
+      },
+    });
+    return it;
+  }
+}
+
+const list = new LinkedList();
+list.add('one');
+list.add('two');
+list.add('three');
+
+for (const value of list) {
+  console.log(value);
+}
+```
+
+- 기본적으로 이전 이터레이터 구현과 동일하다. 객체에서 직접 정의하는 것이 아니라 프로토타입에서 정의할 뿐이다.
+- 또, `next`는 `this`를 사용하지 않기 때문에 화살표 함수를 참조하는 속성이 아닌 메서드 문법을 사용하여 정의할 수 있다.
+
+### 6.1.7 반복 가능한 이터레이터
+
+- %IteratorPrototype%에서 상속된 모든 이터레이터도 **반복 가능**하다는 것을 배웠다.
+- %IteratorPrototype%는 `this`를 반환하는 `Symbol.iterator` 메서드를 제공하기 때문이다.
+- 이터레이터를 반복 가능하게 만드는 데는 여러가지 이유가 있다.
+  - 엔트리 또는 일부 엔트리 를 건너뛰거나 특수하게 처리한 다음 이터레이터를 사용하는 다른 메커니즘을 사용하여 나머지를 처리할 때
+  - 함수의 반환값과 같이 반복 가능한 객체 없이 이터레이터를 제공할 때
+- 아래는 반복 가능한 이터레이터를 반환하는 함수의 예이다.
+  - 하지만 실제로는 제너레이터 함수를 작성하면 된다.
+
+```jsx
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iterable Iterator Example</title>
+  </head>
+  <body>
+    <div>
+      <span>
+        <em id="target">Look in the console for the output</em>
+      </span>
+    </div>
+    <script>
+      // Symbol.iterator 메서드를 구현하면
+      // 어떻게 for-of 와 함께 반복자를 사용할 수 있는지 보여 준다.
+      function parents(element) {
+        return {
+          next() {
+            element = element && element.parentNode;
+            if (element && element.nodeType === Node.ELEMENT_NODE) {
+              return { value: element };
+            }
+            return { done: true };
+          },
+          // 이 이터레이터를 이터러블로 만든다.
+          [Symbol.iterator]() {
+            return this;
+          },
+
+```
+
+### 6.1.8 이터러블 스프레드 문법
+
+- **이터러블 스프레드 문법**은 함수를 호출하거나 배열을 생성할 때 결괏값을 이산 값으로 분산하여 이터러블을 소비하는 방법을 제공한다.
+
+```jsx
+// ES2015 이전 방식
+const a = [27, 14, 12, 64];
+console.log(Math.min.apply(Math, a)); // 12
+
+// 스프레드 문법 사용
+const a = [27, 14, 12, 64];
+console.log(Math.min(...a)); // 12
+```
+
+### 6.1.9 이터레이터, for-of 그리고 DOM
+
+- DOM에는 `querySelectorAll`에서 반환된 `NodeList` 또는 `getElementsByTagName`와 기타 이전 메서드에서 반환된 이전 `HTMLCollection` 같은 다양한 컬렉션 객체가 있다
+- `NodeList`는 최신 모던 브라우저(최신 크롬, 파이어폭스, 엣지 및 사파리)에 있으며 `HTMLCollection`은 엣지의 크로미움 이전 버전을 제외한 모든 브라우저에도 있다.
+- WHAT-WG DOM 사양은 `NodeList`를 `HTMLCollection`이 아닌 이터러블로 표시하므로 이전 버전의 엣지는 사양과 일치하는 반면 다른 버전은 지정되지 않았음에도 불구하고 이 기능을 `HTMLCollection`에 추가했다.
+- 다음은 querySelectorAll에서 NodeList를 반복하는 (좋지 않은) 예를 보여준다.
+
+```jsx
+for (const div of document.querySelectorAll('div')) {
+  // div...
+}
+```
+
+- 과거에 했던 것처럼 DOM 컬렉션을 배열로 변환할 필요가 거의 없을 것이다.
+- 예를 들어, forEach를 사용하려면 DOM 컬렉션을 배열로 변환해야 했다.
+- 최신 브라우저에서는 컬렉션에 forEach가 있기 때문에 더 이상 필요하지 않다.
+- 그러나 배열에 대한 특정 요구가 있는 경우 이터러블 스프레드를 사용하여 DOM 컬렉션을 배열로 변환할 수 있다.
+
+```jsx
+[...document.querySelectorAll('div')];
+```
+
+## 6.2 제너레이터 함수
+
+- **제너레이터 함수**는 핵심적으로 수행하는 작업의 중간에 일시 중지하고 값을 생성하고 선택적으로 새 값을 수락한 다음 필요한 만큼(원하는 경우 영원히) 계속 진행할 수 있는 함수다.
+- 제너레이터 함수는 실제로 중간에 멈추지 않는다.
+- 내부적으로 제너레이터 함수는 **제너레이터 객체**를 만들고 반환한다.
+- 제너레이터 객체는 이터레이터이지만 양방향 정보 흐름을 사용한다. **이터레이터가 값만 생성하는 반면 제너레이터는 값을 생성하고 소비할 수 있다.**
+- 제너레이터 객체를 수동으로 생성할 수 있지만 제너레이터 함수는 과정을 현저하게 단순화하는 문법을 제공한다.
+
+### 6.2.1 값을 생성하는 기본 제너레이터 함수
+
+- 정보의 단방향 흐름, 즉 값 생성만 하는 매우 기본적인 제너레이터 함수로 시작해 보자.
+
+```jsx
+function* simple() {
+  for (let n = 1; n <= 3; ++n) {
+    yield n;
+  }
+}
+for (const value of simple()) {
+  console.log(value);
+}
+```
+
+- 코드 실행
+  1. 코드는 simple을 호출하고 제너레이터 객체를 얻은 다음 해당 객체를 `for-of`에 제공한다.
+  2. `for-of`는 제너레이터 객체에게 이터레이터를 요청한다. 제너레이터 객체는 자신을 이터레이터로 반환한다.
+     (제너레이터 객체는 %IteratorPrototype%에서 간접적으로 상속되므로 제공하는 `"return this" Symbol.iterator` 메서드를 갖는다).
+  3. `for-of`는 제너레이터 객체의 next 메서드를 사용하여 루프에서 값을 가져와 각각 `console.log`에 전달한다.
+- `function` 키워드 뒤에 `*`를 주목하자. 이것이 제너레이터 함수를 만든다.
+- 새 키워드 `yield`에 주목하자. 제너레이터 함수가 겉보기에 일시 중지된 다음 다시 시작되는 위치를 표시한다
+
+### 6.2.2 제너레이터 함수를 사용하여 이터레이터 만들기
+
+- 제너레이터 함수는 제너레이터를 생성하고 제너레이터는 이터레이터의 한 형태이므로 제너레이터 함수 문법을 사용하여 고유한 이터레이터를 작성할 수 있다.
+- 이렇게 하는 것은 이전에 `next` 이터레이터 객체를 생성하는 프로토타입과 `next` 메서드 구현의 모든 코드보다 훨씬 간단하고 간결하다.
+
+```jsx
+// 직접 구현
+const a = {
+  0: 'a',
+  1: 'b',
+  2: 'c',
+  length: 3,
+  [Symbol.iterator]() {
+    let index = 0;
+    const itPrototype = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
+    const it = Object.assign(Object.create(itPrototype), {
+      next: () => {
+        if (index < this.length) {
+          return { value: this[index++], done: false };
+        }
+        return { value: undefined, done: true };
+      },
+    });
+    return it;
+  },
+};
+for (const value of a) {
+  console.log(value);
+}
+
+// 제너레이터 함수 사용
+const a = {
+  0: 'a',
+  1: 'b',
+  2: 'c',
+  length: 3,
+  // The next example shows a simpler way to write the next line
+  [Symbol.iterator]: function* () {
+    for (let index = 0; index < this.length; ++index) {
+      yield this[index];
+    }
+  },
+};
+for (const value of a) {
+  console.log(value);
+}
+```
+
+### 6.2.3 메서드로서의 제너레이터 함수
+
+- 제너레이터 함수는 메서드의 모든 기능(예: super를 사용할 수 있음)이 있는 메서드가 될 수 있다.
+
+```jsx
+class LinkedList {
+  constructor() {
+    this.head = this.tail = null;
+  }
+
+  add(value) {
+    const entry = { value, next: null };
+    if (!this.tail) {
+      this.head = this.tail = entry;
+    } else {
+      this.tail = this.tail.next = entry;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    for (let current = this.head; current; current = current.next) {
+      yield current.value;
+    }
+  }
+}
+
+const list = new LinkedList();
+list.add('one');
+list.add('two');
+list.add('three');
+
+for (const value of list) {
+  console.log(value);
+}
+```
+
+- 제너레이터 메서드가 어떻게 선언되는지 주목하자. function 키워드 뒤에 있는 함수 이름 앞에 별표를 붙이는 것처럼 메서드 이름 앞에 별표(\*)를 넣었다.
+- 계산된 이름 문법을 사용하지만 심볼로 메서드의 이름을 정의할 필요가 없다면 간단한 이름이 될 수 있다.
+
+### 6.2.4 제너레이터 직접 사용
+
+```jsx
+function* simple() {
+  for (let n = 1; n <= 3; ++n) {
+    yield n;
+  }
+}
+const g = simple();
+let result;
+while (!(result = g.next()).done) {
+  console.log(result.value);
+}
+```
+
+- 위 코드는 제너레이터 함수(simple)에서 제너레이터 객체(g)를 가져온 다음 이전에 사용된 제너레이터를 본 방식으로 정확하게 사용한다. (제너레이터는 이터레이터이므로)
+
+### 6.2.5 제너레이터로 값 소비하기
+
+- 지금까지 보았떤 모든 제너레이터는 `yield` 연산자를 통해 값만 제공했다.
+- **제너레이터는 값을 소비할 수도 있다.**
+- `**yield` 연산자의 결과는 제너레이터에 푸시된 값, 즉 소비할 수 있는 값이다.\*\*
+
+```jsx
+function* add() {
+  console.log('starting');
+  const value1 = yield 'Please provide value 1';
+  console.log('value1 is ' + value1);
+  const value2 = yield 'Please provide value 2';
+  console.log('value2 is ' + value2);
+  return value1 + value2;
+}
+
+let result;
+const gen = add();
+result = gen.next(); // "starting"
+console.log(result); // {value: "Please provide value 1", done: false}
+result = gen.next(35); // "value1 is 35"
+console.log(result); // {value: "Please provide value 2", done: false}
+result = gen.next(7); // "value2 is 7"
+console.log(result); // {value: 42, done: true}
+```
+
+- 코드 실행
+  1. `const gen add()`는 제너레이터 함수를 호출하고 반환하는 제너레이터 객체를 `gen` 상수에 저장한다. 제너레이터 함수 내부의 논리가 아직 실행되지 않았다. "시작" 줄은 로그에 나타나지 않는다.
+  2. `gen.next()`는 첫 번째 `yield`까지 제너레이터 코드를 실행한다.
+     "시작" 줄이 출력되고 첫 번째 `yield` 값인 `"Please provide value 1"`이 평가되고 제너레이터가 호출자에게 제공한다.
+  3. 이 값은 `result`에 저장되는 첫 번째 결과 객체의 호출 코드에 의해 수신된다.
+  4. `console.log(result)`는 첫 번째 결과(`{value: "Please provide value 1", done false)`)를 보여준다.
+  5. `gen.next(35)`는 35 값을 제너레이터로 보낸다.
+  6. 제너레이터 코드는 계속된다. 그 값(35)이 `yield`의 결과가 된다.
+     이것이 **전달된 값을 사용 하는 제너레이터**다.
+     코드는 해당 값을 `value1`에 할당하고 기록한 다음 `"Please provide value 2"` 값을 생성(`yield`)한다.
+  7. 호출 코드는 다음 결과 객체에서 해당 값을 수신하고 새 결과 객체(`{value: "Please provide value2", done: false }`)를 기록한다.
+  8. `gen.next(7)`는 7값을 제너레이터로 보낸다.
+  9. 제너레이터 코드는 계속된다. 그 값(7)은 `yield`의 결과가 된다.
+     코드는 이를 `value2`에 할당 하고 값을 기록한 다음 `value1`과 `value2`의 합계를 반환한다.
+  10. 호출 코드는 결과 객체를 받아 `value`에 저장하고 기록한다.
+      이번에는 `value`가 합계(42)이고 `done`이 참임을 유의하자. 제너레이터가 그 값을 산출하는 것이 아니라 반환했기 때문에 그렇다.
+- 위 코드는 매우 기본적이지만 제너레이터를 사용하는 코드에서 다음 입력을 기다리면서 제너레이터 함수의 논리가 겉보기에 일시 중지되는 방식을 보여준다.
+- 위 코드에서 `gen.next()`에 대한 첫 번째 호출에는 인수가 없다. 사실 거기에 인수를 넣으면 제너레이터는 그것을 보지 못한다. `next`에 대한 첫 번째 호출은 제너레이터를 함수의 시작 부분에서 첫 번째 `yield`로 진행한 다음 첫 번째 yield가 생성하는 값을 가진 결과 객체를 반환한다.
+- **제너레이터 함수 코드는 `yield`의 결과로 `next`에서 값을 받기 때문에 `next`에 대한 첫 번째 호출에서 전달된 값을 받을 방법이 없다. 제너레이터에 초기 입력을 제공하려면 `next`에 대한 첫 번째 호출이 아닌 제너레이터 함수의 인수 목록에 인수를 전달하자.**
+  - 위 코드에서 값을 처음부터 추가하려면 `next`으로의 첫 번째 호출에 전달하는 대신 `add`에 전달한다.
+
+```jsx
+function* sumThree() {
+  const lastThree = [];
+  let sum = 0;
+  while (true) {
+    const value = yield sum;
+    lastThree.push(value);
+    sum += value;
+    if (lastThree.length > 3) {
+      sum -= lastThree.shift();
+    }
+  }
+}
+
+const it = sumThree();
+console.log(it.next().value); // 0  (there haven't been any values passed in yet)
+console.log(it.next(1).value); // 1  (1)
+console.log(it.next(7).value); // 8  (1 + 7)
+console.log(it.next(4).value); // 12 (1 + 7 + 4)
+console.log(it.next(2).value); // 13 (7 + 4 + 2; 1 "fell off")
+console.log(it.next(3).value); // 9  (4 + 2 + 3; 7 "fell off")
+```
+
+- 위 코드에서 제너레이터는 사용자가 입력한 마지막 세 값을 추적하여 호출할 때마다 마지막 세 값의 업데이트된 합계를 반환한다. 사용할 때 값을 직접 추적하거나 값이 떨어질 때 값을 빼는 것을 포함하여 누적 합계를 유지하는 논리에 대해 걱정할 필요가 없다. 값을 입력하고 생성된 합계를 사용하면 된다.
+- 제너레이터에 루프, 때로는 무한 루프가 포함되는 것이 일반적이다.
+
+### 6.2.6 제너레이터 함수에서 return 사용
+
+- 제너레이터 함수에 의해 생성된 제너레이터는 반환 값과 함께 `return` 문을 사용할 때 흥미로운 작업을 수행한다.
+- 반환 값이 있고 `done = true` 인 결과 객체를 생성한다.
+
+```jsx
+function* usingReturn() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+console.log('Using for-of:');
+for (const value of usingReturn()) {
+  console.log(value);
+}
+// =>
+// 1
+// 2
+console.log('Using the generator directly:');
+const g = usingReturn();
+let result;
+while (!(result = g.next()).done) {
+  console.log(result);
+}
+// =>
+// {value: 1, done: false}
+// {value: 2, done: false}
+console.log(result);
+// =>
+// {value: 3, done: true}
+```
+
+### 6.2.7 yield 연산자 우선 순위
+
+- `yield` 연산자는 우선순위가 매우 낮다.
+- 즉, `yield` 가 완료되기 전에 가능한 한 많은 표현식이 함께 그룹화된다.
+- 그렇지 않으면 합리적으로 보이는 코드가 헷갈리게 할 수 있기 때문에 이를 인식하는 것이 중요하다.
+
+```jsx
+function* example() {
+  let a = yield +2 + 30; // 잘못됨
+  return a;
+}
+const gen = example();
+console.log(gen.next()); // {value: 32, done: false}
+console.log(gen.next(10)); // {value: 10, done: true}
+```
+
+- 위 코드에서 `yield` 의 오른쪽에 있는 표현식은 피연산자이며 평가되고 `next`값이 된다.
+  - 실제로는 `let a = yield 2 + 30;` 을 수행한다.
+- 가장 명확한 방법은 아래와 같이 그 자체의 명령문을 만드는 것이다.
+
+```jsx
+function* example() {
+  let x = yield;
+  let a = x + 2 + 30;
+  return a;
+}
+const gen = example();
+console.log(gen.next()); // {value: undefined, done: false}
+console.log(gen.next(10)); // {value: 42, done: true}
+```
+
+- 원한다면 아래와 같이 `yield` 주위에 괄호를 써서 의미 있는 표현식의 어느 곳에서나 사용할 수 있다.
+
+```jsx
+function* example() {
+  let a = (yield) + 2 + 30;
+  return a;
+}
+const gen = example();
+console.log(gen.next()); // {value: undefined, done: false}
+console.log(gen.next(10)); // {value: 42, done: true}
+```
+
+### 6.2.8 return과 throw 메서드: 제너레이터 종료
+
+- 제너레이터 함수에 의해 생성된 제너레이터는 이터레이터 인터페이스의 선택적 메서드인 `return`과 `throw`를 모두 구현한다.
+- 이를 사용하여 제너레이터를 사용하는 코드는 실제로 `return` 문을 삽입하거나 현재 `yield`가 있는 제너레이터 함수의 내에서 명령문을 `throw`할 수 있다.
+- 제너레이터의 `return` 메서드를 사용하여 호출 코드는 실제로 제너레이터 함수의 코드에 없는 `return` 을 발행할 수 있다.
+
+```jsx
+function* example() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+const gen = example();
+console.log(gen.next()); // {value: 1, done: false}
+console.log(gen.return(42)); // {value: 42, done: true}
+console.log(gen.next()); // {value: undefined, done: true}
+```
+
+- `throw` 메서드는 `return` 대신 `throw` 를 주입하는 동일한 방식으로 작동한다.
+
+```jsx
+function* example() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+const gen = example();
+console.log(gen.next()); // {value: 1, done: false}
+console.log(gen.throw(new Error('boom'))); // Uncaught Error: boom
+console.log(gen.next()); // (never executed)
+```
+
+- 위 코드는 마치 제너레이터가 현재 `yield` 이 있는 부분에서 `new Error("boom");` 를 호출한 것과 같다.
+- `return` 과 `throw` 문과 마찬가지로 제너레이터는 `try/catch/finally` 를 사용하여 삽입된 `return` 과 `throw` 와 상호 작용할 수 있다.
+
+### 6.2.9 제너레이터와 이터러블을 넘겨주는 방법: yield\*
+
+- 제너레이터는 다른 제너레이터(또는 이터러블)에 제어를 전달한 다음 `yield*` 를 사용하여 해당 제너레이터(또는 이터러블)가 완료되면 다시 실행할 수 있다.
+- 자바스크립트 런타임은 제너레이터가 `yield*`를 수행할 때 `throw`와 `return` 호출이 파이프라인을 통해 가장 깊은 제너레이터/이터레이터로 전파되고 거기에서 위쪽으로 적용되도록 보장한다.
+
+```jsx
+function* inner() {
+  try {
+    let n = 0;
+    while (true) {
+      yield 'inner ' + n++;
+    }
+  } finally {
+    console.log('inner terminated');
+  }
+}
+function* outer() {
+  try {
+    yield 'outer before';
+    yield* inner();
+    yield 'outer after';
+  } finally {
+    console.log('outer terminated');
+  }
+}
+
+const gen = outer();
+let result = gen.next();
+console.log(result); // {value: "outer before", done: false}
+result = gen.next();
+console.log(result); // {value: "inner 0", done: false}
+result = gen.next();
+console.log(result); // {value: "inner 1", done: false}
+result = gen.return(42); // "inner terminated"
+// "outer terminated"
+console.log(result); // {value: 42, done: true}
+result = gen.next();
+console.log(result); // {value: undefined, done: true}
+```
+
+- 코드 실행
+  1. `outer` 제너레이터가 `yield*`를 사용해 `inner` 제너레이터로 제어를 넘긴다.
+  2. `outer` 제너레이터가 `return`하는 것이 `inner` 제너레이터로 포워딩된다.
+  3. 거기에서 만든 일을 `finally` 블록에서 `console.log`를 통해 확인하자.
+- `inner`에서 `return`한 것뿐만 아니라 `outer` 제너레이터에서도 그랬다.
+- `inner` 제너레이터에서 `return 42`가 있는 것과 마찬가지로 `outer` 제너레이터가 `inner`의 반환값을 반환하여 각 제너레이터가 일시 중지되었다.
+- `outer` 제너레이터는 `inner` 제너레이터가 종료했다는 이유만으로 값을 생성하는 것을 멈출 필요는 없다.
+- 제너레이터 함수는 삽입된 `return`을 재정의하는 것을 포함하여 이를 수행할 수도 있다.
+
+```jsx
+function* foo(n) {
+  try {
+    while (true) {
+      n = yield n * 2;
+    }
+  } finally {
+    return 'override'; // 일반적으로 좋지 않은 방법
+  }
+}
+const gen = foo(2);
+console.log(gen.next()); // { value: 4, done: false }
+console.log(gen.next(3)); // { value: 6, done: false }
+console.log(gen.return(4)); // { value: "override", done: true }
+```
+
+- `throw` 메서드를 사용하는 것은 이해하기 더 간단하다.
+
+## 6.3 과거 습관을 새롭게
+
+### 6.3.1 이터러블을 소비하는 구문의 사용
+
+- 루프 본문에 인덱스가 필요하지 않으면 대신 `for-of` 를 사용하자.
+
+### 6.3.2 DOM 컬렉션 반복 기능 사용
+
+- DOM 컬렉션이 사용자 환경에서 반복 가능한지 확인하고 해당 반복성을 직접 사용하자.
+
+```jsx
+for (const div of document.querySelectAll('div')) {
+  // ..
+}
+```
+
+### 6.3.3 이터러블과 이터레이터 인터페이스 사용
+
+- `Symbol.iterator` 함수와 이터레이터를 구현하여 컬렉션 유형을 반복 가능하게 하자.
+
+### 6.3.4 Function.prototype.apply를 사용하는 데 사용했던 대부분 장소에서 이터러블 스프레드 구문 사용
+
+- 스프레드 문법을 사용하자.
+
+```jsx
+const array = [23, 42, 17, 27];
+console.log(Math.min(...array));
+```
+
+### 6.3.5 제너레이터 사용
+
+- 제너레이터 함수에서 논리를 정의하고 결과 제너레이터 객체를 사용하자.
+- 코드 흐름 문법으로 더 잘 모델링되지 않은 상태 머신의 경우 제너레이터 함수가 올바른 선택이 아닐 수 있다.

@@ -1,0 +1,864 @@
+---
+id: 웹 개발자를 위한 자바스크립트의 모든 것
+title: '4장 클래스'
+description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
+keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
+createdAt: 2023.06.16
+---
+
+## 4.1 클래스란 무엇인가?
+
+- 자바스크립트에는 실제로 클래스가 없다. 그렇지 않은가? 자바스크립트는 단지 프로토타입으로 클래스를 모사한다. 맞는 말인가?
+- 클래스는 대체로 언어가 제공하는 정적인 구조 이상이다.
+- 클래스를 갖는다는 것은 클래스 기반과 같지 않으며 언어가 캡슐화 및 상속을 지원한다는 의미이다.
+- 프로토타입 언어는 자바스크립트가 발명되기 전부터 클래스를 가질 수 있었다.
+- 자바스크립트는 항상 여러분이 찾을 수 있는 가장 객체 지향적인 언어이다.
+- ES5가 상속을 직접 지원하기 위해 Object.create를 추가할 때까지 컴퓨터 과학 관점에서는 클래스가 없다고 주장할 수 있다.
+- ES5조차도 선언적 구조와 슈퍼클래스 메서드를 참조하는 간단한 방법이 없기 때문에 자격이 없다고 주장할 수도 있다.
+
+## 4.2 새로운 클래스 문법 소개
+
+- 아래 코드는 class의 기본적인 예를 보여준다.
+  - 생성자
+  - 세 가지 **데이터 속성**(r, g, b)
+  - **접근자 속성**
+  - **프로토타입 메서드**(toString, 일반적으로 인스턴스를 통해 접근하기 때문에 **인스턴스 메서드**라고도 하지만 **프로토타입 메서드**가 더 정확하다. 실제 **인스턴스 메서드**는 프로토타입에서 상속되지 않고 인스턴스에만 존재한다)
+  - **정적 메서드**(fromCSS, 종종 **클래스 메서드**라고도 한다)
+
+```jsx
+class Color {
+  constructor(r = 0, g = 0, b = 0) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  get rgb() {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  }
+
+  set rgb(value) {
+    // ...code shown later...
+  }
+
+  toString() {
+    return this.rgb;
+  }
+
+  static fromCSS(css) {
+    // ...code shown later...
+  }
+}
+
+let c = new Color(30, 144, 255);
+console.log(String(c)); // "rgb(30, 144, 255)"
+```
+
+- 함수와 마찬가지로 선언 또는 표현식으로 클래스를 정의한다.
+
+```jsx
+// 클래스 정의
+class Color {}
+
+// 익명 클래스 정의
+let Color = class {};
+
+// 클래스 정의
+let C = class Color {};
+```
+
+- 클래스 선언은 함수 선언처럼 호이스팅되지 않는다.
+- 임시 데드존으로 완성된 let과 const처럼 초기화가 아닌 식별자만 호이스팅된다.
+- let과 const와 마찬가지로 전역 스코프에서 클래스를 선언하면 클래스의 식별자는 전역이지만 전역 객체의 속성이 아니다.
+
+### 4.2.1 생성자 추가
+
+> 생성자 정의의 닫는 중괄호 뒤에는 세미콜론이 없다. 클래스 본문의 생성자 및 메서드 정의는 선언과 비슷하며 뒤에 세미콜론이 없다(세미콜론은 존재하는 경우 허용된다. 문법은 이러한 쉬운 실수를 구문 오류로 만들지 않도록 특별히 허용한다).
+
+- 생성자를 제공하지 않으면 자바스크립트 엔진은 마치 클래스에 있는 것처럼 정확하게 아무것도 하지 않는 생성자를 생성한다.
+- 생성자는 함수이지만 객체 생성 프로세스의 일부로만 호출할 수 있다.
+- 생성자 함수를 실행하려면 new를 사용한 결과 또는 Reflect.construct 호출의 결과이어야 한다.
+- 객체를 생성하지 않을 때 호출하려고 하면 오류가 발생한다.
+
+```jsx
+Color(); // TypeError: Class construct Color cannot be invoked without 'new'
+```
+
+- ES5에서는 아래와 같이 new를 통한 호출을 제외하고는 호출을 허용하도록 할 수 있다.
+
+```jsx
+var Color = function Color(r, g, b) {
+  if (!(this instanceof Color)) {
+    throw new TypeError("Class construct Color cannot be invoked without 'new'");
+  }
+
+  // ...
+};
+```
+
+- 클래스 내부의 코드는 주변 코드가 아니더라도 항상 엄격 모드다.
+
+### 4.2.2 인스턴스 속성 추가
+
+```jsx
+class Color {
+  constructor(r = 0, g = 0, b = 0) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+}
+```
+
+- 인스턴스 속성은 기본 할당을 통해 생성되기 떄문에 구성, 쓰기, 열거가 가능하다.
+- 생성자 인수에서 가져오지 않는 속성 또한 당연히 설정할 수 있다.
+
+### 4.2.3 프로로타입 메서드 추가
+
+```jsx
+class Color {
+  toString() {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  }
+}
+
+// 이전까지(~ES5)와 거의 동등한 코드
+Color.prototype.toString = function toString() {
+  return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+};
+```
+
+- ES2015의 **메서드 구문은 더 선언적이고 간결하다.**
+- 함수를 메서드로 구체적으로 표시하여 간단한 함수로는 가질 수 없는 기능에 접근할 수 있도록 한다.
+  eg. super
+- 새로운 구문은 또한 **메서드를 열거 불가능**하게 만든다.
+- **메서드는 그 정의에 따라 생성자 함수가 아니므로 자바스크립트 엔진은 prototype 속성 및 관련 객체를 그 위에 배치하지 않는다.**
+
+```jsx
+class Color {
+  toString() {
+    return "rgb(" + this.r + ", " + this.g + ", " + this.b + ")";
+  }
+}
+
+const c = new Color(30, 144, 255);
+console.log(typeof c.toString.prototype); // undefined
+
+...
+
+var Color = function Color(r, g, b) {};
+Color.prototype.toString = function toString() {}
+
+const c = new Color(30, 144, 255);
+console.log(typeof c.toString.prototype); // object
+```
+
+- 이론적으로 메서드 구문은 이전 함수 구문보다 메모리 효율성이 높다.
+
+### 4.2.4 정적 메서드 추가
+
+- static 키워드는 자바스크립트 엔진이 객체의 prototype이 아닌 객체 자체에 해당 메서드를 배치하도록 지시한다.
+
+```jsx
+const c = Color.fromCSS('#1E90FF');
+console.log(c.toString()); // "rgb(30, 144, 255)"
+```
+
+- 이전 ES5에서는 Color 함수의 속성에 할당하여 작업을 수행했다.
+
+```jsx
+Color.fromCSS = function fromCSS(css) {};
+```
+
+- 프로토타입 메서드와 마찬가지로 메서드 구문을 사용한다는 것은 fromCSS에 객체가 할당된 프로토타입 속성이 없다는 것을 의미한다.
+
+### 4.2.5 접근자 속성 추가
+
+```jsx
+class Color {
+  get rgb() {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  }
+
+  toString() {
+    return this.rgb;
+  }
+}
+```
+
+- ES5의 객체 리터럴에 접근자를 정의하는 것과 같다.
+- 한 가지 다른 차이점은 **class 구문의 접근자 속성은 열거할 수 없다.**
+- 정적 접근자 속성을 정의할 수도 있다. 앞에 static이 있는 접근자를 정의하기만 하면 된다.
+
+### 4.2.6 계산된 메서드 이름
+
+- 경우에 따라 런타임에 결정되는 이름으로 메서드를 만들고 싶을 때가 있다.
+  - 이는 심볼을 사용할 때 특히 중요하다.
+
+```jsx
+let name = 'foo' + Math.floor(Math.random() * 100);
+class SomeClass {
+  [name]() {}
+}
+```
+
+- 정적 메서드 및 접근자 속성 메서드도 계산된 이름을 가질 수 있다.
+
+```jsx
+class SomeClass {}
+```
+
+- 메서드 이름 주위의 대괄호에 유의하자. 속성 접근자에서와 똑같은 방식으로 작동한다.
+  - 그 안에 어떤 표현이든 넣을 수 있다.
+  - 클래스 정의가 평가 될 때 식이 평가된다.
+  - 결과가 문자열이나 심볼이 아닌 경우 문자열로 변환된다.
+  - 결과가 메서드 이름으로 사용된다.
+- 정적 메서드 및 접근자 속성 메서드도 계산된 이름을 가질 수 있다.
+
+```jsx
+class Guide {
+  static [6 * 7]() {
+    console.log('...');
+  }
+}
+
+Guide['42'](); // ...
+```
+
+## 4.3 기존 문법과 비교
+
+- ES2015 구문의 전체 클래스와 거의 동등한 ES5 버전과 비교해 보자.
+
+```jsx
+class Color {
+  constructor(r = 0, g = 0, b = 0) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  get rgb() {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  }
+
+  set rgb(value) {
+    let s = String(value);
+    let match = /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i.exec(s.replace(/\s/g, ''));
+    if (!match) {
+      throw new Error("Invalid rgb color string '" + s + "'");
+    }
+    this.r = parseInt(match[1], 10);
+    this.g = parseInt(match[2], 10);
+    this.b = parseInt(match[3], 10);
+  }
+
+  toString() {
+    return this.rgb;
+  }
+
+  static fromCSS(css) {
+    const match = /^#?([0-9a-f]{3}|[0-9a-f]{6});?$/i.exec(css);
+    if (!match) {
+      throw new Error('Invalid CSS code: ' + css);
+    }
+    let vals = match[1];
+    if (vals.length === 3) {
+      vals = vals[0] + vals[0] + vals[1] + vals[1] + vals[2] + vals[2];
+    }
+    return new this(
+      parseInt(vals.substring(0, 2), 16),
+      parseInt(vals.substring(2, 4), 16),
+      parseInt(vals.substring(4, 6), 16),
+    );
+  }
+}
+
+// Usage
+let c = new Color(30, 144, 255);
+console.log(String(c)); // "rgb(30, 144, 255)"
+c = Color.fromCSS('00A');
+console.log(String(c)); // "rgb(0, 0, 170)"
+```
+
+```jsx
+'use strict';
+var Color = function Color(r, g, b) {
+  if (!(this instanceof Color)) {
+    throw new TypeError("Class constructor Color cannot be invoked without 'new'");
+  }
+  this.r = r || 0;
+  this.g = g || 0;
+  this.b = b || 0;
+};
+
+Object.defineProperty(Color.prototype, 'rgb', {
+  get: function () {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  },
+  set: function (value) {
+    var s = String(value);
+    var match = /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i.exec(s.replace(/\s/g, ''));
+    if (!match) {
+      throw new Error("Invalid rgb color string '" + s + "'");
+    }
+    this.r = parseInt(match[1], 10);
+    this.g = parseInt(match[2], 10);
+    this.b = parseInt(match[3], 10);
+  },
+  configurable: true,
+});
+
+Color.prototype.toString = function () {
+  return this.rgb;
+};
+Color.fromCSS = function (css) {
+  var match = /^#?([0-9a-f]{3}|[0-9a-f]{6});?$/i.exec(css);
+  if (!match) {
+    throw new Error('Invalid CSS code: ' + css);
+  }
+  var vals = match[1];
+  if (vals.length === 3) {
+    vals = vals[0] + vals[0] + vals[1] + vals[1] + vals[2] + vals[2];
+  }
+  return new this(
+    parseInt(vals.substring(0, 2), 16),
+    parseInt(vals.substring(2, 4), 16),
+    parseInt(vals.substring(4, 6), 16),
+  );
+};
+
+// Usage
+var c = new Color(30, 144, 255);
+console.log(String(c)); // "rgb(30, 144, 255)"
+c = Color.fromCSS('00A');
+console.log(String(c)); // "rgb(0, 0, 170)"
+```
+
+## 4.4 서브클래스 만들기
+
+- ES5에서 생성자의 상속을 설정하는 것은 상당히 복잡하고 오류가 발생하기 쉽다.
+- 서브클래스에서 메서드의 "super" 버전을 사용하는 것은 훨씬 더 그렇다.
+- class 구문을 사용하면 모든 어려움이 사라진다.
+
+```jsx
+class Color {
+  constructor(r = 0, g = 0, b = 0) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  get rgb() {
+    return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  }
+
+  toString() {
+    return this.rgb;
+  }
+}
+
+class ColorWithAlpha extends Color {}
+
+const c = new ColorWithAlpha(30, 144, 255);
+console.log(String(c)); // rgb(30, 144, 255)
+```
+
+- **서브클래스의 기본 생성자는 여러 인수를 허용하고 모든 인수를 슈퍼클래스의 생성자를 전달한다.**
+
+```jsx
+consturctor(/* ...여기에 임의의 수의 인수가 있다...  */){
+  super(/* ...모두 super로 전달... */);
+}
+```
+
+- **서브클래스에 정의된 생성자가 없으면 자바스크립트 엔진이 기본 생성자를 제공한다.**
+  - 서브클래스가 생성자를 상속한다고 할 수도 있지만, **엔진은 슈퍼클래스의 생성자를 호출하는 별도의 함수를 생성한다.**
+- ES5전의 코드는 아래와 같이 별도로 처리해주어야 할 게 많다.
+
+```jsx
+var ColorWithAlpha = function ColorWithAlpha() {
+  Color.apply(this, arguments);
+};
+
+ColorWithAlpha.prototype = Object.create(Color.prototype);
+ColorWithAlpha.prototype.constructor = ColorWithAlpha;
+```
+
+- 오류가 발생할 가능성이 많은 상용구 코드이고, ColorWithAlpha에서 Color의 정적 속성과 메서드를 사용할 수 없다.
+
+### 4.4.1 super 키워드
+
+- 클래스의 측면을 참조하기 위해 생성자와 메서드에서 super를 사용한다.
+  - super(): 서브클래스 생성자에서 마치 객체를 생성하는 함수인 것처럼 super를 호출하고 슈퍼클래스가 객체의 초기화를 수행하도록 한다.
+  - super.property와 super.method(): super.property와 super.method()가 대신 super에서 접근하여 슈퍼클래스 프로토타입의 속성 및 메서드를 참조한다.
+
+### 4.4.2 서브클래스 생성자 작성
+
+- 서브클래스의 생성자에서는 객체가 생성된 후에만 사용할 수 있으며, super를 호출할 때까지 생성되지 않는다.
+
+```jsx
+class ColorWithAlpha extends Color {
+  constructor(r = 0, g = 0, b = 0, a = 0) {
+    this.a = a;
+    super(r, g, b);
+  }
+}
+```
+
+- 위의 코드에서는 오류가 발생하는데, 이는 자바스크립트 엔진마다 다르다.
+  - ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+  - ReferenceError: must call super constructor before using |this| in ColorWithAlpha class constructor
+  - ReferenceError: this is not defined
+- 이 요구 사항은 생성되는 객체의 초기화가 기본에서 위로 수행되도록 하기 위한 것이다.
+
+### 4.4.3 슈퍼클래스 프로토타입 속성, 메서드 상속, 접근
+
+- 때로는 서브클래스가 메서드의 정의를 재정의하여 슈퍼클래스에서 상속된 것을 사용하는 대신 자신의 것을 제공한다.
+- 때때로 서브클래스에서 메서드는 구현의 일부로 슈퍼클래스 메서드를 호출해야 하기도 한다.
+  - 이를 위해 `super.methodName()` 을 통해 슈퍼클래스 메서드를 호출한다.
+
+```jsx
+class ColorWithAlpha extends Color {
+  constructor(r = 0, g = 0, b = 0, a = 1) {
+    super(r, g, b);
+    this.a = a;
+  }
+
+  brightness(bgColor) {
+    let result = super.brightness() * this.a;
+    if (bgColor && this.a !== 1) {
+      result = (result + bgColor.brightness() * (1 - this.a)) / 2;
+    }
+    return result;
+  }
+}
+```
+
+- ES5전의 코드는 아래와 같이 처리할 수 있다.
+
+```jsx
+ColorWithAlpha.prototype.brightness = function brightness(bgColor) {
+  var result = Color.prototype.brightness.call(this) * this.a; // 또는 아래와 같이 선언 가능
+  if (bgColor && this.a !== 1) {
+    result = (result + bgColor.brightness() * (1 - this.a)) / 2;
+  }
+  return result;
+};
+
+// case1
+var superproto = Object.getPrototypeOf(ColorWithAlpha.prototype);
+var result = superproto.brightness.call(this) * this.a;
+
+// case2
+var superproto = Object.getPrototypeOf(Object.getPrototypeOf(this));
+var result = superproto.brightness.call(this) * this.a;
+```
+
+- 이렇게 만든 코드는 어색하고 call을 사용해 this를 관리해야 하는 번거로움이 있다.
+
+### 4.4.4 정적 메서드 상속
+
+- 자바스크립트에서 정적 메서드는 서브클래스에 상속된다.
+
+```jsx
+class Color {
+  // ...
+  static fromCSS() {
+    // ...
+  }
+}
+
+class ColorWithAlpha extends Color {
+  // ...
+}
+
+const ca = ColorWithAlpha.fromCSS('#1E90FF');
+console.log(String(ca)); // "rgba(30, 144, 255, 1)"
+console.log(ca.constructor.name); // "ColorWithAlpha"
+console.log(ca instanceof ColorWithAlpha); // true
+```
+
+- `extends` 절을 사용하면 두 개의 상속 체인이 생성된다.
+  - `ColorWithAlpha` → `Color` → `Function.Prototype` → `Object.prototype`
+  - `ColorWithAlpha.prototype` → `Color.prototype` → `Object.prototype`
+- 생성자 상속 체인은 ES2015의 새로운 기능이며 ES5 이전까지는 프로토타입이 `Function.prototype` 이 아닌 진정한 자바스크립트 함수를 갖는 표준 방법이 없었다.
+- 하지만 ES2015에서 서브클래스의 생성자가 슈퍼클래스 생성자를 프로토타입으로 사용하고 결과적으로 그 속성과 메서드를 상속하는 것은 완벽하다.
+
+### 4.4.5 정적 메서드에서 super
+
+- 서브클래스 생성자는 실제로 슈퍼클래스 생성자에서 상속되므로 정적 서브클래스 메서드 내에서 super를 사용해 슈퍼클래스 버전 참조할 수 있다.
+
+```jsx
+class ColorWithAlpha extends Color {
+  // ...
+
+  static fromCSS(css, a = 1) {
+    const result = super.fromCSS(css);
+    result.a = a;
+    return result;
+  }
+}
+```
+
+### 4.4.6 새 인스턴스를 반환하는 메서드
+
+- 인스턴스 메서드에서는 this.constructor가 일반적으로 객체의 생성자를 참조하므로 this가 아니라 this.constructor를 사용할 수 있다.
+
+```jsx
+class Color {
+  halfBright() {
+    const ctor = this.constructor || Color;
+    return new ctor(Math.round(this.r / 2), Math.round(this.g / 2), Math.round(this.b / 2));
+  }
+}
+```
+
+- 위 예제에서 halfBright가 Color 인스턴스를 반환하는 대신 Color 서브클래스를 만들고 싶다고 가정해 보겠다.
+- 새 인스턴스를 만드는 대부분의 메서드가 서브클래스에서 쉽게 재정의할 수 잇는 방식으로 동일한 생성자를 사용하도록 하려면 Symbol.species라는 더 나은 대안이 있다.
+- Symbol.species는 “그” 클래스의 새 인스턴스를 만들어야 하는 메서드에서 발생하는 작업을 서브클래스가 제어할 수 있도록 특별히 설계된 패턴의 일부다.
+
+```jsx
+class Base {
+  constructor(data) {
+    this.data = data;
+  }
+
+  static get [Symbol.species]() {
+    return this;
+  }
+
+  static create(data) {
+    // Symbol.species를 사용하지 않는다.
+    const ctor = this || Base;
+    return new ctor(data);
+  }
+
+  clone() {
+    // Symbol.species를 사용한다.
+    const ctor = (this && this.constructor && this.constructor[Symbol.species]) || Base;
+    return new ctor(this.data);
+  }
+}
+
+// Sub1은 기본 동작을 사용한다.
+class Sub1 extends Base {}
+
+// Sub2는 패턴을 따르는 모든 메서드가 Sub2 대신 Base를 사용하게 한다.
+class Sub2 extends Base {
+  static get [Symbol.species]() {
+    return Base;
+  }
+}
+
+const a = Base.create(1);
+console.log(a.constructor.name); // "Base"
+const aclone = a.clone();
+console.log(aclone.constructor.name); // "Base"
+
+const b = Sub1.create(2);
+console.log(b.constructor.name); // "Sub1"
+const bclone = b.clone();
+console.log(bclone.constructor.name); // "Sub1"
+
+const c = Sub2.create(3);
+console.log(c.constructor.name); // "Sub2"
+const d = new Sub2(4);
+console.log(d.constructor.name); // "Sub2"
+console.log(d.data); // 4
+const dclone = d.clone();
+console.log(dclone.constructor.name); // "Base"
+console.log(dclone.data); // 4
+```
+
+### 4.4.7 내장 객체 상속
+
+- ES5에서 Error와 Array 같은 일부 내장 생성자는 서브클래스를 제대로 만들지 못하는 것으로 악명이 높다.
+  - 이는 ES2015에서 수정되었다.
+- 내장 객체를 class로 서브클래싱 하는 것은 다른 것을 서브클래싱하는 것과 같다.
+  - Reflect.construct를 통해 class 구문 없이 서브클래싱할 수도 있다.
+
+```jsx
+class Elements extends Array {
+  select(source) {
+    // ...
+    return this;
+  }
+
+  style(props) {
+    // ...
+    return this;
+  }
+}
+
+new Elements().select('div').style({ color: 'green' }).slice(1).style({ border: '1px solid gray' });
+```
+
+- 슬라이스를 사용해 새 Array가 아닌 새 Elements 인스턴스가 만들어지는 점에 유의하자.
+- Array는 Symbol.species 패턴을 사용하고 Elements 클래스가 기본값을 재정의하지 않았기 때문이다.
+
+### 4.4.8 super를 이용할 수 있는 곳
+
+- ES2015 이전에는 자바스크립트에서 메서드라는 용어가 비교적 느슨하게 사용하여 객체 속성에 할당된 모든 함수를 참조했다.
+- **ES2015에서는 실제 메서드와 속성에 할당된 함수 사이에는 차이가 있다.**
+  - 실제 메서드 내부의 코드에서만 모두 super에 접근이 가능하다.
+
+```jsx
+class SuperClass {
+  test() {
+    return "SuperClass's test";
+  }
+}
+class SubClass extends SuperClass {
+  test1() {
+    return "SubClass's test1: " + super.test();
+  }
+}
+SubClass.prototype.test2 = function () {
+  return "SubClass's test2: " + super.test(); // ERROR HERE
+};
+
+const obj = new SubClass();
+obj.test1();
+obj.test2();
+```
+
+- 메서드는 생성된 객체에 대한 링크가 있지만 속성에 할당된 기존 함수에는 링크가 없기 때문이다.
+
+```jsx
+function getFakeSuper(o) {
+  return Object.getPrototypeOf(Object.getPrototypeOf(o));
+}
+class Base {
+  test() {
+    console.log("Base's test");
+    return 'Base test';
+  }
+}
+class Sub extends Base {
+  test() {
+    console.log("Sub's test");
+    return 'Sub test > ' + getFakeSuper(this).test.call(this);
+  }
+}
+class SubSub extends Sub {
+  test() {
+    console.log("SubSub's test");
+    return 'SubSub test > ' + getFakeSuper(this).test.call(this);
+  }
+}
+
+const obj = new SubSub();
+console.log(obj.test()); // "SubSub's test" 후 "Sub's test" 반복
+// stack overflow error가 발생할 때까지
+```
+
+- 위의 코드가 메서드가 정의된 객체([[HomeObject]])를 나타내는 필드를 가져야하는 이유다.
+- 자바스크립트 엔진은 해당 객체를 얻은 후에야 프로토타입을 가져와 super에 접근할 수 있다.
+- 객체에서 객체로 메서드를 복사하는 것(mixin 패턴)은 메서드의 [[HomeObject]]를 변경하지 않는다. mixin 메서드에서 super를 사용하는 경우 복사된 객체의 프로토타입이 아닌 원래 HomeObject의 프로토타입을 사용한다.
+  - 이는 복사한 대상 간에 미묘한 혼선이 발생할 수 있으니 주의하자.
+
+## 4.5 Object.protoype 떠나보내기
+
+- 기본적으로 기본 클래스도 사실상 Object의 서브클래스이다.
+- 아래 코드의 다음 두 클래스는 사실상 동일하다.
+  ```jsx
+  class A {
+    constructor() {}
+  }
+  class B extends Object {
+    constructor() {
+      super();
+    }
+  }
+  ```
+- 다만 A함수의 프로토타입은 Function.prototype이지만, B 함수의 프로토타입은 Object이다.
+- A.prototype과 B.prototype은 모두 Object.prototype이다.
+
+## 4.6 new.target
+
+- 함수와 생성자는 두 가지 방법으로 호출할 수 있다.
+  1. 직접 호출(클래스 구문을 통해 생성된 생성자는 이를 허용하지 않음)
+  2. 객체 생성의 일부로서 호출(super 또는 Reflect.construct를 통해서)
+- 때로는 함수가 어떻게 호출되었는지 아는 것이 중요하다.
+  - 함수가 `new` 를 통하지 않고 직접 호출된 경우 `new.target` 은 `undefined` , `new` 연산자의 직접 대상인 경우엔 현재 함수를 참조
+
+```jsx
+function example() {
+  console.log(new.target);
+}
+
+example(); // undefined
+
+class Base {
+  constructor() {
+    console.log(new.target);
+  }
+}
+
+new Base(); // "Base"
+
+class Sub extends Base {
+  constructor() {
+    super();
+  }
+}
+
+new Sub(); // "Sub"
+```
+
+- 이 성질을 이용해 다음 세 가지 시나리오에 대해 적절한 처리가 가능
+- **추상 클래스**
+  - 직접 인스턴스화 할 수 없는 클래스로 서브클래스를 통해서만 인스턴스화 가능
+  - 생성자에서 `new.target` 이 자기 자신을 바라보면 오류를 발생시켜 구현
+
+```jsx
+class Shape {
+  constructor(color) {
+    if (new.target === Shape) {
+      throw new Error("Shape can't be directly instantiated");
+    }
+    this.color = color;
+  }
+  // ...
+}
+
+class Triangle extends Shape {
+  get sides() {
+    return 3;
+  }
+}
+
+const t = new Triangle('orange');
+
+const s = new Shape('red'); // Error: "Shape can't be directly instantiated"
+```
+
+- **최종 클래스**
+  - 최종 클래스는 서브클래스 인스턴스를 허용하지 않음
+  - 생성자에서 `new.target` 이 클래스의 자체 생성자와 같지 않으면 오류를 발생시켜 구현
+
+```jsx
+class Thingy {
+  constructor() {
+    if (new.target !== Thingy) {
+      throw new Error("Thingy subclasses aren't supported.");
+    }
+  }
+}
+
+class InvalidThingy extends Thingy {}
+
+const can = new Thingy(); // works
+const cannot = new InvalidThingy(); // Error: "Thingy subclasses aren't supported."
+```
+
+- **생성자 호출/함수 호출에 따른 각각 다른 처리**
+
+```jsx
+const TwoWays = function TwoWays() {
+  if (!new.target) {
+    console.log("Called directly; using 'new' instead");
+    return new TwoWays();
+  }
+  console.log("Called via 'new'");
+};
+console.log('With new:');
+let t1 = new TwoWays();
+// "Called via 'new'"
+
+console.log('Without new:');
+let t2 = TwoWays();
+// "Called directly; using 'new' instead"
+// "Called via 'new'"
+```
+
+## 4.7 클래스 선언 대 클래스 표현식
+
+- function과 마찬가지로 class는 선언이나 표현식으로 사용할 수 있다.
+
+```jsx
+// 선언
+class Class1 {}
+
+// 익명 클래스 표현식
+let Color = class {};
+
+// 명명된 클래스 표현식
+let C = class Color {};
+```
+
+### 4.7.1 class 선언
+
+- class 선언은 몇몇 중요한 차이점이 있지만 function 선언과 매우 유사하게 작동한다.
+- function 선언과 똑같이 동작하는 것
+  - 현재 범위에 클래스 이름을 추가한다.
+  - 닫는 중괄호 뒤에 세미콜론이 필요하지 않다.
+- function 선언과 다르게 동작하는 것
+  - 호이스트되지 않고 절반만 호이스트된다.
+  - 식별자는 범위 전체에서 예약되지만 코드의 단계 별 실행에서 선언에 도달할 때까지 초기화되지 않는다.
+  - 임시 데드존에 참여한다.
+  - 전역 스코프에서 사용되는 경우 클래스 이름에 대한 전역 객체에 속성을 만들지 말라. 대신 전역 객체의 속성이 아닌 전역을 만든다.
+
+```jsx
+// 여기서 TheClass를 사용하려고하면 TDZ때문에 ReferenceError가 발생한다.
+
+let name = 'foo' + Math.floor(Math.random() * 1000);
+
+class TheClass {
+  // 선언은 단계별 코드의 일부로 처리되기 때문에
+  // 여기에서 name을 사용할 수 있고 위에서 할당한 값을 가진다.
+  [name]() {
+    console.log('This is the method ' + name);
+  }
+} // 세미콜론 필요 없음
+
+// 전역이 생성됨
+console.log(typeof TheClass); // "function"
+
+// 전역 객체애 대한 속성이 없음
+console.log(typeof this.TheClass); // "undefined"
+```
+
+### 4.7.2 class 표현
+
+- class 표현식은 function 표현식과 매우 유사하게 작동한다.
+  - 명명된 방식과 익명 방식이 모두 있다.
+  - 클래스 이름이 나타나는 범위에 클래스 이름을 추가하지 않지만 클래스 정의 자체 내에서 클래스 이름을 사용할 수 있도록 한다.
+  - 변수나 상수에 할당되거나 함수에 전달되거나 무시될 수 있는 값(클래스의 생성자)이 생성된다.
+  - 자바스크립트 엔진은 익명 함수식에 대해 컨텍스트에서 익명 클래스 식으로 만든 클래스의 name 속성 값을 유추한다.
+  - 할당의 오른쪽으로 사용되는 경우 할당식을 종료하지 않는다.
+
+```jsx
+let name = 'foo' + Math.floor(Math.random() * 1000);
+
+// 표현식
+const C = class TheClass {
+  [name]() {
+    console.log('This is the method ' + name + ' in the class ' + TheClass.name);
+    // The class name is in-scope -^
+    // within the definition
+  }
+}; // 세미콜론 필요함
+
+// 클래스 이름이 이 스코프 영역에 추가되지 않음
+console.log(typeof TheClass); // "undefined"
+
+// 표현식의 값은 클래스임
+console.log(typeof C); // "function"
+```
+
+## 4.8 앞으로 더 배울 것
+
+- 공용 클래스 속성
+- 프라이빗 필드
+- 프라이빗 메서드
+- 퍼블릭과 프라이빗 정적 필드
+- class 정의(예: ES2021)에 추가될 몇 가지 기능
+
+## 4.9 과거 습관을 새롭게
+
+### 4.9.1 생성자 함수를 만들 때 클래스 사용
+
+- 생성자 함수를 사용하지 않는다면 클래스 사용을 시작해야 한다는 의미는 아니다.
+- 생성자 함수와 prototype 속성은 자바스크립트의 프로토타입 상속을 사용하는 방법 중 하나일뿐이다.
+- **생성자 함수를 사용한다면 class를 사용하는게 간결함, 표현력 기능의 모든 이점을 고려할 때 유익하다.**

@@ -1,0 +1,279 @@
+---
+id: 웹 개발자를 위한 자바스크립트의 모든 것
+title: '7장 디스트럭처링'
+description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
+keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
+createdAt: 2023.06.16
+---
+
+## 7.1 개요
+
+- 디스트럭처링은 그것의 구조에서 무언가를 추출할 때 사용하는 문법이다.
+- ES2018에서 **확장된 디스트럭처링 구문은 더 간결하고 매우 강력하여 기본값, 이름 변경, 중첩 및 나머지 구문을 제공**한다.
+- 특히 함수 매개변수에 적용될 때 명확성과 표현력을 제공한다.
+
+## 7.2 기본 객체 디스트럭처링
+
+```jsx
+let obj = { fisrt: 1, second: 2 };
+let a = obj.a; // 오래된 수동 디스트럭처링
+let { fisrt: b } = obj; // 새로운 디스트럭처링 구문
+
+console.log(a); // 1;
+console.log(b); // 1;
+```
+
+- 위 디스럭처링은 자바스크립트 엔진에 first 속성의 값을 변수 a와 b에 넣도록 지시한다.
+- **객체 리터럴과 디스트럭처링 구문은 그 목적이 반대이지만 정확히 같은 모양이다.**
+- 자바스크립트 엔진은 문맥으로 객체 리터럴을 작성하는지 아니면 객체 디스트럭처링 패턴을 작성하는지 알고 있다.
+
+```jsx
+let { first: a } = { first: 42 };
+```
+
+- 위의 코드에서 대상은 let, 변수 a로 선언되는 변수이다.
+- **디스트럭처링 패턴의 대상은 변수, 객체 속성, 배열 엔트리 등 할당할 수 있는 모든 것이 될 수 있다.**
+- 수동 디스트럭처링과 마찬가지로 객체에 읽으려는 속성이 없는 경우 변수는 undefined를 가져온다.
+
+```jsx
+let obj = { first: 2, second: 3 };
+let { third: c } = obj;
+console.log(c); // undefined
+```
+
+- 디스트럭처링시 콜론과 이름은 생략할 수 있다.
+
+```jsx
+let obj = { first: 2, second: 3 };
+let { first } = obj;
+console.log(first); // 2
+```
+
+- 하나 이상의 속성을 선택할 때 디스트럭처링은 강력해지기 시작한다.
+
+```jsx
+let obj = { first: 2, second: 3 };
+let { first, second } = obj;
+
+// 위 코드는 다음 코드와 같다.
+let obj = { first: 2, second: 3 };
+let first = obj.first,
+  second = obj.second;
+```
+
+- **디스트럭처링은 변수/상수 초기화에만 국한되지 않는다. 모든 할당에서 사용할 수 있다.**
+
+```jsx
+let first, second;
+
+{first, second} = getSomeObject(); // 문법 오류
+({first, second} = getSomeObject()); // 동작함
+```
+
+- 자바스크립트 파서가 명령문을 예상하는 할당을 수행하는 경우 파서가 초기 중괄호를 블록의 시작으로 처리하므로 할당 표현식을 괄호로 묶어야 한다.
+- **디스트럭처링은 이전 스타일과 동등한 코드로 속성을 선택하기 위한 문법적 설탕(syntactic sugar)일 뿐이다.** 문법적 설탕이 없는 버전이 어떻게 생겼는지 보면 도움이 된다.
+
+```jsx
+let { first, second } = 42;
+// first와 second 모두 undefined
+
+const temp = 42;
+let first = temp.first,
+  second = temp.second;
+// first와 second 모두 undefined
+```
+
+- 숫자를 객체처럼 취급할 떄와 마찬가지로 기본 숫자는 Number로 강제 변환되며, 이 예에서 first, second 속성은 해당 객체에서 읽게 된다. 물론 존재하지 않으므로 undefined 값을 얻는다.
+
+## 7.3 기본 배열(과 이터러블) 디스트럭처링
+
+- 배열과 다른 이터러블도 디스트럭처링할 수 있다.
+
+```jsx
+const arr = [1, 2];
+const [first, second] = arr;
+console.log(first, second); // 1, 2
+
+// 위 코드는 다음 코드와 같다.
+const arr = [1, 2];
+const first = arr[0],
+  second = arr[1];
+console.log(first, second); // 1, 2
+```
+
+- 객체 디스트럭처링과 달리, 명령문이 예상되는 위치에 초기화하는 대신 할당을 수행할 때 표현식을 괄호로 묶을 필요가 없다. 초기 대괄호 `[` 는 초기 중괄호 `{` 와 같이 모호하지 않다.
+
+```jsx
+const arr = [1, 2];
+let first, second;
+[first, second] = arr;
+
+console.log(first, second); // 1, 2
+```
+
+## 7.4 기본값
+
+- 수동 디스트럭처링과 달리 속성이 없거나 값이 undefined인 경우에만 적용되는 기본 값을 지정할 수 있다.
+
+```jsx
+const obj = { first: 1, second: 2 };
+const { third = 3 } = obj;
+
+console.log(third); // 3
+
+const obj2 = { fourth: 0 };
+const { fourth = 3 } = obj2;
+
+console.log(fourth); // 0, 3이 아님
+```
+
+- **기본값은 유횻값이 거짓으로 평가되는 모든 값이 아니라 undefined인 경우에만 사용된다.**
+
+```jsx
+const getDefault = (val) => val;
+const obj = { first: 1, second: undefined };
+const { first = getDefault('it is 1'), second = getDefault('it is 2'), third = getDefault(second) } = obj;
+
+console.log(first); // 1
+console.log(second); // it is 2
+console.log(third); // it is 2
+```
+
+- 디스트럭처링은 소스 코드 순서대로 수행된다.
+- 소스 코드 순서로 수행되기 때문에 이후 대상은 기본값에서 이전 대상의 값을 참조할 수 있다.
+
+## 7.5 디스트럭처링 패턴에서 나머지 문법
+
+- 디스트럭처링할 때 나머지 문법을 사용할 수 있고, 패턴의 나머지 엔트리는 끝에 있어야 한다.
+
+```jsx
+const a = [1, 2, 3, 4];
+const [first, second, ...rest] = a;
+
+console.log(first); // 1
+console.log(second); // 2
+console.log(rest); // [3, 4]
+```
+
+## 7.6 다른 이름 사용하기
+
+- 단축 문법을 사용하는 대신 명시적 변수 이름을 포함하면 디스트럭처링을 통해서도 다른 이름을 사용할 수도 있다.
+
+```jsx
+const obj = { 'my-name': 1 };
+const { 'my-name': myName } = obj;
+console.log(myName); // 1
+```
+
+- **배열은 객체이기 때문에 배열 디스트럭처링보다는 객체 디스트럭처링을 사용하여 더 명확하게 할 수 있다.**
+
+```jsx
+const arr = [1, 2, 3, 4, 5];
+const [first, , , last] = arr; // 배열 디스트럭처링
+const { 0: a, 4: e } = arr; // 객체 디스트럭처링
+
+console.log(first, last); // 1, 5
+console.log(a, e); // 1, 5
+```
+
+- 위의 인덱스 트릭은 배열 인덱스가 속성 이름이기 때문에 작동한다.
+  따라서, 이터러블에서 작동하지 않고 배열에서만 작동한다. 이터러블이 유한한 경우 Array.from을 사용하여 이 트릭을 적용할 수 있다.
+
+## 7.7 계산된 속성 이름
+
+- 객체 디스트럭처링은 객체 리터럴과 똑같은 문법을 사용하므로 디스터럭처링할 때도 계산된 속성 이름을 사용할 수 있다.
+
+```jsx
+let source = { a: 'ayy', b: 'bee' };
+let name = Math.random() < 0.5 ? 'a' : 'b';
+let { [name]: dest } = source;
+
+console.log(dest); // 반은 "ayy", 반은 "bee";
+```
+
+## 7.8 중첩된 디스트럭처링
+
+- 패턴에서 중첩을 사용하면 디스트럭처링 구문이 더 깊어질 수 있다.
+
+```jsx
+const obj = { a: [1, 2, 3], b: [4, 5, 6] };
+let {
+  a: [first, second],
+} = obj;
+
+console.log(first, second); // 1, 2
+```
+
+- 객체와 배열 리터럴과 마찬가지로 사용할 수 있는 중첩 수는 기본적으로 무제한이다.
+
+## 7.9 매개변수 디스트럭처링
+
+- 디스트럭처링은 할당만을 위한 것이 아니다. 함수 매개변수에도 디스트럭처링할 수 있다.
+- 디스트럭처링되지 않는 매개변수가 첫 번째이거나 유일한 매개변수일 필요는 없다. 매개변수 목록 어디에나 있을 수 있다.
+
+```jsx
+function example(first, { a, b }, last) {
+  console.log(first, a, b, last);
+}
+const o = { a: 'ayy', b: 'bee', c: 'see', d: 'dee' };
+example('alpha', o, 'omega'); // "alpha" "ayy" "bee" "omega"
+example('primero', { a: 1, b: 2 }, 'ultimo'); // "primero" 1 2 "ultimo"
+```
+
+- 기본 함수 매개변수는 사실상 기본 디스트럭처링 값일 뿐이다. 함수 매개변수 목록은 매개변수 없이 예를 호출할 때 다음과 같은 디스트럭처링과 동일하다.
+
+```jsx
+function example(first, { a, b }, last) {
+  console.log(first, a, b, last);
+}
+const o = { a: 'ayy', b: 'bee', c: 'see', d: 'dee' };
+example('alpha', o, 'omega'); // "alpha" "ayy" "bee" "omega"
+example('primero', { a: 1, b: 2 }, 'ultimo'); // "primero" 1 2 "ultimo"
+```
+
+## 7.10 반복문에서 디스트럭처링
+
+- for-in과 for-of 루프는 루프 반복이 시작될 때 루프변수에 할당한다. 여기에도 디스트럭처링을 사용할 수 있다.
+
+```jsx
+const arr = [
+  { name: 'one', value: 1 },
+  { name: 'two', value: 2 },
+  { name: 'forty-two', value: 42 },
+];
+for (const { name, value } of arr) {
+  console.log('Name: ' + name + ', value: ' + value);
+}
+
+const obj = { a: 1, b: 2, c: 3 };
+for (const name in obj) {
+  if (obj.hasOwnProperty(name)) {
+    const value = obj[name];
+    console.log(name + ' = ' + value);
+  }
+}
+```
+
+- 또한, 이터러블 디스트럭처링으로 코드를 훨씬 더 명확하게 할 수 있다.
+
+```jsx
+const obj = { a: 1, b: 2, c: 3 };
+for (const [name, value] of Object.entries(obj)) {
+  console.log(name + ' = ' + value);
+}
+```
+
+## 7.11 과거 습관을 새롭게
+
+### 7.11.1 객체에서 일부 속성만 가져올 때 디스트럭처링 사용
+
+- 추후에 객체 자체가 필요하지 않다면 디스트럭처링을 사용하자.
+
+```jsx
+const { firstName, lastName } = getThePerson();
+console.log(firstName, lastName);
+```
+
+### 7.11.2 옵션 객체에 디스트럭처링 사용
+
+- 디스트럭처링 사용을 고려하자.

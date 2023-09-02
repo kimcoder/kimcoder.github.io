@@ -1,0 +1,535 @@
+---
+id: 웹 개발자를 위한 자바스크립트의 모든 것
+title: '5장 새로운 객체 기능'
+description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
+keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
+createdAt: 2023.06.16
+---
+
+## 5.1 계산된 속성 이름
+
+- ES2015는 속성 정의 자체에 앞의 코드에서 사용된 대괄호와 같이 대괄호([])를 사용하는 **계산된 속성 이름(computed property name)**을 추가했다.
+
+```jsx
+const name = 'answer';
+const obj = {
+  [name]: 42,
+};
+console.log(obj); // {answer:42}
+```
+
+- 속성 의의 대괄호는 속성 값을 가져오거나 설정할 때 항상 사용했던 대괄호처럼 작동한다.
+- 즉, 대괄호 안의 모든 표현식을 사용할 수 있으며 표현식의 결과가 이름으로 사용된다.
+
+```jsx
+const prefix = 'ans';
+const obj = {
+  [prefix + 'wer']: 42,
+};
+console.log(obj); // {answer:42}
+```
+
+## 5.2 단축 속성
+
+- ES2015부터 **단축 속성(shorthand property)**을 사용할 수 있다.
+
+```jsx
+function getMinMax(nums) {
+  let min, max;
+  // do something
+
+  return { min, max };
+}
+```
+
+- 값이 단순한 범위 내 식별자(변수, 매개변수 등)에서 오는 경우에만 이 작업을 수행할 수 있다.
+
+## 5.3 객체의 프로토타입 얻기와 설정하기
+
+- ES2015에는 기존 객체의 프로토타입을 설정하는 기능이 추가되었다.
+- 매우 드문 일이겠지만 가능하다.
+
+### 5.3.1 Object.setPrototypeOf
+
+- 기본 방법은 Object.setPrototypeOf를 통해 변경할 수 있으며 변경할 객체와 제공할 프로토타입을 받는다.
+
+```jsx
+const p1 = {
+  greet: function () {
+    console.log('p1 greet' + this.name);
+  },
+};
+
+const p2 = {
+  greet: function () {
+    console.log('p2 greet' + this.name);
+  },
+};
+
+const obj = Object.create(p1);
+obj.name = 'Joe';
+obj.greet();
+Object.setPrototypeOf(obj, p2);
+obj.greet();
+```
+
+- 객체를 만든 후 프로토타입을 변경하는 것은 드문 일이며 그렇게 하면 **객체 최적화를 해제하여 속성 조회가 훨씬 느려질 수 있다.**
+
+### 5.3.2 브라우저에서 `__proto__` 속성
+
+- 브라우저 환경에서 `__proto__` 라는 접근자 속성을 사용하여 객체의 프로토타입을 가져오고 설정할 수 있다.
+- 하지만 이는 공식적으로 브라우저가 아닌 자바스크립트 엔진에 대해서는 정의되지 않았다.
+
+> `__proto__`기능은 비표준 확장으로서의 동작을 공식적으로 설명하기 위해서만 표준화된 레거시 기능이다.
+> 새 코드에서는 사용하지 않아야 한다. 대신 getPrototypeOf와 setPrototypeOf를 사용하자.
+
+### 5.3.3 브라우저에서 `__proto__` 리터럴 속성 이름
+
+- `__proto__` 는 객체 리터럴에서 결과 객체의 프로토타입을 설정하는 데 사용할 수도 있다.
+- 아래 코드는 명시적 구문이고 `__proto__`접근자 속성의 결과가 아니며 문자 그대로 지정된 경우에만 작동한다.
+
+```jsx
+const p = {
+  hi: function () {
+    console.log('hi');
+  },
+};
+
+const name = '__proto__';
+const obj = {
+  __proto__: p,
+};
+
+obj.hi(); // hi
+```
+
+## 5.4 메서드 문법과 super 외부 클래스
+
+- ES2015에는 객체 리터럴에도 메서드 구문이 추가되었다.
+
+```jsx
+const obj = {
+  name: 'Joe',
+  say() {
+    console.log(this.name);
+  },
+};
+
+obj.say(); // Joe
+```
+
+- 콜론과 function 키워드를 완전히 생략한다.
+- 메서드 구문은 객체 리터럴에서 함수를 정의하는 간단한 구문이 아니지만 대부분의 경우 마치 그랬던 것처럼 작동하는 것이 좋다.
+- **클래스에서처럼 메서드 구문은 기존 함수로 초기화된 속성보다 더 많거나 적은 작업을 수행한다.**
+  - 메서드에 객체가 있는 prototype 속성이 없으며 생성자로 사용할 수 없다.
+  - 메서드는 정의된 객체인 **홈 객체에 대한 링크**를 가져온다.
+- **메서드에서 객체로 다시 연결하는 목적은 메서드 내에서 super 사용을 지원하는 것이다.**
+- ES2015+에서는 메서드 구문과 super를 사용할 수 있다.
+
+```jsx
+const obj = {
+  toString() {
+    return super.toString().toUpperCase();
+  },
+};
+
+obj.toString(); // [OBJECT OBJECT]
+```
+
+- 메서드 이름은 리터럴 식별자일 필요는 없다. 속성 키와 마찬가지로 문자열 또는 계산된 이름일 수 있다.
+
+```jsx
+const obj = {
+  name() {
+    return 'test';
+  },
+  ['say']() {
+    console.log(this.name());
+  },
+};
+
+obj.say(); // test
+```
+
+```jsx
+const obj = {
+  toString() {
+    return super.toString().toUpperCase();
+  },
+};
+
+Object.setPrototypeOf(obj, {
+  toString() {
+    return 'a different string';
+  },
+});
+
+obj.toString(); // A DIFFERENT STRING
+```
+
+- 위 코드가 [[HomeObject]]가 들어오는 곳이다. 자바스크립트 엔진이 super(예: super.toString)에 대한 속성 참조를 처리하는 방법은 명확성을 위해 일부 세부 정보를 건너뛰었다.
+  1. 현재 함수의 [[HomeObject]] 내부 슬롯 값을 가져온다. 이 예에서는 obj가 참조하는 객체이다.
+  2. 함수가 생성될 때가 아니라 super.toString **코드가 실행될 때 해당 객체의 현재 프로토타입을 가져온다.**
+  3. 프로토타입 객체의 속성을 조회하고 사용한다.
+
+## 5.5 심볼
+
+- ES2015부터는 속성 키는 문자열 또는 심볼이 될 수 있다.
+- 심볼은 고유한 기본 값이다.
+
+### 5.5.1 왜 심볼인가?
+
+- Object.prototype의 toString 함수는 `[object XYZ]` 양식의 문자열을 만든다.
+  - Date에서와 같은 기본 제공 생성자에 의해 생성된 객체의 경우 `XYZ`는 생성자의 이름이 된다(`[object Date]`, `[object Array]` 등).
+  - 그러나 ES2015 이전에는 자체 생성자(또는 일반 객체)에 의해 생성된 인스턴스의 경우 문자열은 `[object Object]`이다.
+- **ES2015에서 TC39는 사용할 이름으로 객체 속성을 지정하여 프로그래머가 기본 toString으로 XYZ가 무엇인지 결정할 수 있기를 원했다.**
+- **Object.toString은 문자열이 아닌 Symbol로 식별되는 속성을 만들었다.**
+
+```jsx
+class Example1 {}
+class Example2 {
+  get [Symbol.toStringTag]() {
+    return 'Example2';
+  }
+}
+
+new Example1().toString(); // '[object Object]'
+new Example2().toString(); // '[object Example2]'
+```
+
+- Symbol.toStringTag의 값은 Object.prototype.toString 메서드가 찾는 미리 정의된 잘 알려진 심볼이다.
+- toStringTag의 일반적인 사용 사례는 이전 예에서와 같이 클래스이지만 일반 객체에서도 잘 작동하므로 생성자 함수보다 다른 유형의 객체 팩토리를 선호하는 경우에 유용하다.
+
+```jsx
+const obj1 = {
+  [Symbol.toStringTag]: 'Nifty',
+};
+
+obj1.toString(); // '[object Nifty]'
+```
+
+### 5.5.2 심볼 생성 및 사용
+
+- 심볼 함수를 호출하면 새롭고 고유한 심볼을 얻을 수 있다.
+- 심볼은 기본 요소이므로 new를 사용하지 않는다.
+- ES2019부터는 심볼의 설명이 속성으로 제공된다.
+  - 단지 설명이 다른 의미는 없다.
+  - 두 개의 심볼은 동일한 설명을 가질 수 있지만 여전히 다른 심볼이다.
+
+```jsx
+const MySymbol = Symbol('my symbol');
+
+MySymbol.description; // my symbol
+```
+
+- 문자열이 아닌 심볼로 키가 지정된 속성은 열거 가능한 속성인 경우에도 for-in 루프 또는 Object.keys에서 반환된 배열에 포함되지 않는다.
+
+### 5.5.3 심볼은 정보 은닉을 위한 것이 아니다.
+
+```jsx
+const everUpward = (() => {
+  const count = Symbol('count');
+  return {
+    [count]: 0,
+    increment() {
+      return ++this[count];
+    },
+    get() {
+      return this[count];
+    },
+  };
+})();
+
+console.log(everUpward.get()); // 0
+everUpward.increment();
+console.log(everUpward.get()); // 1
+console.log(everUpward['count']); // undefined
+console.log(everUpward[Symbol('count')]); // undefined
+```
+
+- count에 저장된 심볼은 검색할 수 있기 때문에 심볼은 비공개가 아니다.
+- Object.getOwnPropertySymbols라는 적절한 이름을 통해 객체가 사용하는 기호를 가져올 수 있다.
+- 검색 가능하므로 심볼은 속성에 대한 정보 은닉을 제공하지 않는다. 약간 모호하다.
+  - 심볼은 프라이빗 이름 객체로 시작했으며 원래 객체애 대한 개인 속성을 만드는 메커니즘으로 사용될 것으로 예상되었었다.
+  - 시간이 지나 기본 요소가 되었으며 프라이빗 속성에 사용하는 것은 진행되지 않았다.
+
+### 5.5.4 전역 심볼
+
+- 코드는 자신의 영역에 접근할 수 있을 뿐만 아니라 다른 영역에 있는 엔트리에도 접근할 수 있다.
+  - 브라우저의 자식 창과 부모 창
+  - 웹 워커가 가지는 자체 영역
+- 두 개의 다른 영역에 있는 코드가 심볼로 식별되는 속성에 대한 접근을 공유해야 하는 경우 심볼도 공유해야 한다. 이때 **전역 심볼**이 필요하다.
+- **Symbol.for 함수를 이용하여 문자열 키와 연결된 전역 심볼 레지스트리에 심볼을 게시하여 공유**할 수 있다.
+- 전역 변수와 마찬가지로, 다른 대안이 있을 때는 전역 기호를 사용하지 말고 올바른 경우에만 사용하자.
+
+```jsx
+const s = Symbol.for('my-nifty-symbol');
+const key = Symbol.keyFor(s);
+console.log(key); // "my-nifty-symbol"
+
+// Not in the global registry:
+const s2 = Symbol('my-nifty-symbol');
+const key2 = Symbol.keyFor(s2);
+console.log(key2); // undefined
+```
+
+- 심볼이 전역 심볼 레지스트리에 있는지, 심볼이 할당된 키를 알아야 하는 경우 Symbol.keyFor를 사용할 수 있다.
+- 전역 레지스트리에 값이 없으면 undefined가 반환된다.
+
+### 5.5.4 잘 알려진 심볼
+
+- 다양한 작업에서 사용되는 잘 알려진 심볼이 있다.
+  - [Symbol.asyncIterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator)
+  - [Symbol.prototype.description](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description)
+  - [Symbol.hasInstance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance)
+  - [Symbol.isConcatSpreadable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/isConcatSpreadable)
+  - [Symbol.iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator)
+  - [Symbol.match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/match)
+  - [Symbol.matchAll](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/matchAll)
+  - [Symbol.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace)
+  - [Symbol.search](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/search)
+  - [Symbol.species](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species)
+  - [Symbol.split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/split)
+  - [Symbol.toPrimitive](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive)
+  - [Symbol.toStringTag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag)
+  - [Symbol.unscopables](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables)
+- 잘 알려진 심볼도 모두 전역적이다.
+- 여러 영역에서 공유할 수 있다.
+
+## 5.6 새로운 객체 함수
+
+### 5.6.1 Object.assign
+
+- 하나 이상의 소스 객체에서 대상 객체로 속성을 복사하는 일반적인 “확장” 함수의 자바스크립트 버전이다.
+- 소스 객체를 통해 왼쪽에서 오른쪽 순서로 작동하므로 둘 이상의 값이 동일한 속성에 대한 값을 가질 때 마지막 객체가 승리한다.
+- 고유한 열거 가능한 속성만 소스 객체에서 복사하고 열거 불가능한 것으로 표시 된 속성은 복사하지 않는다.
+
+### 5.6.2 Object.is
+
+- ES2015의 Object.is는 사양의 값 같음(Same Value) 추상 연산에 따라 두 값을 비교한다.
+
+```jsx
+console.log(Object.is(+0, -0)); // false
+console.log(Object.is(NaN, NaN)); // true
+```
+
+### 5.6.3 Object.values
+
+- ES2017에서 추가된 Object.values는 동일한 속성 값의 배열을 제공한다.
+- **상속된 속성, 열거할 수 없는 속성 및 심볼로 키가 지정된 속성의 값은 포함되지 않는다.**
+
+```jsx
+const obj = {
+  a: 1,
+  b: 2,
+  c: 3,
+};
+console.log(Object.values(obj)); // [1, 2, 3]
+```
+
+### 5.6.4 Object.entries
+
+- ES2017에서 `[이름, 값]`배열의 배열을 제공하는 Object.entries도 추가됐다.
+
+```jsx
+const obj = {
+  a: 1,
+  b: 2,
+  c: 3,
+};
+console.log(Object.entries(obj)); // [["a", 1], ["b", 2], ["c", 3]]
+```
+
+### 5.6.5 Object.fromEntries
+
+- ES2019에서 추가된 유틸리티 함수로, 키/값 쌍의 목록(반복 가능)을 받아서 객체를 생성한다.
+- Map.prototype.entries는 Object.fromEntries가 예상하는 정확한 유형의 목록을 반환하므로 맵을 객체로 변환하는 데도 편리하다.
+
+```jsx
+const obj = Object.fromEntries([
+  ['a', 1],
+  ['b', 2],
+  ['c', 3],
+]);
+console.log(obj);
+// => {a: 1, b: 2, c: 3}
+```
+
+### 5.6.6 Object.getOwnPropertySymbols
+
+- 객체의 고유한 심볼-이름 속성에 대한 심볼 배열을 반환한다.
+
+### 5.6.7 Object.getOwnPropertyDescriptors
+
+- 객체의 모든 속성에 대한 속성 설명자가 있는 객체를 반환한다.
+- 한 가지 용도는 반환하는 객체를 다른 객체의 Object.defineProperties에 전달하여 정의를 해당 객체에 복사하는 것이다
+- **열거할 수 없는 속성과 문자열이 아닌 심볼로 키가 지정된 속성을 포함한다.**
+
+```jsx
+const s = Symbol('example');
+const o1 = {
+  // 심볼로 정의된 속성
+  [s]: 'one',
+  // 접근자 속성
+  get example() {
+    return this[s];
+  },
+  set example(value) {
+    this[s] = value;
+  },
+  // 데이터 속성
+  data: 'value',
+};
+
+// 열거할 수 없는 속성
+Object.defineProperty(o1, 'nonEnum', {
+  value: 42,
+  writable: true,
+  configurable: true,
+});
+
+// 해당 속성을 새 겍체에 복사
+const descriptors = Object.getOwnPropertyDescriptors(o1);
+const o2 = Object.defineProperties({}, descriptors);
+console.log(o2.example); // "one"
+o2.example = 'updated';
+console.log(o2[s]); // "updated", [s]에 작성된 속성
+console.log(o2.nonEnum); // 42
+console.log(o2.data); // "value"
+
+// Object.assign와 비교
+const o3 = Object.assign({}, o1);
+console.log(o3.example); // "one"
+o3.example = 'updated';
+console.log(o3[s]); // "one", example는 접근자가 아니라 단지 데이터 속성이므로 one이 출력 됨.
+console.log(o3.nonEnum); // undefined
+console.log(o3.data); // "value"
+```
+
+- Object.assign는 열거할 수 없는 속성을 복사하지 않고, 접근자 속성에서 반환한 값을 복사한다.
+
+## 5.7 Symbol.toPrimitive
+
+- Symbol.toPrimitive는 객체를 프리미티브 값으로 변환하는 새롭고 강력한 방법을 제공한다.
+- 전통적으로 toString(문자열을 선호하는 작업에 사용됨) 및 valueOf(숫자를 선호하는 객체와 선호하지 않는 객체 모두에서 사용됨)를 구현하여 이 변환 프로세스에 연결했다. 상당히 잘 작동하지만, 선호도가 숫자에 대한 것이거나 전혀 없을 때 여러분의 객체가 다른 일을 할 수 없다는 것을 의미한다.
+- 객체에 Symbol.toPrimitive에 의해 키가 지정된 메서드가 있는 경우 valueOf 또는 toString 대신 해당 메 서드가 사용된다.
+  - 더 좋은 점은 기본 작업에 선호도가 없는 경우 선호하는 유형을 인수 (`number`, `string`, `default`)로 받는다.
+
+```
+const obj = {
+  [Symbol.toPrimitive](hint) {
+    const result = hint === "string" ? "str" : 42;
+    console.log("hint = " + hint + ", returning " + JSON.stringify(result));
+    return result;
+  },
+};
+
+/*
+    더하기 연산자를 사용하면 선호도가 없기 때문에
+    Symbol.toPrimitive 메서드는 다음과 같이 'default'로 호출된다.
+*/
+console.log("foo" + obj);
+// hint = default
+// foo42
+console.log(2 + obj);
+// hint = default
+// 44
+
+/*
+	빼기 연산자이면 다음과 같이 힌트는 'number'이다.
+*/
+console.log(2 - obj);
+// hint = number
+// -40
+
+/*
+	문자열이라면 힌트는 'string'이다.
+*/
+console.log(String(obj));
+// hint = string
+// str
+console.log("this is a string".indexOf(obj));
+// hint = string
+// 10 (the index of "str" in "this is a string")
+```
+
+- Symbol.toPrimitive는 Date 객체에 -를 사용할 때 숫자로 변환되더라도 +를 사용할 떄 문자로 변환된다.
+
+## 5.8 속성 순서
+
+- 초기 자바스크립트 엔진은 속성에 명백한 순서를 부여했고, 나중에 엔진이 복사(종종 약간의 차이가 있음)하고 사람들이 의존했다.
+- 사람들은 계속해서 속성 순서를 원하거나 이에 의존하고 있었기 때문에 자바스크립트 엔진은 두 개의 유사한(그러나 다른) 순서를 정해 놓았기 때문에 상황을 예측할 수 있도록 ES2015에서 그 순서가 표준화되었다.
+- 특정 작업에 대해서 그리고 자기 자신 속성(상속된 속성 아님)에 대해서만 표준화 진행하였다.
+  1. 키가 숫자 순서로 정수 인덱스인 문자열인 속성이다.
+  2. 그다음으로 키가 문자열인 다른 속성은 해당 속성이 객체에 생성된 순서대로 지정된다.
+  3. 그다음으로 키가 심볼인 속성은 해당 속성이 객체에서 생성된 순서대로 지정된다.
+- ES2015-ES2019에서 이 순서는 `for-in` 루프, `Object.keys` , `Object.values`
+   , `Object.entries` , `Object.getOwnPropertyNames` , `JSON.stringify` 등에서 반환된 배열에 적용되지 않았다.
+- 일반적으로 현재 정의된 순서가 있음에도 불구하고 객체의 속성 순서에 의존하는 것은 그리 좋은 생각이 아니다.
+
+## 5.9 속성 스프레드 구문
+
+- 다른 객체의 모든 속성이 포함된 객체를 만들고 싶을 수도 있다.
+  - 객체를 절대 수정하지 않는 불변 접근 방식으로 프로그래밍할 때 일반적이다.
+- ES2018은 `Object.assign` 호출 대신 객체 리터럴 내에서 표현식 앞에 줄임표(…)를 사용하여 표현식 결과의 고유한 열거 가능한 속성을 스프레드 할 수 있다.
+
+```jsx
+function showDialog(opts) {
+  const options = { ...defaultOptions, ...opts };
+  console.log("title = '" + options.title + "', text = '" + options.text + "'");
+}
+```
+
+- 속성 스프레드는 객체 리터럴 내에서만 유효하며 `Object.assign` 과 거의 똑같이 작동한다.
+- `**Object.assign` 는 기존 객체에 할당 할 수 있는 반면 속성 스프레드는 새 객체를 만들 때만 사용할 수 있다.\*\*
+
+> …를 연산자로 생각하고 싶은 유혹이 있겠지만, 연산자가 아니며 그럴 수도 없다. 연산자는 함수와 같다.
+> 피연산자가 있고 단일 결괏값을 생성한다. 그러나 결괏값은 객체에서 이러한 속성 생성이라고 말할 수 없다.
+> 따라서 줄임표는 기본 구문/표기이다. 즉 연산자가 아니며 while 루프의 조건을 둘러싼 괄호와 같다.
+
+## 5.10 과거 습관을 새롭게
+
+### **5.10.1 동적 이름으로 속성을 만들 때 계산된 구문 사용**
+
+- 계산된 속성 이름 사용한다.
+
+```jsx
+let name = 'answer';
+let obj = {
+  [name]: 42,
+};
+```
+
+### **5.10.2 이름이 같은 변수에서 속성을 초기화 할 때 단축 구문 사용**
+
+- 단축 속성 구문 사용을 사용하자.
+
+```jsx
+function getMinMax() {
+  let min, max;
+  // ...
+  return { min, max };
+}
+```
+
+### **5.10.3 사용자 지정 확장 함수 대신 `Object.assign` 을 사용하거나 모든 속성을 명시적으로 복사**
+
+- `Object.assign` 을 사용하자.
+
+### **5.10.4 기존 객체의 속성을 기반으로 새 객체를 만들 때 스프레드 구문 사용**
+
+- 속성 스프레드 구문 사용하자.
+
+### **5.10.5 이름 충돌을 피하기 위해 심볼 사용**
+
+- 심볼을 사용하자.
+
+### 5.10.6 `__proto__` 대신 `Object.getPrototypeOf` / `Object.setPrototypeOf` 사용
+
+- 현재 웹 브라우저에서 **`__proto__`** 가 표준화되었음에도 `Object.getPrototypeOf` 와 `Object.setPrototypeOf` 를 사용하자.
+
+### **5.10.7 메서드에 메서드 구문 사용**
+
+- 메서드 구문을 사용하자.
+- `super` 를 사용하는 경우 메서드는 원래 객체에 대한 링크를 가지므로 다른 객체에 복사하면 새 객체가 아닌 원래 객체의 프로토타입을 계속 사용한다.
+- `super` 를 사용하지 않으면 좋은 자바스크립트 엔진이 해당 링크를 최적화한다.

@@ -397,6 +397,42 @@
         { "title": "19장 스태프플러스 직책을 위한 면접", "path": "/books/staff-engineer/19" },
         { "title": "20장 제안 협상하기", "path": "/books/staff-engineer/20" }
       ]
+    },
+    {
+      "title": "웹 개발자를 위한 자바스크립트의 모든 것",
+      "open": false,
+      "routes": [
+        {
+          "title": "소개",
+          "path": "/books/everything-about-js/0"
+        },
+        {
+          "title": "1장 ES2015부터 ES2020까지 그리고 그 이후의 새로운 장난감",
+          "path": "/books/everything-about-js/1"
+        },
+        {
+          "title": "2장 블록 스코프 선언: let과 const",
+          "path": "/books/everything-about-js/2"
+        },
+        { "title": "3장 새로운 함수 기능", "path": "/books/everything-about-js/3" },
+        { "title": "4장 클래스", "path": "/books/everything-about-js/4" },
+        { "title": "5장 새로운 객체 기능", "path": "/books/everything-about-js/5" },
+        {
+          "title": "6장 이터러블, 이터레이터, for-of, 이터러블 스프레드, 제너레이터",
+          "path": "/books/everything-about-js/6"
+        },
+        { "title": "7장 디스트럭처링", "path": "/books/everything-about-js/7" },
+        { "title": "8장 프라미스", "path": "/books/everything-about-js/8" },
+        { "title": "9장 비동기 함수, 이터레이터, 제너레이터", "path": "/books/everything-about-js/9" },
+        { "title": "10장 템플릿, 태그 함수, 새로운 문자열 함수", "path": "/books/everything-about-js/10" },
+        { "title": "11장 새로운 배열 함수, 타입이 있는 배열", "path": "/books/everything-about-js/11" },
+        { "title": "12장 맵과 세트", "path": "/books/everything-about-js/12" },
+        { "title": "13장 모듈", "path": "/books/everything-about-js/13" },
+        { "title": "14장 리플렉션-리플렉트과 프록시", "path": "/books/everything-about-js/14" },
+        { "title": "15장 정규 표현식 업데이트", "path": "/books/everything-about-js/15" },
+        { "title": "16장 공유 메모리", "path": "/books/everything-about-js/16" },
+        { "title": "17장 그 외", "path": "/books/everything-about-js/17" }
+      ]
     }
   ]
 }

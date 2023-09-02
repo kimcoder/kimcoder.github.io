@@ -1,0 +1,549 @@
+---
+id: 웹 개발자를 위한 자바스크립트의 모든 것
+title: '8장 프라미스'
+description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
+keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
+createdAt: 2023.06.16
+---
+
+- 프라미스는 promise, future, deferred 라고도 불리는 패턴의 자바스크립트 버전이다.
+- 그들은 선행기술, 특히 Promises/A+ 사양과 관련 작업에 크게 의존한다.
+
+## 8.1 왜 프라미스를 사용하는가?
+
+- 프라미스는 그 자체로 어떠한 일도 하지 않으며 비동기식의 결과를 관찰하는 방법일 뿐이다.
+- **프라미스는 작업을 비동기화하지 않는다.**
+- **이미 비동기화된 작업의 완료를 관찰하는 수단을 제공할 뿐이다.**
+- 프라미스 이전에 사용되었던 간단한 콜백의 문제점
+  - 콜백 지옥이 발생된다.
+  - 콜백에 오류가 발생했음을 나타내는 표준 방법이 없다. 사용하는 각 함수에서 오류 보고 방법을 정의해야 한다.
+  - **성공/실패를 나타내는 표준 방법이 없다는 것은 일반적인 도구를 사용하여 복잡성을 관리할 수 없을을 의미한다.**
+  - 이미 완료된 프로세스에 콜백을 추가하는 것도 표준화되지 않았다.
+  - 작업에 여러 콜백을 추가하는 것은 불가능하거나 표준화되지 않았다.
+
+## 8.2 프라미스 기초
+
+### 8.2.1 개요
+
+- 프라미스는 세 가지 상태가 가능한 객체이다.
+  - **대기(pending)** : 프라미스가 보류 중/미결/아직 확정되지 않았다.
+  - **이행(fulfilled)** : 프라미스가 값으로 정해졌다. 일반적으로 성공을 의미.
+  - **거부(rejected)** : 거부 이유로 프라미스가 정해졌다. 일반적으로 실패를 의미.
+- 확정된 프라미스는 대기 상태로 돌아갈 수 없다.
+- 이행되거나 거부된 프라미스는 그 반대 상태로 변경될 수 없다.
+- 프라미스를 이행할 때 값을 가지고 이행하거나 다른 프라미스에 의존하게 만든다.
+  - 다른 프라미스에 의존하게 만들면 다른 프라미스에 이행하도록 한다.
+- 프라미스의 상태와 값/거부 이유를 직접 관찰할 수는 없다. 프라미스가 호출하는 핸들러 함수를 추가해야만 얻을 수 있다.
+  - then: 프라미스가 이행된 경우 호출하는 핸들러를 추가한다.
+  - catch: 프라미스가 거부된 경우 호출하는 핸들러를 추가한다.
+  - finally: 프라미스가 확정된 경우 호출하는 핸들러를 추가한다.
+
+### 8.2.2 예
+
+```jsx
+function example() {
+  return new Promise((resolve, reject) => {
+    // ...
+  });
+}
+
+example()
+  .then((value) => {
+    console.log('다음 값으로 이행', value);
+  })
+  .catch((err) => {
+    console.log('다음 값으로 거부', err);
+  })
+  .finally(() => {
+    console.log('finally');
+  });
+```
+
+- **Promise 생성자에게 제공하는 함수는 실행자(executor) 함수**라는 멋진 이름을 가지고 있다.
+- Promise 생성자는 resolve 또는 reject라는 두 함수를 인수로 전달하는 실행자 함수를 (동기적으로) 호출한다.
+
+### 8.2.3 프라미스와 “thenable”
+
+- 자바스크립트의 프라미스는 Promises/A+ 사양을 완전히 준수하며 catch와 finally와 같이 의도적으로 해당 사양에 포함되지 않은 일부 추가 기능이 있다.
+- Promises/A+ 사양은 의도적으로 미니멀하여 then만 정의한다.
+- Promises/A+ 사양의 특징은 “프라미스”와 구별되는 “thenable” 개념이다.
+  - “프라미스”는 동작이 [Promises/A+ 사양]을 따르는 then 메서드를 사용하는 객체 또는 함수다.
+  - “thenable”은 then 메서드를 정의하는 객체 또는 함수다.
+- 따라서 모든 프라미스는 thenable이지만 모든 thenable이 프라미스는 아니다.
+  - 객체가 프라미스와 완전히 관련이 없는 것을 의미하는 then 메서드를 가질 수가 있다.
+- 그 당시 존재했던 여러 프라미스 라이브러리를 허용하였기 때문에 프라미스가 자바스크립트에 추가 될 당시에는 최상의 솔루션이었다.
+
+## 8.3 기존 프라미스 사용하기
+
+### 8.3.1 then 메서드
+
+```rust
+p2 = p1.then(result => doSomething(result.toUpperCase());
+```
+
+- 위 코드는 이행 핸들러를 등록하고, 원래 프라미스(p1)에 발생하는 일과 핸들러에서 수행하는 작업에 따라 새 프라미스(p2)를 반환한다.
+- p1이 거부되면 핸들러가 호출되지 않고 p1의 거부 이유와 함께 p2가 거부된다.
+- p1이 충족되면 핸들러가 호출되고, 수행하는 작업에 따라 p2에 발생하는 작업은 아래와 같다.
+  - thenable을 반환하면 p2가 해당 thenable로 이행된다.
+  - 다른 값을 반환하면 p2가 해당 값으로 확정된다.
+  - throw를 사용하면 throw하는 무언가를 거부 이유로 사용하여 p2가 거부된다.
+- then 핸들러에서 무언가를 반환하는 것은 resolve를 호출하는 것과 같다.
+- 핸들러에서 throw를 사용하는 것은 reject를 호출하는 것과 같다.
+
+### 8.3.2 프라미스를 연결(체이닝)하기
+
+- then/catch/finally 핸들러에서 프라미스(또는 thenable)를 생성하여 반환할 수 있다는 사실은 then을 연속 사용할 수 있음을 의미한다.
+
+```rust
+firstOperation()
+  .then((firstResult) => secondOperation(firstResult))
+  .then((secondResult) => thirdOperation(secondResult * 2))
+  .then((thirdResult) => { /* thirdResult 값 사용 */ }
+  .catch((error) => {
+    console.error("rejection handler ran, rejection is:", error);
+  });
+
+// 동기작업으로 만든 동일 로직
+
+try {
+  const firstResult = firstOperation();
+  const secondResult = secondOperation(firstResult);
+  const thirdResult = thirdOperation(secondResult * 2);
+  /* thirdResult 값 사용 */
+} catch (err) {
+  console.log(err);
+}
+```
+
+- 오류 처리 로직에서 주 로직을 분리하는 것이 try/catch 동기 코드에서 유용하듯이 프라미스 연결의 오류(거부) 로직에서 주(이행) 로직을 분리하는 것이 유용하다.
+
+### 8.3.3 콜백과의 비교
+
+```rust
+firstOperation((error, firstResult) => {
+  if (error) {
+    console.error("got error (1):", error);
+  } else {
+    secondOperation(firstResult, (error, secondResult) => {
+      if (error) {
+        console.error("got error (2):", error);
+      } else {
+        thirdOperation(secondResult * 2, (error, thirdResult) => {
+          if (error) {
+            console.error("got error (3):", error);
+          } else {
+            try {
+              console.log("final else, thirdResult:", thirdResult);
+              /* thirdResult 값 사용 */
+            } catch (error) {
+              console.error("got error (4):", error);
+            }
+          }
+        });
+      }
+    });
+  }
+});
+```
+
+- 콜백에 서로 중첩되지 않게 해당 코드를 작성할 수 있지만 어색하고 장황하다.
+
+### 8.3.4 catch 메서드
+
+- 핸들러가 **이행이 아닌 거부 시 호출된다는 점을 제외하면 catch는 정확히 then과 같다.**
+
+```rust
+p2 = p1.catch(err => doSomething(err));
+```
+
+- p1에 거부 핸들러를 등록하여 원래 프라미스(p1)에 발생하는 일과 핸들러에서 수행하는 작업에 따라 완료되거나 거부될 새 프라미스(p2)를 만들고 반환한다.
+- p1이 이행되면 핸들러가 핸들러가 호출되지 않고 p2는 p1의 이행 값으로 이행된다.
+- p1이 거부되면 핸들러가 호출되고, 수행하는 작업에 따라 p2에 발생하는 작업은 아래와 같다.
+  - thenable을 반환하면 p2가 해당 thenable로 이행된다.
+  - 다른 값을 반환하면 p2가 해당 값으로 완료된다.
+  - throw를 사용하면 throw하는 무언가를 거부 이유로 사용하여 p2가 거부된다.
+- 주목해야 할 점은 **catch 핸들러에서 thenable이 아닌 것을 반환하면 catch의 프라미스가 완료된다는 것이다.**
+  - 여기에는 아래와 같은 단점이 있다.
+  - catch 핸들러를 잘못된 위치에 배치하면 실수로 오류가 가려진다.
+
+```rust
+someOpertaion()
+	.catch(err => reportErr(err))
+	.then(result => console.log(result.someProperty));
+
+// 아래와 같은 오류가 발생한다.
+// Uncaucht (in promise) TypError: Cannot read property 'someProperty' of undefined
+// 위의 코드는 아래 코드와 동일하다.
+
+let result;
+try {
+  result = someOpertaion();
+} catch(err){
+  reportErr(err);
+  result = undefined;
+}
+
+console.log(result.someProperty)
+```
+
+- catch는 오류를 포착하여 출력했지만 오류를 전파하기 위해 아무것도 하지 않았따.
+- 따라서 catch 이후의 코드는 여전히 실행되기 때문에 오류가 발생한다.
+- 프라미스 버전에서는 catch 핸들러에서 아무 것도 하지 않았고 undefined를 값으로 반환하게 되어 then 핸들러에서 오류가 발생했다.
+
+### 8.3.5 finally 메서드
+
+- finally 메서드는 try/catch/finally의 finally 블록과 매우 유사하다.
+- then과 catch와는 달리 핸들러는 항상 호출되고, 이를 통과하는 이행 또는 거부에 영향을 미치지 않는다.
+- finally 핸들러의 반환값은 thenable이 아니다.
+- **finally 핸들러의 주요 목적은 아무것도 변경하지 않고 정리하는 것**이므로 finally 핸들러의 반환값을 무시하는 것이 좋다.
+- 핸들러가 체인의 이행 값에 영향을 미칠 수 없다고 해서 프라미스 또는 thenable을 반환할 수 없다는 의미는 아니다. ( 아래 코드 참조 )
+
+```jsx
+// Function returning promise that is fulfilled after the given
+// delay with the given value
+function returnWithDelay(value, delay = 100) {
+  return new Promise((resolve) => setTimeout(resolve, delay, value));
+}
+
+// The function doing the work
+function doSomething() {
+  return returnWithDelay('original value').finally(() => {
+    return returnWithDelay('unused value from finally', 1000);
+  });
+}
+
+console.time('example');
+doSomething().then((value) => {
+  console.log('value = ' + value); // "value = original value"
+  console.timeEnd('example'); // example: 1100ms (or similar)
+});
+```
+
+### 8.3.6 then, catch, finally 핸들러에서 throw
+
+- 최신 브라우저의 fetch 함수는 네트워크 요청이 성공하면 이행된 프라미스를 반환한다.
+- fetch로 인한 프라미스는 네트워크 오류가 있을 때만 거부되기 때문에 응답상태를 직접 확인해야 하는데, 아래와 같이 then 핸들러에서 오류를 발생시키는 유틸리티 함수를 만들어서 사용할 수 있다.
+
+```jsx
+class FetchError extends Error {
+  constructor(response, message = 'HTTP error ' + response.status) {
+    super(message);
+    this.response = response;
+  }
+}
+const myFetch = (...args) => {
+  return fetch(...args).then((response) => {
+    if (!response.ok) {
+      throw new FetchError(response);
+    }
+    return response;
+  });
+};
+```
+
+- then 핸들러는 response.ok 편의 속성(HTTP 응답 상태 코드가 성공 코드이면 true, 그렇지 않으면 false)을 확인하고 throw를 사용하여 HTTP 오류가 있는 처리를 거부로 변환한다.
+
+### 8.3.7 두 개의 인수를 갖는 then 메서드
+
+- then은 두 개의 핸들러를 받을 수 있다. 하나는 이행용이고 다른 하나는 거부용이다.
+
+```jsx
+doSomething().then(
+  (value) => {},
+  (error) => {},
+);
+```
+
+- **p.then(f1, f2)를 사용하는 것은 p.then(f1).catch(f2)를 사용하는 것과 동일하지 않다.**
+- then의 **두 인수 버전은 호출하는 프라미스에 두 핸들러를 모두 연결하지만 catch를 사용하면 거부 핸들러를 프라미스에 연결한 다음 대신 반환**한다.
+- p.then(f1, f2)를 사용하면 f1이 오류를 던지거나 거부하는 프라미스를 반환하는 경우가 아니라 **p를 거부하는 경우에만 f2가 사용된다.**
+- then의 두 인수 모두 선택사항이다.
+  - p.then(undefined, rejectionHanlder)와 같이 사용할 수도 있다.
+
+## 8.4 기존 프라미스에 핸들러 추가하기
+
+- 프라미스는 이행 핸들러(여러 개 포함)를 추가하기 위한 표준 문법을 제공하고 다음 두 가지를 보장한다.
+  - 핸들러가 호출된다(적절한 종류의 확정, 이행 또는 거부를 위한 경우).
+  - 호출이 비동기다.
+- 어디에선가 프라미스를 받는 코드가 있는 경우 아래처럼 수행된다.
+
+```jsx
+console.log('이전');
+thePromise.then(() => {
+  console.log('내부');
+});
+console.log('이후');
+```
+
+- 코드는 ‘이전’, ‘이후’, 그리고 나중에 프라미스가 이행되거나 이미 이행 된 경우 ‘내부’를 출력하도록 사양에 의해 보장된다.
+- 프라미스가 이미 이행된 경우에는 then을 호출하는 동안 예약되지만 실행되지는 않는다.
+- **이행 또는 거부 핸들러에 대한 호출은 마이크로 태스크 큐에 작업을 추가하여 예약된다.**
+- **이미 확정된 프라미스에서도 핸들러가 비동기식으로만 호출되도록 하는 것이 프라미스 자체가 여전히 비동기적이지 않은 것을 비동기식으로 만뜨는 유일한 방법이다.**
+
+## 8.5 프라미스 만들기
+
+### 8.5.1 프라미스 생성자
+
+- Promise 생성자는 프라미스를 만든다. 새로운 프라미스는 이미 비동기적인 결과를 보고하는 일관된 수단을 제공할 뿐이다.
+- new Promise를 사용하지 않고 아래와 같은 방법으로 프라미스를 받을 수 있다.
+  - 프라미스를 반환하는 무언가(API 함수 등)를 호출한다.
+  - 기존의 프라미스에서 then, catch, finally를 통해 얻는다.
+  - Promise.resolve 또는 Promise.reject과 같은 Promise 정적 메서드 중 하나에서 가져온다
+
+### 8.5.2 Promise.resolve
+
+- Promise.resolve(x)는 다음의 축약이다.
+
+```rust
+x instanceof Promise ? x : new Promise(resolve => resolve(x))
+```
+
+- Promise.resolve (x)에서 x는 한 번만 평가된다는 점을 제외하고는 인수가 프라미스의 인스턴스의 경우 인수를를 직접 반환한다. 그렇지 않으면 새로운 프라미스를 생성하고 그 프라미스를 전달받은 값으로 확정한다.
+
+### 8.5.3 Promise.reject
+
+- Promise.reject(x)는 다음의 축약이다.
+
+```rust
+x instanceof Promise ? x : new Promise((resolve, reject) => reject(x))
+```
+
+- Promise.reject는 Promise.resolve만큼 일반적인 용도는 아니지만 처리를 거부로 반환하려는 경우에 대한 일반적인 사용 사례 중 하나는 then 핸들러에 있다.
+
+```rust
+.then(value => value == null ? Promise.reject(new Error()) : value);
+```
+
+## 8.6 그 외 프라미스 메서드
+
+### 8.6.1 Promise.all
+
+- Promise.all은 **이터러블을 받아들이고 그 안에 있는 모든 thenable이 확정될 때까지 기다린다.**
+- 이터러블으이 모든 thenable이 충족될 때 충족되거나 하나라도 거부되면 즉시 거부되니 프라미스를 반환한다.
+- 이행될 때, 이행 값은 호출되니 이터러블과 동일한 순서로 원래 이터러블의 모든 비 thenable 값과 함께 thenable들의 이행 값을 갖는 배열이다.
+
+### 8.6.2 Promise.race
+
+- Promise.race는 **이터러블을 받아들이고 결과에 대한 프라미스를 제공하면서 가장 빠른 것을 감시한다.**
+- 가장 빠른 thenable이 이행되자마자 이행되거나 가장 빠른 thenable이 거부되는 즉시 승리한 프라미스의 이행 값으로 이행되거나 거부 이유를 사용하여 거부된다.
+- Promise.all과 마찬가지로 이터러블의 값을 Promise.resolve를 통해 전달하므로 thenable이 아닌 값도 작동한다.
+
+### 8.6.3 Promise.allSettled
+
+- Promise.allSettled는 Promise.resolve를 통해 제공한 이터러블의 모든 값을 전달하고 이행 또는 거부 여부에 관계없이 모든 값이 확정될 때까지 기다린 다음 상태 status와 value 또는 reason 속성이 있는 객체 배열을 반환한다.
+- status 속성이 fulfilled이면 프라미스가 이행된 것이며 객체의 value에 이행 값이 있다.
+- 상태가 reject이면 프라미스가 거부된 것이며 reason에 거부 이유가 있다.
+
+### 8.6.4 Promise.any
+
+- Promise.all의 반대이다.
+- **성공을 thenable이 이행된 어느 하나로 정의한다.**
+- thenables가 모두 거부되면 erros 속성이 거부 이유 배열인 AggregateError로 프라미스를 거부한다.
+- Promise.all의 이행 값 배열과 마찬가지로 거부 이유 배열은 전달된 이터러블 엔트리의 값과 항상 동일한 순서이다.
+
+## 8.7 프라미스 패턴
+
+### 8.7.1 오류 처리 또는 프라미스 반환
+
+- **프라미스의 기본 규칙 중 하나는 오류를 처리하거나 프라미스 체인을 호출자에게 전파하는 것이다.**
+- 이 규칙을 어기는 것이 프라미스를 사용할 때 프로그램 오류의 가장 큰 원인일 수 있다.
+- 모든 계층은 거부를 처리하거나 호출자가 거부를 처리할 것을 기대하면서 호출자에게 프라미스를 반환해야 한다.
+
+```rust
+function showUpdatedScore(id){
+	return myFetch("getscore?id=" + id).then(displayScore);
+}
+
+button.addEventListener("click", () => {
+  const { scoreId } = this.dataset;
+	showUpdatedScore(scoreId).catch(reportError);
+});
+```
+
+### 8.7.2 연속된 프라미스
+
+- 연속적으로 발생해야 하는 일련의 작업이 있고 모든 결과를 수집하거나 각 결과를 다음 작업에 제공하려는 경우 루프를 사용하여 프라미스 체인을 구성하면 편리하다.
+
+```rust
+async function handleTransforms(value, transforms) {
+	let result = value;
+	for (const transform of transforms) {
+		result = await transform(result);
+	}
+	return result;
+}
+```
+
+### 8.7.3 병렬 프라미스
+
+- 작업 그룹을 병렬로 실행하려면 각 반환되는 프라미스의 배열을 한 번에 하나씩 시작하고 Promise.alll을 사용하여 모두 완료될 때까지 기다린다.
+
+```rust
+try {
+	const result = await Promise.all(urls.map(
+		url => myFetch(url).then(response => response.json())
+	));
+	console.log(result)
+} catch(e) {
+	console.log(e)
+}
+```
+
+## 8.8 프라미스 안티 패턴
+
+### 8.8.1 불필요한 new Promise(/_…_/)
+
+```jsx
+function getData(id) {
+  return new Promise((resolve, reject) => {
+    myFetch('...')
+      .then((response) => response.json())
+      .then((response) => resolve(data))
+      .catch((err) => reject(err));
+  });
+}
+```
+
+- then과 catch과 프라미스를 반환하므로 새로운 프라미스가 전혀 필요하지 않다.
+- 아래와 같이 작성해야 한다.
+
+```jsx
+function getData(id) {
+	return myFetch('...')
+		.then(response => response.json())
+	})
+}
+```
+
+### 8.8.2 오류를 처리하지 않음(또는 적절하게 처리하지 않음)
+
+- **예외는 catch 블록이 처리할 때까지 호출 스택을 통해 자동으로 전파되는 반면, 프라미스 거부는 그렇지 않아 숨겨진 오류가 발생한다.**
+- 프라미스의 기본 규칙은 오류를 처리하거나 호출자가 처리할 수 있도록 프라미스 연결을 호출자에게 전파하는 것이다.
+
+### 8.8.3 콜백 API를 변환할 때 오류가 눈에 띄지 않게 하기
+
+- 프라미스 래퍼에서 콜백 API를 래핑할 때 실수로 오류가 처리되지 않도록 허용하기 쉽다.
+
+```jsx
+function getAllRows(query) {
+  return new Promise((resolve, reject) => {
+    query.execute((err, resultSet) => {
+      if (err) {
+        reject(err);
+      } else {
+        const results = [];
+        while (resultSet.next()) {
+          results.push(resultSet.getRow());
+        }
+        resolve(results);
+      }
+    });
+  });
+}
+```
+
+- resultSet.next()에서 만약 오류가 발생한다면 처리가 되어 있지 않아 프라미스가 영원히 불안정하게 된다.
+
+### 8.8.4 거부를 이행으로 암시적 변환
+
+```jsx
+function getData(id) {
+  return new Promise((resolve, reject) => {
+    myFetch('...')
+      .then((response) => response.json())
+      .catch((err) => reportError(err));
+  });
+}
+```
+
+- 위와 같은 코드를 작성하면 getData의 프라미스가 undefined 값으로 이행되고 거부되지 않는다.
+
+### 8.8.5 연결 외부의 결과 사용 시도
+
+```jsx
+let result;
+startSomething()
+  .then((response) => {
+    result = response.result;
+  })
+  .doSomethingWith(result);
+```
+
+- 위의 코드에서는 doSomethingWith에 대한 호출은 then 콜백 안에 있어야 한다.
+
+### 8.8.6 아무것도 하지 않는 핸들러 사용
+
+- 프라미스를 처음 사용할 때 일부 프로그래머는 다음과 같이 아무것도 하지 않는 핸들러를 작성한다.
+
+```jsx
+startSomething()
+  .then((value) => value)
+  .then((response) => {
+    doSomething(response.data);
+  })
+  .catch((error) => {
+    throw error;
+  });
+```
+
+- 위의 핸들러 중 첫번째 then과 catch 핸들러는 무의미하다.
+
+### 8.8.7 연결을 잘못 분기
+
+```jsx
+const p = startSomething();
+p.then((response) => {
+  doSomething(response.data);
+});
+p.catch(handleError);
+```
+
+- 위의 코드에서 문제는 then 핸들러의 오류가 처리되지 않는다는 것이다. **catch는 then의 프라미스가 아니라 원래 프라미스에서 호출되기 때문이다.**
+
+## 8.9 프라미스 서브클래스
+
+- 일반적인 방법으로 프라미스의 고유한 서브클래스를 만들 수 있다.
+
+> 프라미스 서브클래스를 생성하는 것은 하고 싶은 일이 아니다. 왜냐하면 결국 서브클래스 대신 네이티브 프라미스 클래스를 처리하는 것이 너무 쉽기 때문이다.<br/>
+> 예를 들어 프라미스를 제공하는 API를 처리하는 경우 프라미스 서브클래스를 사용하려면 해당 API의 프라미스를 서브클래스에 래핑해야 한다.
+
+- **프라미스 메서드 구현은 똑똑하다.**
+- Promise 메서드는 서브클래스를 사용하여 새로운 프라미스를 만들도록 한다.
+  - MyPromise 인스턴스에서 then을 호출하여 (MyPromise.resolve, MyPromise.reject 등을 사용하여) 올바르게 작동하는 MyPromise의 인스턴스를 반환한다.
+
+```rust
+class MyPromise extends Promise {}
+const p1 = MyPromise.resolve(42);
+const p2 = p1.then(() => {
+  /*...*/
+});
+console.log(p1 instanceof MyPromise); // true
+console.log(p2 instanceof MyPromise); // true
+```
+
+- 프라미스를 서브클래스로 만들기로 결정한 경우 아래 사항들을 유의해야 한다.
+  - 자체 생성자를 정의할 필요가 없으며 기본 생성자로 충분하다.
+    - 생성자를 정의한다면, 첫 번째 인수인 실행자 함수를 super()에 전달해야 한다.
+    - 다른 인수를 받을 것으로 예상하지 않는지 확인한다. (then과 같이 생성자를 사용하는 프라미스 메서드 구현에서 받을 수 없으므로)
+  - then, catch, finally를 재정의하는 경우 기본 규칙을 위반하지 않도록 하자.
+  - then이 프라미스의 중심 메서드 인것을 기억하자.
+  - then을 재정의하는 경우 두 개의 매개변수(onFulfilled, onRejected)가 있으며 둘 다 선택 사항이다.
+  - **프라미스를 만드는 새 메서드를 만드는 경우 자체 생성자를 직접 호출하지 말라.**
+    - 서브클래스에 비우호적이다.
+    - 예) `new MyPromise();`
+    - `Symbol.species` 패턴을 사용
+    - 인스턴스 메서드에서 `new this.constructor[Symbol.species](/*..*/)` 를 사용
+    - 정적 메서드에서 `new this[Symbol.species](/*..*/)` 를 사용
+    - 인스턴스 메서드에서 `new this.constructor(/*..*/)` 를 사용
+    - 정적 메서드에서 `new this(/*..*/)` 를 사용
+  - MyPromise 메서드의 코드에서 MyPromise.resolve/reject를 사용하지 말아라.
+    - 인스턴스 메서드에서 `this.constructor.resolve/reject` 를 사용
+    - 정적 메서드에서 `this.resolve/reject` 를 사용
+- 네이티브 프라미스 클래스는 후자를 사용하고 species 패턴을 사용하지 않는다.
+- **프라미스를 서브클래스로 상송해야 할 가능성은 거의 없다.**
+
+## 8.10 과거 습관을 새롭게
+
+### 8.10.1 성공/실패 콜백 대신 프라미스 사용
+
+- 비동기 함수를 통해 명시적 또는 암시적으로 프라미스를 반환하자

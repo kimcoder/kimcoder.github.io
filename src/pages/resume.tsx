@@ -4,10 +4,9 @@ import { Sticky } from 'components/Sticky';
 
 import ResumeCompany from 'components/resume/ResumeCompany';
 import { CAREER } from 'lib/resume/career';
-import { getPeriod, getCareerDuration } from 'lib/resume/helpers';
+import { getCareerDuration } from 'lib/resume/helpers';
 import { Seo } from 'components/Seo';
 import ResumeSection from 'components/resume/ResumeSection';
-import Link from 'next/link';
 import { ETC } from 'lib/resume/etc';
 import ResumeEtc from 'components/resume/ResumeEtc';
 
@@ -35,7 +34,7 @@ const Resume = ({ career, etc }: Props) => {
           </h1>
           <div className='lg mt-3 sm:mt-4 lg:grid lg:items-center lg:gap-5'>
             <p className='text-xl leading-7 text-gray-600'>
-              저는 {getCareerDuration(career)}년차 프론트엔드 개발자로 일하고 있으며, 다양한 사고와 도구들을 사용하여
+              저는 {getCareerDuration(career)}년 차 프론트엔드 개발자로 일하고 있으며, 다양한 사고와 도구들을 사용하여
               문제를 해결하는 것을 좋아합니다.
               <br />
               복잡한 문제들을 효율적이고 단순하게 해결하고자 노력합니다.

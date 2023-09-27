@@ -31,7 +31,10 @@ const remarkPlugins = [
   ],
 ];
 
-module.exports = optimizedImages({
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
   pageExtensions: ['jsx', 'js', 'ts', 'tsx', 'mdx', 'md'],
   env: {
     NEXT_PUBLIC_GA_TRACKING_ID: 'UA-122659594-1',
@@ -68,51 +71,22 @@ module.exports = optimizedImages({
     ];
   },
   experimental: {
-    plugins: true,
-    modern: true,
-  },
-  webpack: (config, { dev, isServer, ...options }) => {
-    config.module.rules.push({
-      test: /.mdx?$/, // load both .md and .mdx files
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: '@mdx-js/loader',
-          options: {
-            remarkPlugins,
+    turbo: {
+      rules: {
+        // Option format
+        '*.md': [
+          {
+            loader: '@mdx-js/loader',
+            options: {
+              remarkPlugins,
+            },
           },
-        },
-        path.join(__dirname, './src/lib/docs/md-loader'),
-      ],
-    });
-
-    // only compile build-rss in production server build
-    if (dev || !isServer) {
-      return config;
-    }
-
-    // we're in build mode so enable shared caching for Notion data
-    process.env.USE_CACHE = 'true';
-
-    const originalEntry = config.entry;
-    config.entry = async () => {
-      const entries = {
-        ...(await originalEntry()),
-      };
-      // entries['./scripts/build-rss.js'] = './src/lib/build-rss.js'
-      return entries;
-    };
-
-    return config;
-  },
-  optimizeImages: {
-    /* config for next-optimized-images */
-    mozjpeg: {
-      quality: 70,
+        ],
+        // Option-less format
+        '*.mdx': ['@mdx-js/loader'],
+      },
     },
-    optipng: {
-      optimizationLevel: 3,
-    },
-    optimizeImagesInDev: true,
   },
-});
+};
+
+module.exports = nextConfig;

@@ -11,18 +11,24 @@ export const Footer = (props) => {
             <h4 className='text-sm leading-5 font-semibold tracking-wider text-gray-400 uppercase'>Resources</h4>
             <ul className='mt-4'>
               <li>
-                <Link href='/overview'>
-                  <a className='text-base leading-6 text-gray-500 hover:text-gray-900'>Docs</a>
+                <Link
+                  href='/overview'
+                  className='text-base leading-6 text-gray-500 hover:text-gray-900'>
+                  Docs
                 </Link>
               </li>
               <li className='mt-4'>
-                <Link href='/examples/simple'>
-                  <a className='text-base leading-6 text-gray-500 hover:text-gray-900'>Examples</a>
+                <Link
+                  href='/examples/simple'
+                  className='text-base leading-6 text-gray-500 hover:text-gray-900'>
+                  Examples
                 </Link>
               </li>
               <li className='mt-4'>
-                <Link href='/reference/useQuery'>
-                  <a className='text-base leading-6 text-gray-500 hover:text-gray-900'>API Reference</a>
+                <Link
+                  href='/reference/useQuery'
+                  className='text-base leading-6 text-gray-500 hover:text-gray-900'>
+                  API Reference
                 </Link>
               </li>
             </ul>

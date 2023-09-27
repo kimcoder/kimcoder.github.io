@@ -25,7 +25,7 @@ export function SidebarNavLink({ route: { href, pathname, title, selected }, onC
             {title}
           </a>
         ) : (
-          <Link href={href} as={pathname}>
+          <Link href={href} as={pathname} legacyBehavior>
             <a>{title}</a>
           </Link>
         )

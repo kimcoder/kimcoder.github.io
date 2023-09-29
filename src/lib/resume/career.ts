@@ -51,6 +51,7 @@ type Project = {
     | 'Gulp'
     | 'webpack'
     | 'esbuild'
+    | 'Rollup'
     | 'sass'
     | 'jQuery'
     | 'ImageMagick'
@@ -322,37 +323,94 @@ export const CAREER: Career[] = [
             title: '배민상회 판매중개플랫폼 구축',
             beginAt: '2020.02',
             endAt: '2020.05',
-            description: '',
+            description:
+              '판매중개를 위한 플랫폼 사이트를 구축하였습니다.\n애플리케이션은 외부 셀러들과 내부 관리자를 위한 2가지 유형의 사용자로 분기되어 구동시킬 수 있었습니다.',
             role: [
               {
-                description: '',
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 정의', '코드 컨벤션 정의', '애플리케이션 아키텍처 정의'],
+              },
+              {
+                description: '애플리케이션 기본 동작을 위한 모듈 개발',
+                subDescription: ['사용자 권한에 따른 메뉴 구현', 'API 프록시 구현', 'isomorphic 유틸 작성'],
+              },
+              {
+                description: '기능별 다수 페이지 개발',
+                subDescription: [
+                  '로그인',
+                  '판매사 운영 관리',
+                  '전시상품 관리',
+                  '주문 관리',
+                  '배송 관리',
+                  '정산 관리',
+                  '기타',
+                ],
               },
             ],
-            techStack: [],
+            techStack: ['React', 'Next.js', 'Typescript', 'styled-components', 'Node.js', 'Github', 'AWS'],
           },
           {
             title: '배민상회 디자인시스템 구축',
             beginAt: '2019.12',
             endAt: '2020.01',
-            description: '',
+            description:
+              '배민상회 쇼핑몰 구축 후, 판매중개를 준비하는 상황을 맞이하여 배민상회 프론트 전역에서 사용할 수 있는 디자인시스템을 구축하였습니다.\n디자이너와 협업하여 가이드를 만들고 다양한 컴포넌트들을 제작하였습니다.\n프리랜서 개발자들과 협업하여 구축을 하였는데, 개발에 대한 전반적인 가이드도 제공하였습니다.',
             role: [
               {
-                description: '',
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 정의', '코드 컨벤션 정의', '브랜치 전략 정의'],
+              },
+              {
+                description: 'Github Action을 활용한 CI/CD 구축',
+                subDescription: [
+                  '버저닝된 패키지를 사내 Nexus에 배포되도록 처리',
+                  '스토리북 빌드 결과물을 S3에 업로드 처리',
+                ],
+              },
+              {
+                description: '컴포넌트 개발',
+                subDescription: ['Button', 'Input', 'Textarea', 'Select', 'Modal', 'Table', 'Etc'],
               },
             ],
-            techStack: [],
+            techStack: ['React', 'Typescript', 'styled-components', 'Rollup', 'Storybook', 'Github', 'AWS'],
           },
           {
-            title: '배민상회 구축',
+            title: '배민상회 쇼핑몰 구축',
             beginAt: '2018.10',
             endAt: '2019.12',
-            description: '',
+            description:
+              '배민상회 개발팀이 세팅될 때부터 합류하여, 배민상회 쇼핑몰 구축 과정 모든 부분을 참여하였습니다.\n기존에 고도몰을 통해 운영되고 있었던 배민상회 서비스를 점진적으로 내재화시켰고, 고도화를 위한 발판을 마련하였습니다.\nUI/UX 구현뿐만 아니라, 웹 애플리케이션 서버도 구현하여 배민상회 쇼핑몰 프론트의 전반을 담당하였습니다.',
             role: [
               {
-                description: '',
+                description: '개발 환경 구축',
+                subDescription: [
+                  '기술 스택 정의',
+                  '코드 컨벤션 정의',
+                  '브랜치 전략 정의',
+                  '애플리케이션 아키텍처 정의',
+                ],
+              },
+              {
+                description: '디자인 가이드에 따른 코어 컴포넌트 개발',
+              },
+              {
+                description: '기능별 페이지 전환 프로젝트 진행',
+                subDescription: ['메인', '검색', '상품 목록/상세', '장바구니', '주문서', 'My상회', '샘플', '기타'],
               },
             ],
-            techStack: [],
+            techStack: [
+              'React',
+              'Redux',
+              'Redux Saga',
+              'Typescript',
+              'styled-components',
+              'webpack',
+              'Storybook',
+              'Node.js',
+              'Express',
+              'Github',
+              'AWS',
+            ],
           },
         ],
       },

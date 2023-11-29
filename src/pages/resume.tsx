@@ -55,7 +55,7 @@ const Resume = ({ career, etc }: Props) => {
           <ResumeSection title='그 외 경력'>
             <ResumeEtc etc={etc} />
           </ResumeSection>
-          <ResumeSection title='스킬'></ResumeSection>
+          {/* <ResumeSection title='스킬'></ResumeSection> */}
         </div>
       </div>
     </div>

@@ -63,6 +63,7 @@ type Project = {
     | 'Serverless'
     | 'OpenGL'
     | 'i18n'
+    | 'nivo'
   )[];
 };
 
@@ -153,7 +154,29 @@ export const CAREER: Career[] = [
             endAt: '2022.09',
             description: '',
             role: [],
-            techStack: [],
+            techStack: [
+              'React',
+              'Typescript',
+              'Redux Toolkit',
+              'Redux Saga',
+              'React Query',
+              'Express',
+              'styled-components',
+              'Gitlab',
+              'Storybook',
+              'Jest',
+              'React Testing Library',
+              'MSW',
+              'Express',
+              'styled-components',
+              'Gitlab',
+              'Storybook',
+              'Jest',
+              'React Testing Library',
+              'MSW',
+              'webpack',
+              'AWS',
+            ],
           },
           {
             title: '배민상회 셀러어드민 구축 및 운영',
@@ -195,52 +218,104 @@ export const CAREER: Career[] = [
         endAt: '2021-05',
         projects: [
           {
-            title: '코스피 지수에 따른 인덱스,리버스 펀드 서비스 구축',
+            title: '코스피 지수에 따른 인덱스/리버스 펀드 서비스 구축',
             beginAt: '2020.08',
             endAt: '2021.02',
-            description: '',
+            description:
+              '게임성이 가미된 펀드 매매를 위한 신규 서비스를 구축하였습니다.\n사내 CBT까지 진행하였지만, 아쉽게도 컴플라이언스 이슈로 인해 서비스가 런칭되지는 못하였습니다.\n카카오페이에서 React Query를 처음으로 도입하였고, 그 후에 사용성 등을 전사에 전파하였습니다.',
             role: [
               {
-                description: '',
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 정의', '코드 컨벤션 정의', '애플리케이션 아키텍처 정의'],
+              },
+              {
+                description: '메인 페이지 일부 영역 개발',
+                subDescription: ['지수영역', '지수 차트 영역'],
+              },
+              {
+                description: '펀드 매수 기능 개발',
+              },
+              {
+                description: '사용자 랭킹 페이지 개발',
+              },
+              {
+                description: '최근 라운드 페이지 개발',
               },
             ],
-            techStack: [],
+            techStack: ['React', 'React Query', 'nivo', 'Typescript', 'sass', 'Jest', 'Storybook', 'webpack', 'Github'],
           },
           {
             title: 'P2P 서비스 운영',
             beginAt: '2020.11',
             endAt: '2021.02',
-            description: '',
+            description:
+              '지금은 더 이상 서비스되지 않고 있는 부동산 P2P 투자 서비스를 운영하였습니다.\n레거시들을 개선하던 중 React Query를 도입하여 적극 사용하였습니다.\n이 서비스는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱에서 접근할 수 있었습니다.',
             role: [
               {
-                description: '',
+                description: '레거시 개발 환경 개선',
+                subDescription: [
+                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거 및 전환',
+                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'husky, lint-staged를 활용한 코드 포맷팅 및 컨벤션 준수',
+                ],
+              },
+              {
+                description: '투자내역 목록 개선',
+                subDescription: ['React Query를 적용하여 기존 코드의 복잡도 감소 및 사용성 개선'],
+              },
+              {
+                description: '카카오페이 통합웹뷰 SDK 적용',
+              },
+              {
+                description: '제휴사용 카카오페이 통합웹뷰 SDK 구현 및 가이드',
               },
             ],
-            techStack: [],
+            techStack: ['React', 'React Query', 'Typescript', 'sass', 'Jest', 'Storybook', 'webpack', 'Github'],
           },
           {
             title: '펀드 서비스 운영',
             beginAt: '2020.08',
             endAt: '2020.10',
-            description: '',
+            description:
+              '펀드 매매 서비스를 운영하였습니다.\n이 서비스는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱에서 접근할 수 있었습니다.',
             role: [
               {
-                description: '',
+                description: '레거시 개발 환경 개선',
+                subDescription: [
+                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거 및 전환',
+                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'husky, lint-staged를 활용한 코드 포맷팅 및 컨벤션 준수',
+                ],
+              },
+              {
+                description: '코드 분할 처리로 웹뷰 성능 개선',
               },
             ],
-            techStack: [],
+            techStack: ['React', 'Typescript', 'Mobx', 'sass', 'Jest', 'webpack', 'Github'],
           },
           {
             title: '투자홈 운영',
             beginAt: '2020.12',
             endAt: '2021.01',
-            description: '',
+            description:
+              '카카오페이 투자 서비스들과 나의 투자 현황을 볼 수 있는 페이지를 운영하였습니다.\n이 페이지는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱의 하단 탭의 페이지로 제공되었습니다.',
             role: [
               {
-                description: '',
+                description: '레거시 개발 환경 개선',
+                subDescription: [
+                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거 및 전환',
+                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'husky, lint-staged를 활용한 코드 포맷팅 및 컨벤션 준수',
+                ],
+              },
+              {
+                description: '카카오페이 통합웹뷰 SDK 적용',
+              },
+              {
+                description: '다크모드 화면 대응',
               },
             ],
-            techStack: [],
+            techStack: ['React', 'Typescript', 'sass', 'Jest', 'webpack', 'Github'],
           },
         ],
       },

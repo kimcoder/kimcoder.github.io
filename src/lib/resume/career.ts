@@ -152,8 +152,29 @@ export const CAREER: Career[] = [
             title: '배민상회 쇼핑몰 운영',
             beginAt: '2021.05',
             endAt: '2022.09',
-            description: '',
-            role: [],
+            description:
+              '배민상회 쇼핑몰을 운영하였습니다.\n배민상회 전시팀 소속으로 전시 영역 도메인의 작업들을 진행했으며, 기능 조직으로 변경 후에는 전반적인 영역의 작업들을 진행하였습니다.',
+            role: [
+              {
+                description: '각 페이지 유지보수 및 추가 기능 구현',
+                subDescription: ['발주서 기능 구현', '난수 쿠폰 기능 구현', '메인화면 AB테스트 탭 기능 구현', '기타'],
+              },
+              {
+                description: '개발 환경 개선',
+                subDescription: [
+                  '새로운 기술 스택 도입',
+                  '레거시 코드/기술 개선',
+                  '도메인 기반의 아키텍처로의 변경',
+                  '사내 배포플랫폼 버전 마이그레이션',
+                  'CI/CD 개선',
+                  '모니터링 대시보드 설정',
+                ],
+              },
+              {
+                description: '웹 성능 개선',
+                subDescription: ['이미지 지연 로드 처리', '웹 바이탈 메트릭 개선'],
+              },
+            ],
             techStack: [
               'React',
               'Typescript',
@@ -167,14 +188,6 @@ export const CAREER: Career[] = [
               'Jest',
               'React Testing Library',
               'MSW',
-              'Express',
-              'styled-components',
-              'Gitlab',
-              'Storybook',
-              'Jest',
-              'React Testing Library',
-              'MSW',
-              'webpack',
               'AWS',
             ],
           },
@@ -182,25 +195,93 @@ export const CAREER: Career[] = [
             title: '배민상회 셀러어드민 구축 및 운영',
             beginAt: '2022.02',
             endAt: '2022.09',
-            description: '',
-            role: [],
-            techStack: [],
+            description:
+              '배민상회가 판매중개로 비지니스 모델이 변경되면서 외부 셀러들을 위한 관리자 서비스를 구축하고 운영하였습니다.\n배민상회 전시팀 소속으로 전시 영역 도메인의 작업들을 진행하고 이끌었으며, 애플리케이션이 서비스되기 위한 여러가지 부분들을 주도하여 처리하였습니다.',
+            role: [
+              {
+                description: '배민상회 전시팀 프론트 리소스 및 일정 관리',
+              },
+              {
+                description: '공통 UI 컴포넌트 개발',
+              },
+              {
+                description: '전시 페이지 개발',
+                subDescription: ['상품 관리', '가격 관리', '카테고리 관리', '기타'],
+              },
+              {
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 선정', 'CI/CD 구성', '도메인 기반 아키텍처 정의', '모니터링 대시보드 설정'],
+              },
+            ],
+            techStack: [
+              'React',
+              'Next.js',
+              'Typescript',
+              'React Query',
+              'React Hook Form',
+              'styled-components',
+              'Node.js',
+              'Github',
+              'AWS',
+            ],
           },
           {
             title: '배민상회 플랫폼어드민 운영',
             beginAt: '2021.05',
             endAt: '2022.09',
-            description: '',
-            role: [],
-            techStack: [],
+            description:
+              '배민상회 쇼핑몰을 관리하기 위한 플랫폼 어드민을 운영하였습니다.\n또한, 배민상회 이커머스 플랫폼을 활용하여 배민문방구 쇼핑몰도 구축되어 서비스가 되었는데, 이를 서포트하기 위해 플랫폼 어드민 운영까지 진행하였습니다.',
+            role: [
+              {
+                description: '쇼핑몰 타입 분기에 따른 배민상회, 배민문방구 전환 기능 구현',
+              },
+              {
+                description: '각 페이지 유지보수',
+                subDescription: ['상품 관리', '가격 관리', '카테고리 관리', '수수료 관리', '기타'],
+              },
+              {
+                description: '개발 환경 개선',
+                subDescription: ['새로운 기술 스택 도입', '레거시 코드/기술 개선', '도메인 기반의 아키텍처로의 변경'],
+              },
+            ],
+            techStack: [
+              'React',
+              'Next.js',
+              'Typescript',
+              'React Query',
+              'React Hook Form',
+              'styled-components',
+              'Node.js',
+              'Github',
+              'AWS',
+            ],
           },
           {
             title: '배민상회 디자인시스템 운영',
             beginAt: '2021.05',
             endAt: '2022.09',
-            description: '',
-            role: [],
-            techStack: [],
+            description:
+              '배민상회 쇼핑몰, 플랫폼어드민, 셀러어드민에서 사용하는 디자인시스템을 운영하였습니다.\n비대해지는 패키지와 서비스별 컴포넌트 사용 방식이 달라짐에 따라 패키지를 분할하여 운영하였습니다.',
+            role: [
+              {
+                description: '신규 컴포넌트 개발',
+              },
+              {
+                description: '모노레포 전환',
+                subDescription: ['쇼핑몰 패키지, 어드민 패키지 분할', 'CI/CD 구성'],
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'styled-components',
+              'React Hook Form',
+              'Rollup',
+              'Lerna',
+              'Storybook',
+              'Github',
+              'AWS',
+            ],
           },
         ],
       },

@@ -433,6 +433,21 @@
         { "title": "16장 공유 메모리", "path": "/books/everything-about-js/16" },
         { "title": "17장 그 외", "path": "/books/everything-about-js/17" }
       ]
+    },
+    {
+      "title": "크리에이티브 프로그래머",
+      "open": false,
+      "routes": [
+        { "title": "소개", "path": "/books/creative-programmer/0" },
+        { "title": "1장 창의성을 향한 여정", "path": "/books/creative-programmer/1" },
+        { "title": "2장 기술지식", "path": "/books/creative-programmer/2" },
+        { "title": "3장 커뮤니케이션", "path": "/books/creative-programmer/3" },
+        { "title": "4장 제약 조건", "path": "/books/creative-programmer/4" },
+        { "title": "5장 비판적 사고", "path": "/books/creative-programmer/5" },
+        { "title": "6장 호기심", "path": "/books/creative-programmer/6" },
+        { "title": "7장 창의적 마인드셋", "path": "/books/creative-programmer/7" },
+        { "title": "8장 창의적 기법", "path": "/books/creative-programmer/8" }
+      ]
     }
   ]
 }

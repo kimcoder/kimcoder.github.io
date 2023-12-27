@@ -1,8 +1,10 @@
 import { diffYearFromNow, getDateString, sortDateAsc } from 'lib/date-utils';
 import { CAREER } from 'lib/resume/career';
 
-export const getPeriod = (beginAt: string, endAt?: string) => {
-  const transformDate = (dateStr: string) => getDateString(new Date(dateStr), 'yyyy.MM');
+type careerDurationDate = (typeof CAREER)[0]['beginAt'];
+
+export const getPeriod = (beginAt: careerDurationDate, endAt?: careerDurationDate) => {
+  const transformDate = (dateStr: careerDurationDate) => getDateString(new Date(`${dateStr}-01`), 'yyyy.MM');
   const endAtStr = endAt ? transformDate(endAt) : '재직중';
 
   return `${transformDate(beginAt)} ~ ${endAtStr}`;

@@ -22,7 +22,7 @@ export const Seo = withRouter(({ title, description, keywords, image = ogImage, 
 
     {/* OPEN GRAPH */}
     <meta property='og:type' key='og:type' content='website' />
-    <meta property='og:url' key='og:url' content={`https://github.com/kimcoder`} />
+    <meta property='og:url' key='og:url' content={`https://kimcoder.io`} />
     {title != undefined && <meta property='og:title' content={title} key='og:title' />}
     {description != undefined && <meta property='og:description' key='og:description' content={description} />}
     {image != undefined && <meta property='og:image' key='og:image' content={image} />}

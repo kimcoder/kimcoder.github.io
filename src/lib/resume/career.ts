@@ -50,6 +50,8 @@ type Project = {
     | 'PHP'
     | 'Gulp'
     | 'webpack'
+    | 'Vite'
+    | 'Vitest'
     | 'esbuild'
     | 'Rollup'
     | 'sass'
@@ -64,6 +66,12 @@ type Project = {
     | 'OpenGL'
     | 'i18n'
     | 'nivo'
+    | 'TS-Pattern'
+    | 'Rspress'
+    | 'tsup'
+    | 'Turborepo'
+    | 'Slack Bolt'
+    | 'Docusaurus'
   )[];
 };
 
@@ -81,28 +89,112 @@ export const CAREER: Career[] = [
         teamName: '셀러웹프론트개발팀',
         position: '팀원',
         beginAt: '2022-10',
-        // techStack: [
-        //   'React',
-        //   'Typescript',
-        //   'Redux',
-        //   'Redux Saga',
-        //   'React Query',
-        //   'Express',
-        //   'styled-components',
-        //   'Gitlab',
-        //   'Storybook',
-        //   'Jest',
-        //   'React Testing Library',
-        //   'MSW',
-        //   'webpack',
-        //   'AWS',
-        // ],
         projects: [
+          {
+            title: '우아한라이브러리 구축',
+            beginAt: '2023-05',
+            description:
+              '우아한형제들의 전사 FE 라이브러리 제작을 위한 워킹 그룹에 참여하여 라이브러리를 구축하였습니다.\n워킹 그룹 리드 역할을 맡아 그룹 활동을 이끌고 전반적인 환경 구성 및 라이브러리 배포까지 담당하였습니다.',
+            role: [
+              {
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 정의', 'CI/CD 구성', '코드 컨벤션 정의', '브랜치 전략 정의'],
+              },
+              {
+                description: '라이브러리 운영 가이드 수립 및 문서화',
+              },
+              {
+                description: 'React Custom Hook 라이브러리 개발',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Turborepo',
+              'Vite',
+              'Vitest',
+              'Docusaurus',
+              'Storybook',
+              'Gitlab',
+              'AWS',
+            ],
+          },
+          {
+            title: '배민사장님 앱 웹뷰 라이브러리 구축',
+            beginAt: '2023-02',
+            description:
+              '배민사장님앱 웹뷰 개발 및 운영에 필요한 다양한 기능들을 모듈화하여 라이브러리로 구성했습니다.\n주도적으로 아이디어를 내고, 필요한 모듈들과 앱을 모노레포로 구성하여 제공하였습니다.',
+            role: [
+              {
+                description: '개발 환경 구축',
+                subDescription: ['기술 스택 정의', 'CI/CD 구성', '코드 컨벤션 정의', '브랜치 전략 정의'],
+              },
+              {
+                description: '배민사장님 앱 웹뷰 브릿지 SDK 개발',
+                subDescription: [
+                  'WebViewData, WebViewVersion, WebViewScheme, WebViewInterface 등 모듈 구성',
+                  'SDK 문서화 및 정적 문서 개발 환경 구성',
+                  '배민사장님 웹뷰, 주문접수 튜토리얼, 셀프서비스에 SDK 제공',
+                ],
+              },
+              {
+                description: '배민사장님 앱 웹뷰 슬랙 앱 개발',
+              },
+              {
+                description: 'GitLab MR 스토리북 프리뷰어 개발',
+              },
+              {
+                description: '배민사장님 앱 가변폰트 스토리북 애드온 개발',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Turborepo',
+              'Rspress',
+              'tsup',
+              'Slack Bolt',
+              'Storybook',
+              'Gitlab',
+              'AWS',
+            ],
+          },
           {
             title: '배민사장님 앱 웹뷰 운영',
             beginAt: '2022-10',
-            description: '',
-            role: [],
+            description:
+              '배민사장님앱 웹뷰를 운영하고 있습니다.\n주문, 배달 관련된 지면, 가게를 관리하고 매출 데이터를 조회할 수 있는 셀프 지면 등을 웹뷰로 제공하고 있습니다.\n많은 레거시들과 기술부채들을 안정적으로 개선하였고, 개발 환경을 많이 개선하였습니다.\n또한, 팀내 주문접수파트의 리더 역할을 맡고 있습니다.',
+            role: [
+              {
+                description: '각 페이지 유지보수 및 추가 기능 구현',
+                subDescription: [
+                  '배민스토어 주문 접수 처리 기능 구현',
+                  '가변폰트(100%, 125%, 150%) 기능 구현',
+                  '광장 페이지 개발',
+                  '기타',
+                ],
+              },
+              {
+                description: '개발 환경 개선',
+                subDescription: [
+                  '새로운 기술 스택 도입',
+                  '레거시 코드/기술 개선',
+                  '사내 배포플랫폼 적용',
+                  'CI/CD 개선',
+                  '모니터링 대시보드 설정',
+                  '센트리 대시보드 설정',
+                  '스토리북, MSW 등을 활용한 로컬 작업 환경 개선',
+                  'MR(Merge Request)에 스토리북을 통해 미리보기 기능 구현',
+                ],
+              },
+              {
+                description: '웹 성능 개선',
+                subDescription: ['웹 바이탈 메트릭 개선'],
+              },
+              {
+                description: '코드커버리지 개선',
+              },
+            ],
             techStack: [
               'React',
               'Typescript',
@@ -111,12 +203,13 @@ export const CAREER: Career[] = [
               'React Query',
               'Express',
               'styled-components',
+              'TS-Pattern',
               'Gitlab',
               'Storybook',
-              'Jest',
-              'React Testing Library',
               'MSW',
-              'webpack',
+              'React Testing Library',
+              'Vitest',
+              'Vite',
               'AWS',
             ],
           },
@@ -127,26 +220,6 @@ export const CAREER: Career[] = [
         position: '팀원',
         beginAt: '2021-05',
         endAt: '2022-10',
-        // techStack: [
-        //   'React',
-        //   'Typescript',
-        //   'Redux Toolkit',
-        //   'Redux Saga',
-        //   'React Query',
-        //   'React Hook Form',
-        //   'Next.js',
-        //   'Express',
-        //   'styled-components',
-        //   'Gitlab',
-        //   'Storybook',
-        //   'Jest',
-        //   'React Testing Library',
-        //   'MSW',
-        //   'Lerna',
-        //   'webpack',
-        //   'esbuild',
-        //   'AWS',
-        // ],
         projects: [
           {
             title: '배민상회 쇼핑몰 운영',
@@ -157,14 +230,14 @@ export const CAREER: Career[] = [
             role: [
               {
                 description: '각 페이지 유지보수 및 추가 기능 구현',
-                subDescription: ['발주서 기능 구현', '난수 쿠폰 기능 구현', '메인화면 AB테스트 탭 기능 구현', '기타'],
+                subDescription: ['발주서 페이지 개발', '난수 쿠폰 기능 구현', '메인화면 AB테스트 탭 기능 구현', '기타'],
               },
               {
                 description: '개발 환경 개선',
                 subDescription: [
                   '새로운 기술 스택 도입',
                   '레거시 코드/기술 개선',
-                  '도메인 기반의 아키텍처로의 변경',
+                  '도메인 기반 아키텍처로의 변경',
                   '사내 배포플랫폼 버전 마이그레이션',
                   'CI/CD 개선',
                   '모니터링 대시보드 설정',
@@ -241,7 +314,7 @@ export const CAREER: Career[] = [
               },
               {
                 description: '개발 환경 개선',
-                subDescription: ['새로운 기술 스택 도입', '레거시 코드/기술 개선', '도메인 기반의 아키텍처로의 변경'],
+                subDescription: ['새로운 기술 스택 도입', '레거시 코드/기술 개선', '도메인 기반 아키텍처로의 변경'],
               },
             ],
             techStack: [

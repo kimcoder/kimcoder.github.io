@@ -1,5 +1,4 @@
 import DocsPageFooter from 'components/DocsPageFooter';
-import { Footer } from 'components/Footer';
 import MDXComponents from 'components/MDXComponents';
 import { Nav } from 'components/Nav';
 import { Seo } from 'components/Seo';

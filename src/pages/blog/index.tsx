@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { Banner } from 'components/Banner';
-import { Footer } from 'components/Footer';
 import markdownStyles from 'components/markdown.module.css';
 import { Nav } from 'components/Nav';
 import { Seo } from 'components/Seo';

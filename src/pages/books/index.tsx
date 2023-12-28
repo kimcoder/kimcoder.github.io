@@ -1,5 +1,4 @@
 import { Banner } from 'components/Banner';
-import { Footer } from 'components/Footer';
 import { useIsMobile } from 'components/useIsMobile';
 import { SidebarMobile } from 'components/SidebarMobile';
 import { Nav } from 'components/Nav';

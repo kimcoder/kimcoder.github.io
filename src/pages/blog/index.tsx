@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { Banner } from 'components/Banner';
-import { Footer } from 'components/Footer';
 import markdownStyles from 'components/markdown.module.css';
 import { Nav } from 'components/Nav';
 import { Seo } from 'components/Seo';
@@ -44,13 +43,14 @@ export default function Index({ posts }: any) {
                         </div>
                       )}
                       <h3 className='mt-2 text-2xl font-semibold leading-7 text-gray-900'>
-                        <Link as={`/blog/${post.filePath.replace(/\.mdx?$/, '')}`} href={`/blog/[slug]`}>
-                          <a className='block'>
-                            <span className='cursor-pointer hover:underline'>
-                              {!post.data.published && <span className='rounded-xl bg-black text-white'>Draft</span>}
-                              {post.data.title}
-                            </span>{' '}
-                          </a>
+                        <Link
+                          as={`/blog/${post.filePath.replace(/\.mdx?$/, '')}`}
+                          href={`/blog/[slug]`}
+                          className='block'>
+                          <span className='cursor-pointer hover:underline'>
+                            {!post.data.published && <span className='rounded-xl bg-black text-white'>Draft</span>}
+                            {post.data.title}
+                          </span>{' '}
                         </Link>
                       </h3>
                       <div className='mt-3 leading-6 text-gray-500 '>
@@ -62,10 +62,11 @@ export default function Index({ posts }: any) {
                       </div>
 
                       <div className='mt-3'>
-                        <Link as={`/blog/${post.filePath.replace(/\.mdx?$/, '')}`} href={`/blog/[slug]`}>
-                          <a className='transition text-base font-semibold leading-6 text-blue-600 duration-150 ease-in-out hover:text-blue-500'>
-                            읽으러 가기 <span aria-hidden='true'>→</span>
-                          </a>
+                        <Link
+                          as={`/blog/${post.filePath.replace(/\.mdx?$/, '')}`}
+                          href={`/blog/[slug]`}
+                          className='transition text-base font-semibold leading-6 text-blue-600 duration-150 ease-in-out hover:text-blue-500'>
+                          읽으러 가기<span aria-hidden='true'>→</span>
                         </Link>
                       </div>
                     </div>
@@ -75,7 +76,6 @@ export default function Index({ posts }: any) {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );

@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { SidebarNavLink } from './SidebarNavLink';
+import { Route, SidebarNavLink } from './SidebarNavLink';
 import cn from 'classnames';
 
-export const SidebarPost = ({ isMobile, route, level = 1, onClick = undefined, ...props }) => {
+type Props = {
+  route: Route;
+  isMobile: boolean;
+  level: number;
+};
+
+export const SidebarPost = ({ isMobile, route, level = 1 }: Props) => {
   const selectedRef = React.useRef<HTMLDivElement>(null);
   const ref = route.selected ? selectedRef : null;
   React.useEffect(() => {
@@ -18,7 +24,7 @@ export const SidebarPost = ({ isMobile, route, level = 1, onClick = undefined, .
   }, [ref, isMobile]);
   return (
     <div ref={ref} className={cn('link', `level-${level}`)}>
-      <SidebarNavLink route={route} categorySelected={props.categorySelected} level={level} onClick={onClick} />
+      <SidebarNavLink route={route} level={level} />
       <style jsx>{`
         .link {
           margin: 12px 0;

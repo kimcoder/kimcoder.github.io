@@ -1,8 +1,9 @@
-import React, { createElement, HtmlHTMLAttributes, ReactNode } from 'react';
+import type { MDXComponents } from 'mdx/types';
+
+import React, { createElement, HtmlHTMLAttributes } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { CustomLink } from 'components/CustomLink';
-import Highlight2 from 'components/Highlight2';
 
 const ANCHOR_TITLE = 'Direct link to heading';
 
@@ -32,16 +33,19 @@ const handleHeadingTags =
       : createElement(tag, { ...attr, id: getHeadingId(attr) }, getHeadingChildrenWithAnchor(attr));
   };
 
-export default {
-  // default tags
-  pre: (p: any) => <div {...p} />,
-  code: Highlight2,
-  a: CustomLink,
-  Head,
-  h1: handleHeadingTags('h1'),
-  h2: handleHeadingTags('h2'),
-  h3: handleHeadingTags('h3'),
-  h4: handleHeadingTags('h4'),
-  h5: handleHeadingTags('h5'),
-  h6: handleHeadingTags('h6'),
-} as unknown as Record<string, ReactNode>;
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  console.log('..useMDXComponents...', useMDXComponents);
+  return {
+    ...components,
+    pre: (p: any) => <div {...p} />,
+    code: dynamic(() => import('components/Highlight2')),
+    a: CustomLink,
+    Head,
+    h1: handleHeadingTags('h1'),
+    h2: handleHeadingTags('h2'),
+    h3: handleHeadingTags('h3'),
+    h4: handleHeadingTags('h4'),
+    h5: handleHeadingTags('h5'),
+    h6: handleHeadingTags('h6'),
+  };
+}

@@ -6,7 +6,7 @@ import { vsDarkTheme } from './utils/prism';
 const Code = ({ children, codeString, className = 'language-js', ...props }) => {
   const language = className.replace(/language-/, '');
   const [key, setKey] = React.useState(`${Math.random() * 7}`);
-
+  console.log('chilfren', children, codeString);
   if (props['live']) {
     return (
       <div>

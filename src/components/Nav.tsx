@@ -9,9 +9,9 @@ export const Nav = () => (
       <div className='flex flex-wrap items-center'>
         <div className='nav-height flex w-60 items-center pt-4 md:pt-0'>
           <Link href='/' as='/'>
-            <a>
-              <h1 id='page-title'>@kimcoder</h1>
-            </a>
+
+            <h1 id='page-title'>@kimcoder</h1>
+
           </Link>
         </div>
 
@@ -22,13 +22,13 @@ export const Nav = () => (
         <div className='flex-grow nav-height flex w-3/4 items-center justify-between space-x-4 md:w-auto md:justify-end md:space-x-8'>
           <div className='flex space-x-4 text-sm md:space-x-8 md:text-base'>
             <div>
-              <Link href='/blog'>
-                <a className='font-medium leading-6'>Blog</a>
+              <Link href='/blog' className='font-medium leading-6'>
+                Blog
               </Link>
             </div>
             <div>
-              <Link href='/books'>
-                <a className='font-medium leading-6'>Books</a>
+              <Link href='/books' className='font-medium leading-6'>
+                Books
               </Link>
             </div>
           </div>

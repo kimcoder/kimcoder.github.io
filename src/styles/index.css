@@ -9,6 +9,7 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 .top-24 {
@@ -53,15 +54,6 @@ html {
 
 .aspect-ratio-21-9 {
   padding-top: 42.86%;
-}
-
-.anchor {
-  @apply absolute ml-2 pr-1 text-gray-500 underline;
-}
-
-.anchor::after {
-  content: '#';
-  visibility: hidden;
 }
 
 h1:hover .anchor::after,

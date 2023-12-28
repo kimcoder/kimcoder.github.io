@@ -9,15 +9,19 @@ import { Seo } from 'components/Seo';
 import ResumeSection from 'components/resume/ResumeSection';
 import { ETC } from 'lib/resume/etc';
 import ResumeEtc from 'components/resume/ResumeEtc';
+import { GetStaticProps } from 'next/types';
+import { Toc } from 'components/Toc';
+import resumeStyles from 'styles/resume.module.css';
+import classNames from 'classnames';
 
 type Props = {
   career: typeof CAREER;
   etc: typeof ETC;
 };
 
-const Resume = ({ career, etc }: Props) => {
+export default function ResumePage({ career, etc }: Props) {
   return (
-    <div className='h-full min-h-full'>
+    <div className={classNames(resumeStyles.resume, 'h-full min-h-full')}>
       <Banner />
       <Sticky>
         <Nav />
@@ -27,7 +31,7 @@ const Resume = ({ career, etc }: Props) => {
         description='프론트엔드 개발자 김대현의 이력서입니다.'
         keywords='개발자 이력서, 프론트엔드개발자 이력서, FE 이력서'
       />
-      <div className='container mx-auto bg-white px-4 pt-16 pb-20 lg:pt-24 lg:pb-28'>
+      <div className='container mx-auto bg-white px-4 pt-16 pb-20 lg:pt-24 lg:pb-28 flex'>
         <div className='overflow-hidden bg-white sm:rounded-lg'>
           <h1 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 lg:text-5xl '>
             안녕하세요. 김대현입니다.
@@ -48,7 +52,7 @@ const Resume = ({ career, etc }: Props) => {
             </p>
           </div>
           <ResumeSection title='업무 경력'>
-            {career.map((item) => {
+            {career.map((item, idx) => {
               return <ResumeCompany key={item.team[0].beginAt} company={item} />;
             })}
           </ResumeSection>
@@ -57,15 +61,19 @@ const Resume = ({ career, etc }: Props) => {
           </ResumeSection>
           {/* <ResumeSection title='스킬'></ResumeSection> */}
         </div>
+        <div className='ml-10 hidden w-24 flex-shrink-0 xl:block'>
+          <div className='on-this-page sticky top-24 overflow-y-auto pb-16'>
+            <h4 className='mb-2 mt-2 text-sm font-semibold uppercase text-gray-500'>이력서</h4>
+            <Toc title={'자기소개'} />
+          </div>
+        </div>
       </div>
     </div>
   );
-};
+}
 
-export const getStaticProps = async () => {
+export const getStaticProps = (async () => {
   return {
     props: { career: CAREER, etc: ETC },
   };
-};
-
-export default Resume;
+}) satisfies GetStaticProps<Props>;

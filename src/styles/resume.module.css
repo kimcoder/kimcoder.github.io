@@ -1,0 +1,43 @@
+.resume h1:before,
+.resume h2:before,
+.resume h3:before,
+.resume h4:before,
+.resume h5:before,
+.resume h6:before {
+  display: block;
+  height: 6rem;
+  margin-top: -6rem;
+  visibility: hidden;
+  content: '';
+}
+
+.resume :global(.anchor) {
+  @apply absolute ml-2 pr-1 text-gray-500 underline;
+}
+
+.resume :global(.anchor::before) {
+  display: block;
+  height: 6rem;
+  margin-top: -6rem;
+  visibility: hidden;
+  content: '';
+}
+
+.resume :global(.anchor::after) {
+  content: '#';
+  visibility: hidden;
+}
+
+.anchor::after {
+  content: '#';
+  visibility: hidden;
+}
+
+h1:hover .anchor::after,
+h2:hover .anchor::after,
+h3:hover .anchor::after,
+h4:hover .anchor::after,
+h5:hover .anchor::after,
+h6:hover .anchor::after {
+  visibility: visible;
+}

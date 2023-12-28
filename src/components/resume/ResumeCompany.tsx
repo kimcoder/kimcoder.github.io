@@ -10,17 +10,19 @@ type Props = {
 };
 
 const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props) => {
+  const id = companyName + beginAt.split('-')[0];
+
   return (
     <section className='mt-12 first-of-type:mt-0'>
-      <h2 className='text-3xl font-bold leading-6 text-gray-900'>
-        <Anchor href={`#${companyName}`}>{companyName}</Anchor>
-      </h2>
+      <h3 className='text-3xl font-bold leading-6 text-gray-900' id={`${id}`}>
+        <Anchor href={`#${id}`}>{companyName}</Anchor>
+      </h3>
       <h3 className='mt-1 font-medium text-gray-700'>{getPeriod(beginAt, endAt)}</h3>
       {team.map(({ teamName, beginAt, endAt, position, projects }) => (
         <div className='border-t mt-2 pt-2' key={companyName + teamName}>
-          <h3>
+          <h4>
             {teamName} / {position}
-          </h3>
+          </h4>
           <p className='mt-1 max-w-2xl text-sm text-gray-900'>{getPeriod(beginAt, endAt)}</p>
           <div className='mt-5'>
             <dl>
@@ -36,7 +38,7 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
                         ),
                       },
                       {
-                        title: '한일',
+                        title: '한 일',
                         description: (
                           <ul className='ml-4 list-disc'>
                             {role.map(({ description, subDescription }) => (

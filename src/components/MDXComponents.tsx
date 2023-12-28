@@ -1,4 +1,4 @@
-import React, { createElement, HtmlHTMLAttributes } from 'react';
+import React, { createElement, HtmlHTMLAttributes, ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { CustomLink } from 'components/CustomLink';
@@ -44,4 +44,4 @@ export default {
   h4: handleHeadingTags('h4'),
   h5: handleHeadingTags('h5'),
   h6: handleHeadingTags('h6'),
-};
+} as unknown as Record<string, ReactNode>;

@@ -1,5 +1,4 @@
 import { Banner } from 'components/Banner';
-import { Footer } from 'components/Footer';
 import styles from 'components/markdown.module.css';
 import MDXComponents from 'components/MDXComponents';
 import { Nav } from 'components/Nav';

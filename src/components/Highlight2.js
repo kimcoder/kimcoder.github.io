@@ -4,6 +4,7 @@ import { vsDarkTheme } from './utils/prism';
 
 const Code = ({ children, codeString, className = 'language-js', ...props }) => {
   const language = className.replace(/language-/, '');
+
   return (
     <Highlight {...defaultProps} code={children.trim()} language={language} theme={vsDarkTheme} noInline>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (

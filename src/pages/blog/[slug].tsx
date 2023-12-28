@@ -1,5 +1,4 @@
 import { Banner } from 'components/Banner';
-import { Footer } from 'components/Footer';
 import styles from 'components/markdown.module.css';
 import MDXComponents from 'components/MDXComponents';
 import { Nav } from 'components/Nav';
@@ -18,7 +17,7 @@ type Props = {
   blogMetadata: BlogMetaData;
 };
 
-export default function PostPage({ mdxSource, blogMetadata }: Props) {
+export default function BlogPage({ mdxSource, blogMetadata }: Props) {
   return (
     <>
       <div className='h-full min-h-full'>
@@ -60,7 +59,6 @@ export default function PostPage({ mdxSource, blogMetadata }: Props) {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );

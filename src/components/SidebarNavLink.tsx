@@ -3,13 +3,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 
-type Props = {
-  route: { href: string; pathname: string; title: string; selected: boolean };
-  categorySelected: boolean;
-  level: Number;
-  onClick: () => void;
+export type Route = {
+  href: string;
+  pathname: string;
+  title: string;
+  selected: boolean;
 };
-export function SidebarNavLink({ route: { href, pathname, title, selected }, onClick }: Props) {
+
+type Props = {
+  route: Route;
+  level: Number;
+};
+
+export function SidebarNavLink({ route: { href, pathname, title, selected } }: Props) {
   const router = useRouter();
   const onlyHashChange = pathname === router.pathname;
 
@@ -25,7 +31,7 @@ export function SidebarNavLink({ route: { href, pathname, title, selected }, onC
             {title}
           </a>
         ) : (
-          <Link href={href} as={pathname}>
+          <Link href={href} as={pathname} legacyBehavior>
             <a>{title}</a>
           </Link>
         )

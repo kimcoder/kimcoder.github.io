@@ -1,10 +1,12 @@
 ---
 id: 웹 개발자를 위한 자바스크립트의 모든 것
-title: '11.1 새로운 배열 메서드'
+title: '11장 새로운 배열 함수, 타입이 있는 배열'
 description: '웹 개발자를 위한 자바스크립트의 모든 것 책을 읽고 내용을 정리합니다.'
 keywords: '웹 개발자를 위한 자바스크립트의 모든 것, javascript, everything about javascript, ES2015, ES2020, book, study'
 createdAt: 2023.06.16
 ---
+
+## 11.1 새로운 배열 메서드
 
 ### 11.1.1 Array.of
 
@@ -537,6 +539,7 @@ document.getElementById('file-input').addEventListener('change', function (event
   - start: 버퍼를 사용하기 시작할 버퍼의 시작 부분에서의 오프셋(바이트). 기본값은 0(처음부터 시작)이다.
   - length: 엔트리 기준 새로운 타입이 있는 배열의 길이(바이트 아님). 기본값은 엔트리의 갯수를 ArrayBuffer의 나머지 부분에 맞춘다.
 - ArrayBuffer는 다음 두 가지 방법으로 여러 유형의 배열 간에 공유할 수 있다.
+
   - 겹침 없음: 버퍼의 고유한 부분만 사용하는 각 배열
     ```
     const buf = new ArrayBuffer(20);
@@ -547,6 +550,7 @@ document.getElementById('file-input').addEventListener('change', function (event
     console.log(words.length); // 6(6개의 2바이트(16비트) 워드 = 12바이트)
     ```
   - 겹침 있음: 버퍼의 동일한 부분을 공유하는 배열
+
     ```
     const buf = new ArrayBuffer(12);
     const bytes = new Uint8Array(buf);
@@ -588,8 +592,10 @@ console.log(a.map((v) => v * 2));
 ```
 
 - %TypedArray%.prototype.set
+
   - set은 넘겨준 배열에서 타입이 있는 배열의 여러 값을 설정한다.
   - set을 사용하여 여러 유형의 배열을 결합할 수 있다.
+
   ```
   // ==== Prep for the snippet:
 
@@ -608,9 +614,12 @@ console.log(a.map((v) => v * 2));
 
   console.log(all);
   ```
+
 - %TypedArray%.prototype.subarray
+
   - subarray는 원래 배열의 버퍼를 공유하는 호출한 배열의 부분을 새로운 타입이 있는 배열로 만든다.
   - 첫 번째 인자와 두 번째 인자는 모두 바이트가 아닌 엔트리다.
+
   ```
   const wholeArray = Uint8Array.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   const firstHalf = wholeArray.subarray(0, 5);

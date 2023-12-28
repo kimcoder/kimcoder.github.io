@@ -1,35 +1,5 @@
-const path = require('path');
-const dotenvLoad = require('dotenv-load');
-const optimizedImages = require('next-optimized-images');
-dotenvLoad();
-
-const remarkPlugins = [
-  require('remark-slug'),
-  require('./src/lib/docs/remark-paragraph-alerts'),
-  [
-    require('remark-autolink-headings'),
-    {
-      behavior: 'append',
-      linkProperties: {
-        class: ['anchor'],
-        title: 'Direct link to heading',
-      },
-    },
-  ],
-
-  require('remark-emoji'),
-  require('remark-footnotes'),
-  require('remark-images'),
-  [require('remark-github'), { repository: 'https://github.com/kimcoder/kimcoder.github.io' }],
-  require('remark-unwrap-images'),
-  [
-    require('remark-toc'),
-    {
-      skip: 'Reference',
-      maxDepth: 6,
-    },
-  ],
-];
+import createMDX from '@next/mdx';
+import remarkGfm from 'remark-gfm';
 
 /**
  * @type {import('next').NextConfig}
@@ -70,23 +40,14 @@ const nextConfig = {
       },
     ];
   },
-  experimental: {
-    turbo: {
-      rules: {
-        // Option format
-        '*.md': [
-          {
-            loader: '@mdx-js/loader',
-            options: {
-              remarkPlugins,
-            },
-          },
-        ],
-        // Option-less format
-        '*.mdx': ['@mdx-js/loader'],
-      },
-    },
-  },
+  experimental: {},
 };
 
-module.exports = nextConfig;
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(nextConfig);

@@ -1,4 +1,3 @@
-// List of projects/orgs using your project for the users page.
 export const siteConfig = {
   copyright: `Copyright © ${new Date().getFullYear()} kimcoder. All Rights Reserved.`,
   repoUrl: 'https://github.com/kimcoder',
@@ -7,8 +6,6 @@ export const siteConfig = {
   algolia: {
     appId: 'KB3ECWAG70',
     apiKey: 'e695ee02d4487fc488e9698c663ee160',
-    indexName: 'kimcoder', // algoliaOptions: {
-    //   facetFilters: ['version:VERSION'],
-    // },
+    indexName: 'kimcoder',
   },
 };

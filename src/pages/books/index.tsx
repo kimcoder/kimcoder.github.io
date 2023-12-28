@@ -7,8 +7,14 @@ import { Seo } from 'components/Seo';
 import { Sticky } from 'components/Sticky';
 import { Sidebar } from 'components/Sidebar';
 import SidebarRoutes from 'components/SidebarRoutes';
+import { GetStaticProps, GetStaticPropsContext } from 'next/types';
+import { getBooks, getSidebarRoutesWith } from 'lib/books/mdxUtils';
 
-export default function Books({ posts }: any) {
+type Props = {
+  sidebarRoutes: PropOf<typeof SidebarRoutes, 'routes'>;
+};
+
+export default function Books({ sidebarRoutes }: Props) {
   const isMobile = useIsMobile();
 
   return (
@@ -25,7 +31,7 @@ export default function Books({ posts }: any) {
             <Nav />
             <Sticky shadow>
               <SidebarMobile>
-                <SidebarRoutes isMobile={true} />
+                <SidebarRoutes routes={sidebarRoutes} />
               </SidebarMobile>
             </Sticky>
           </>
@@ -39,7 +45,7 @@ export default function Books({ posts }: any) {
           <div className='relative flex'>
             {!isMobile && (
               <Sidebar fixed>
-                <SidebarRoutes isMobile={false} />
+                <SidebarRoutes routes={sidebarRoutes} />
               </Sidebar>
             )}
             <div>
@@ -54,8 +60,18 @@ export default function Books({ posts }: any) {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );
 }
+
+export const getStaticProps = (async ({ params }: GetStaticPropsContext<{ slug: string[] }>) => {
+  const books = await getBooks();
+  const sidebarRoutes = getSidebarRoutesWith(books);
+
+  return {
+    props: {
+      sidebarRoutes,
+    },
+  };
+}) satisfies GetStaticProps<Props>;

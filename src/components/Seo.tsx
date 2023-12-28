@@ -14,7 +14,7 @@ export const Seo = withRouter(({ title, description, keywords, image = ogImage, 
   <Head>
     {/* DEFAULT */}
 
-    {title != undefined && <title key='title'>{title} | kimcoder</title>}
+    {title != undefined && <title>{`${title} | kimcoder`}</title>}
     {description != undefined && <meta name='description' key='description' content={description} />}
     {keywords != undefined && <meta name='keywords' key='keywords' content={keywords} />}
     <link rel='icon' type='image/x-icon' href={favicon} />

@@ -1,4 +1,4 @@
-import { Fragment, ReactChild } from 'react';
+import { Fragment, ReactElement } from 'react';
 
 const ResumeProject = {
   Name: ({ title, period }: { title: string; period: string }) => {
@@ -9,7 +9,7 @@ const ResumeProject = {
       </dt>
     );
   },
-  Description: ({ rows }: { rows: { title: string; description: ReactChild }[] }) => {
+  Description: ({ rows }: { rows: { title: string; description: ReactElement }[] }) => {
     return (
       <dd className='mt-3 sm:mt-1 text-sm text-gray-900 sm:col-span-2'>
         {rows.map(({ title, description }) => {

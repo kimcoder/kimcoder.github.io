@@ -29,7 +29,7 @@ export default function ResumePage({ career, etc }: Props) {
       <Seo
         title='김대현 이력서'
         description='프론트엔드 개발자 김대현의 이력서입니다.'
-        keywords='개발자 이력서, 프론트엔드개발자 이력서, FE 이력서'
+        keywords='개발자 이력서, 프론트엔드개발자 이력서, FE 이력서, Frontend Engineer Resume, Engineering Resume'
       />
       <div className='container mx-auto bg-white px-4 pt-16 pb-20 lg:pt-24 lg:pb-28 flex'>
         <div className='overflow-hidden bg-white sm:rounded-lg'>

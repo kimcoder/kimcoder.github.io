@@ -61,7 +61,7 @@ export default function ResumePage({ career, etc }: Props) {
           </ResumeSection>
           {/* <ResumeSection title='스킬'></ResumeSection> */}
         </div>
-        <div className='ml-10 hidden w-24 flex-shrink-0 xl:block'>
+        <div className='ml-10 hidden w-28 flex-shrink-0 xl:block'>
           <div className='on-this-page sticky top-24 overflow-y-auto pb-16'>
             <h4 className='mb-2 mt-2 text-sm font-semibold uppercase text-gray-500'>이력서</h4>
             <Toc title={'자기소개'} />

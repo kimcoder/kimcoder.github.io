@@ -26,7 +26,7 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
           <p className='mt-1 max-w-2xl text-sm text-gray-900'>{getPeriod(beginAt, endAt)}</p>
           <div className='mt-5'>
             <dl>
-              {projects.map(({ title, beginAt, endAt, description, role, techStack }) => (
+              {projects.map(({ title, beginAt, endAt, description, role, works, techStack }) => (
                 <div key={title + beginAt} className='py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 mt-5'>
                   <ResumeProject.Name title={title} period={getPeriod(beginAt, endAt)} />
                   <ResumeProject.Description
@@ -38,10 +38,31 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
                         ),
                       },
                       {
-                        title: '한 일',
+                        title: '역할',
                         description: (
                           <ul className='ml-4 list-disc'>
                             {role.map(({ description, subDescription }) => (
+                              <Fragment key={description}>
+                                <li key={description} className='mt-1 first:mt-0'>
+                                  {description}
+                                </li>
+                                {subDescription && (
+                                  <ul className='ml-8 list-disc'>
+                                    {subDescription.map((txt) => (
+                                      <li key={txt}>{txt}</li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </Fragment>
+                            ))}
+                          </ul>
+                        ),
+                      },
+                      {
+                        title: '업무',
+                        description: (
+                          <ul className='ml-4 list-disc'>
+                            {works.map(({ description, subDescription }) => (
                               <Fragment key={description}>
                                 <li key={description} className='mt-1 first:mt-0'>
                                   {description}

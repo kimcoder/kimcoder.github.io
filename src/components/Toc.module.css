@@ -8,6 +8,6 @@
 }
 
 .contents__link--active {
-  @apply font-medium text-coral;
+  @apply font-medium;
 }
 /* purgecss end ignore */

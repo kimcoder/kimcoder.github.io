@@ -8,7 +8,7 @@ export const Search = () => {
     <div>
       <button
         type='button'
-        className='group form-input hover:text-gray-600 hover:border-gray-300 transition duration-150 ease-in-out pointer flex items-center bg-gray-50 text-left w-full  text-gray-500 rounded-lg text-sm align-middle'
+        className='group py-2 px-3 border-gray-200 border hover:text-gray-600 hover:border-gray-300 transition duration-150 ease-in-out pointer flex items-center bg-gray-50 text-left w-full text-gray-500 rounded-lg text-sm align-middle'
         onClick={onOpen}>
         <svg
           width='1em'

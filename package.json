@@ -23,7 +23,6 @@
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
     "date-fns": "^2.16.1",
-    "docsearch.js": "^2.6.3",
     "gray-matter": "^4.0.2",
     "intersection-observer": "^0.10.0",
     "next": "^14.0.4",
@@ -36,7 +35,7 @@
     "react-icons": "^3.11.0",
     "react-live": "^2.2.2",
     "remark-gfm": "^4.0.0",
-    "tailwindcss": "^1.9.6",
+    "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
@@ -45,7 +44,7 @@
     "@types/react": "18.2.23",
     "algoliasearch": "3.35.1",
     "postcss-preset-env": "^7.8.2",
-    "prettier-plugin-tailwindcss": "^0.1.13"
+    "prettier-plugin-tailwindcss": "^0.5.9"
   },
   "engines": {
     "node": "18.x"

@@ -1,6 +1,7 @@
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
+@tailwind utilities;
 /* purgecss end ignore */
 
 body,
@@ -8,15 +9,11 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 .top-24 {
   top: 6rem;
-}
-
-.focus-ring {
-  outline: none;
-  @apply shadow-outline border-blue-400;
 }
 
 /* purgecss start ignore */
@@ -57,15 +54,6 @@ html {
 
 .aspect-ratio-21-9 {
   padding-top: 42.86%;
-}
-
-.anchor {
-  @apply text-gray-500 absolute ml-2 pr-1 underline;
-}
-
-.anchor::after {
-  content: '#';
-  visibility: hidden;
 }
 
 h1:hover .anchor::after,
@@ -113,23 +101,23 @@ h6:hover .anchor::after {
 
 /* Custom Remark alerts */
 .alert {
-  @apply p-4 border-l-4  mb-4;
+  @apply mb-4 border-l-4  p-4;
 }
 
 .alert.alert-danger {
-  @apply bg-red-50 text-red-800 border-red-500;
+  @apply bg-red-50 border-red-500 text-red-800;
 }
 
 .alert.alert-success {
-  @apply bg-green-50 text-green-700 border-green-500;
+  @apply bg-green-50 border-green-500 text-green-700;
 }
 
 .alert.alert-warning {
-  @apply bg-yellow-50 text-yellow-800 border-yellow-500;
+  @apply bg-yellow-50 border-yellow-500 text-yellow-800;
 }
 
 .alert.alert-info {
-  @apply bg-blue-50 text-blue-800 border-blue-500;
+  @apply bg-blue-50 border-blue-500 text-blue-800;
 }
 
 .font-mono {
@@ -142,7 +130,7 @@ details > ol > li > a,
 details > ul > li a,
 details > ol > li a,
 details > table > tbody > tr > td > a {
-  @apply text-blue-600 font-semibold transition-colors duration-150 ease-out;
+  @apply font-semibold text-blue-600 transition-colors duration-150 ease-out;
 }
 
 details > p > a:hover,
@@ -173,13 +161,13 @@ details > ol {
   @apply ml-8 list-decimal;
 }
 details {
-  @apply p-3 bg-gray-50 rounded-md border mb-3  text-sm leading-5 shadow-sm;
+  @apply bg-gray-50 border mb-3 rounded-md p-3  text-sm leading-5 shadow-sm;
 }
 details > p {
   @apply mt-2;
 }
 details > summary {
-  @apply font-bold text-base;
+  @apply text-base font-bold;
 }
 
 @tailwind utilities;

@@ -1,7 +1,9 @@
 // tailwind.config.js
 
 const defaultTheme = require('tailwindcss/defaultTheme');
+const plugin = require('tailwindcss/plugin');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   corePlugins: {
     preflight: true,
@@ -9,7 +11,7 @@ module.exports = {
   },
   purge: {
     enabled: false,
-    content: ['./src/**/*.js'],
+    content: ['./src/**/*.{js,ts,jsx,tsx}'],
     options: {
       defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
     },
@@ -57,6 +59,9 @@ module.exports = {
       },
     }),
   },
-  variants: {},
-  plugins: [require('@tailwindcss/ui')],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('children', '& > *');
+    }),
+  ],
 };

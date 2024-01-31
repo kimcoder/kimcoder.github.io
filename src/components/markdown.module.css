@@ -134,7 +134,7 @@
   @apply p-3;
 }
 
-.markdown > :not(pre) code,
+/* .markdown > :not(pre) code,
 .markdown > ul > li > code,
 .markdown > blockquote > code,
 .markdown > blockquote > p > code,
@@ -150,7 +150,7 @@
   padding-bottom: 2px;
   word-break: keep-all;
   font-size: 0.875em;
-}
+} */
 
 .markdown > table > tbody > tr > td:not(:first-child) > code {
   @apply text-xs;

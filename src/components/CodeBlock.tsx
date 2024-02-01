@@ -46,7 +46,7 @@ const CodeBlock = ({ children, className = 'language-js', metastring: meta, titl
         wrapLines={true}
         className={'code'}
         style={vscDarkPlus}
-        customStyle={{ ...borderStyle, padding: '1rem 0 0' }}
+        customStyle={{ ...borderStyle, padding: '1rem 0 1rem' }}
         showLineNumbers={true}
         lineProps={(lineNumber) => {
           const isHighlighted = highlightLines.includes(lineNumber);

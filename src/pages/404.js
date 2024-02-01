@@ -2,7 +2,7 @@ import React from 'react';
 import { useIsMobile } from 'components/useIsMobile';
 import { Nav } from 'components/Nav';
 import { Sticky } from 'components/Sticky';
-import markdown from 'components/markdown.module.css';
+import markdown from 'styles/markdown.module.css';
 
 export default function NotFound() {
   const isMobile = useIsMobile();

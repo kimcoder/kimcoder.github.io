@@ -65,21 +65,6 @@ h6:hover .anchor::after {
   visibility: visible;
 }
 
-/* Algolia v3 overrides */
-:root {
-  --docsearch-modal-background: #fff;
-  --docsearch-highlight-color: #1965e0;
-  --docsearch-primary-color: #0052cc;
-  --docsearch-searchbox-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-  --ifm-z-index-fixed: 1000;
-  --docsearch-searchbox-height: 48px;
-  --docsearch-icon-stroke-width: 1.4;
-  --hover-overlay: rgba(0, 0, 0, 0.05);
-  --fds-animation-fade-in: cubic-bezier(0, 0, 1, 1);
-  --fds-animation-fade-out: cubic-bezier(0, 0, 1, 1);
-  --nav-height: 4rem;
-}
-
 .DocSearch--active #__next {
   -webkit-filter: blur(2px);
   filter: blur(2px);
@@ -240,4 +225,73 @@ details > summary {
 
 .m-auto {
   margin: auto;
+}
+
+:root {
+  /* Algolia v3 overrides */
+  --docsearch-modal-background: #fff;
+  --docsearch-highlight-color: #1965e0;
+  --docsearch-primary-color: #0052cc;
+  --docsearch-searchbox-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --ifm-z-index-fixed: 1000;
+  --docsearch-searchbox-height: 48px;
+  --docsearch-icon-stroke-width: 1.4;
+  --hover-overlay: rgba(0, 0, 0, 0.05);
+  --fds-animation-fade-in: cubic-bezier(0, 0, 1, 1);
+  --fds-animation-fade-out: cubic-bezier(0, 0, 1, 1);
+  --nav-height: 4rem;
+
+  /* Code Block */
+  --code-title-background: rgba(0, 99, 199, 0.08);
+  --code-line-highlight-color: rgba(0, 99, 199, 0.1);
+  --code-color-text: #414141;
+  --code-color-background: #f1f1f1;
+  --code-token-constant: #f59403;
+  --code-token-string: #31a94d;
+  --code-token-comment: rgb(182, 180, 180);
+  --code-token-keyword: #cf2727;
+  --code-token-parameter: #1976d2;
+  --code-token-function: #7041c8;
+  --code-token-string-expression: #218438;
+  --code-token-punctuation: #242323;
+  --code-token-link: #22863a;
+  --code-token-variable: #1976d2;
+  --code-token-symbol: #f59403;
+}
+
+blockquote {
+  @apply border-l-4 border-solid pl-4 my-6 transition-colors;
+}
+
+blockquote > p {
+  @apply mb-0;
+}
+
+pre > code {
+  @apply text-sm;
+}
+
+pre > code .linenumber {
+  @apply text-gray-400;
+}
+
+div [class~='code-title'] {
+  @apply py-3 px-4 text-sm rounded-t-xl;
+  background-color: var(--code-title-background);
+  transition: background-color.5s;
+}
+
+:not(pre):not(h3) > code,
+ul > li > code,
+blockquote > code,
+blockquote > p > code,
+ul > li > ul > li > code,
+ol > li > code,
+ol > li > ol > li > code,
+p a > code,
+table > tbody > tr > td:not(:first-child) > code {
+  @apply rounded-2xl py-1 px-2 border-none text-sm text-gray-900;
+  word-break: keep-all;
+  color: var(--code-color-text);
+  background-color: var(--code-color-background);
 }

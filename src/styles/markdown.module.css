@@ -71,6 +71,7 @@
 }
 
 .markdown > p > a,
+.markdown > p > strong > a,
 .markdown > ul > li > a,
 .markdown > ol > li > a,
 .markdown > table > tbody > tr > td > a {
@@ -78,6 +79,7 @@
 }
 
 .markdown p > a:hover,
+.markdown > p > strong > a:hover,
 .markdown ul > li > a:hover,
 .markdown ol > li > a:hover,
 .markdown table > tbody > tr > td > a:hover {

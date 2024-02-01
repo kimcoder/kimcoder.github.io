@@ -168,7 +168,7 @@ public void Sum_of_two_numbers()
 
 ### 3.3.1 테스트 간의 높은 결합도는 안티 패턴이다
 
-```charp
+```csharp
 public class CustomerTests
 {
   private readonly Store _store;    // 공통 테스트 픽스처
@@ -212,7 +212,7 @@ private readonly Customer _sut;
 
 ### 3.3.3 더 나은 테스트 픽스처 재사용법
 
-```charp
+```csharp
 public class CustomerTests
 {
   [Fact]
@@ -249,7 +249,7 @@ public class CustomerTests
 
 테스트가 정확히 무엇을 검증하는지, 비지니스 요구 사항과 어떤 관련이 있는지 파악하기 쉽게 이름을 지어야 한다.
 
-```charp
+```csharp
 public void Sum_of_two_numbers()
 public void Sum_TwoNumbers_ReturnsSum()
 ```

@@ -7,7 +7,7 @@ import { SidebarMobile } from 'components/SidebarMobile';
 import SidebarRoutes from 'components/SidebarRoutes';
 import { Sticky } from 'components/Sticky';
 import { Toc } from 'components/Toc';
-import markdown from 'components/markdown.module.css';
+import markdownStyles from 'styles/markdown.module.css';
 import { useIsMobile } from 'components/useIsMobile';
 import { getBooks, BookData, getSidebarRoutesWith } from 'lib/books/mdxUtils';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
@@ -52,7 +52,7 @@ export default function BooksPage({ mdxSource, meta, sidebarRoutes, prevRoute, n
                     <SidebarRoutes routes={sidebarRoutes} />
                   </Sidebar>
                 )}
-                <div className={markdown['markdown'] + ' docs w-full'}>
+                <div className={markdownStyles['markdown'] + ' docs w-full'}>
                   <div>
                     <h1 id='_top'>{meta.title}</h1>
                     {meta.createdAt && <p id='_date'>{meta.createdAt}</p>}

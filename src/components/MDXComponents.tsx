@@ -2,7 +2,7 @@ import React, { createElement, HtmlHTMLAttributes, ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { CustomLink } from 'components/CustomLink';
-import Highlight2 from 'components/Highlight2';
+import CodeBlock from 'components/CodeBlock';
 
 const ANCHOR_TITLE = 'Direct link to heading';
 
@@ -35,7 +35,7 @@ const handleHeadingTags =
 export default {
   // default tags
   pre: (p: any) => <div {...p} />,
-  code: Highlight2,
+  code: CodeBlock,
   a: CustomLink,
   Head,
   h1: handleHeadingTags('h1'),

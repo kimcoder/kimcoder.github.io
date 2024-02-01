@@ -1,10 +1,10 @@
 /* purgecss start ignore */
 .markdown {
-  @apply leading-relaxed text-gray-800 text-base;
+  @apply text-base leading-relaxed text-gray-800;
 }
 
-/* 
-  Add fake margin to offset the nav. This technique is stolen right from the Tailwind docs 
+/*
+  Add fake margin to offset the nav. This technique is stolen right from the Tailwind docs
   @see https://tailwindcss.com/docs/customizing-colors/#app
 */
 .markdown > h1:before,
@@ -27,8 +27,17 @@
 }
 
 .markdown > h1,
+.markdown > div > h1,
 .markdown > a > h1 {
-  @apply mb-6 text-3xl lg:text-4xl font-semibold leading-snug tracking-tighter text-gray-900;
+  @apply text-4xl font-semibold leading-snug tracking-tighter text-gray-900;
+}
+
+.markdown > div {
+  @apply mb-6;
+}
+
+.markdown > div > p {
+  @apply text-base tracking-tighter text-gray-500;
 }
 
 .markdown > h2,
@@ -53,7 +62,7 @@
 
 .markdown > h4,
 .markdown > a > h4 {
-  @apply pt-8 mb-3 text-lg font-semibold  text-gray-900;
+  @apply mb-3 pt-8 text-lg font-semibold  text-gray-900;
 }
 
 .markdown > h4 code,
@@ -65,14 +74,14 @@
 .markdown > ul > li > a,
 .markdown > ol > li > a,
 .markdown > table > tbody > tr > td > a {
-  @apply text-blue-600 font-semibold transition-colors duration-150 ease-out;
+  @apply text-gray-900 transition-colors duration-150 ease-out font-medium border-b border-dashed border-b-blue-700;
 }
 
-.markdown > p > a:hover,
-.markdown > ul > li > a:hover,
-.markdown > ol > li > a:hover,
-.markdown > table > tbody > tr > td > a:hover {
-  @apply text-blue-800 transition-colors duration-150 ease-out;
+.markdown p > a:hover,
+.markdown ul > li > a:hover,
+.markdown ol > li > a:hover,
+.markdown table > tbody > tr > td > a:hover {
+  @apply text-blue-700 transition-colors border-solid duration-150 ease-out;
 }
 
 .markdown strong {
@@ -82,8 +91,6 @@
 .markdown > p,
 .markdown > ul,
 .markdown > ol,
-.markdown > blockquote,
-.markdown > pre,
 .markdown > div > .code-block {
   @apply mb-4;
 }
@@ -97,14 +104,8 @@
   @apply ml-8 list-decimal;
 }
 
-.markdown > pre,
-.markdown > div > .code-block > pre {
-  color: #f8f8f2;
-  overflow: auto;
-}
-
 .markdown > table {
-  @apply mb-6 w-full text-gray-700 text-sm;
+  @apply mb-6 block w-full overflow-x-scroll text-sm text-gray-700;
 }
 
 .markdown > table > thead > tr {
@@ -112,7 +113,7 @@
 }
 
 .markdown > table > thead > tr > th {
-  @apply px-3 py-2 text-left text-sm font-bold bg-gray-100 text-gray-700;
+  @apply bg-gray-100 px-3 py-2 text-left text-sm font-bold text-gray-700;
 }
 
 .markdown > table > tbody > tr {
@@ -123,7 +124,7 @@
   @apply p-3;
 }
 
-.markdown > :not(pre):not(h3) > code,
+/* .markdown > :not(pre) code,
 .markdown > ul > li > code,
 .markdown > blockquote > code,
 .markdown > blockquote > p > code,
@@ -132,14 +133,14 @@
 .markdown > ol > li > ol > li > code,
 .markdown > p a > code,
 .markdown > table > tbody > tr > td:not(:first-child) > code {
-  @apply bg-gray-100 rounded-md px-1  border border-gray-300 text-gray-900;
+  @apply border rounded-md border-gray-300  bg-gray-100 px-1 text-gray-900;
   margin-left: 2px;
   margin-right: 2px;
   padding-top: 2px;
   padding-bottom: 2px;
   word-break: keep-all;
   font-size: 0.875em;
-}
+} */
 
 .markdown > table > tbody > tr > td:not(:first-child) > code {
   @apply text-xs;
@@ -154,23 +155,16 @@
   @apply text-xl;
 }
 
+.markdown > h2 > a,
+.markdown > h3 > a,
+.markdown > h4 > a {
+  @apply underline;
+}
+
 .markdown > .markdown ul {
   @apply list-disc;
 }
 
 .markdown > hr {
-  @apply my-6 block border-b;
+  @apply border-b my-6 block;
 }
-.markdown pre {
-  @apply p-3 rounded-lg  mb-6 overflow-y-scroll text-sm bg-gray-100;
-  background: #292d3e;
-}
-/* Blockquotes */
-.markdown blockquote {
-  @apply p-3 bg-gray-100 mb-6 border border-gray-300 border-l-4 rounded-sm text-sm leading-5;
-}
-.markdown blockquote > p {
-  @apply mb-0;
-}
-
-/* purgecss end ignore */

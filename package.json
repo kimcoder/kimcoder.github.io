@@ -25,6 +25,7 @@
     "date-fns": "^2.16.1",
     "gray-matter": "^4.0.2",
     "intersection-observer": "^0.10.0",
+    "mermaid": "^10.7.0",
     "next": "^14.0.4",
     "next-mdx-remote": "^3",
     "next-sitemap": "^2.5.10",

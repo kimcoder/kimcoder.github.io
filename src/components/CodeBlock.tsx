@@ -1,20 +1,20 @@
 import React, { CSSProperties } from 'react';
-import SyntaxHighlighter, { Light as SyntaxHighlight } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { github as vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import csharp from 'react-syntax-highlighter/dist/cjs/languages/hljs/csharp';
-import javascript from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript';
-import typescript from 'react-syntax-highlighter/dist/cjs/languages/hljs/typescript';
-import json from 'react-syntax-highlighter/dist/cjs/languages/hljs/json';
-import rust from 'react-syntax-highlighter/dist/cjs/languages/hljs/rust';
-import java from 'react-syntax-highlighter/dist/cjs/languages/hljs/java';
+import csharp from 'react-syntax-highlighter/dist/cjs/languages/prism/csharp';
+import javascript from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
+import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import rust from 'react-syntax-highlighter/dist/cjs/languages/prism/rust';
+import java from 'react-syntax-highlighter/dist/cjs/languages/prism/java';
 import classNames from 'classnames';
 
-SyntaxHighlight.registerLanguage('csharp', csharp);
-SyntaxHighlight.registerLanguage('javascript', javascript);
-SyntaxHighlight.registerLanguage('typescript', typescript);
-SyntaxHighlight.registerLanguage('json', json);
-SyntaxHighlight.registerLanguage('rust', rust);
-SyntaxHighlight.registerLanguage('java', java);
+SyntaxHighlighter.registerLanguage('csharp', csharp);
+SyntaxHighlighter.registerLanguage('javascript', javascript);
+SyntaxHighlighter.registerLanguage('typescript', typescript);
+SyntaxHighlighter.registerLanguage('json', json);
+SyntaxHighlighter.registerLanguage('rust', rust);
+SyntaxHighlighter.registerLanguage('java', java);
 
 const HIGHLIGHT_REG = /{[\d,-]*}/i;
 

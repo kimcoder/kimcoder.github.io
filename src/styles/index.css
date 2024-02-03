@@ -243,7 +243,8 @@ details > summary {
 
   /* Code Block */
   --code-title-background: rgba(0, 99, 199, 0.08);
-  --code-line-highlight-color: rgba(0, 99, 199, 0.1);
+  /* --code-line-highlight-color: rgba(0, 99, 199, 0.1); */
+  --code-line-highlight-color: rgba(255, 255, 255, 0.1);
   --code-color-text: #414141;
   --code-color-background: #f1f1f1;
   --code-token-constant: #f59403;
@@ -271,7 +272,7 @@ pre > code {
   @apply text-sm;
 }
 
-pre > code .linenumber {
+pre > code .comment {
   @apply text-gray-400;
 }
 

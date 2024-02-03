@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { github as vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import csharp from 'react-syntax-highlighter/dist/cjs/languages/prism/csharp';
 import javascript from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';

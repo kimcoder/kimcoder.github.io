@@ -56,6 +56,15 @@ html {
   padding-top: 42.86%;
 }
 
+.anchor {
+  @apply absolute ml-2 pr-1 text-gray-500 underline;
+}
+
+.anchor::after {
+  content: '#';
+  visibility: hidden;
+}
+
 h1:hover .anchor::after,
 h2:hover .anchor::after,
 h3:hover .anchor::after,
@@ -242,9 +251,11 @@ details > summary {
   --nav-height: 4rem;
 
   /* Code Block */
+  --code-background-color: #f6f8fa;
+  --code-block-color: rgb(46, 52, 64);
   --code-title-background: rgba(0, 99, 199, 0.08);
-  /* --code-line-highlight-color: rgba(0, 99, 199, 0.1); */
-  --code-line-highlight-color: rgba(255, 255, 255, 0.1);
+  --code-line-highlight-color: rgba(0, 99, 199, 0.1);
+  /* --code-line-highlight-color: rgba(255, 255, 255, 0.1); */
   --code-color-text: #414141;
   --code-color-background: #f1f1f1;
   --code-token-constant: #f59403;
@@ -293,6 +304,6 @@ p a > code,
 table > tbody > tr > td:not(:first-child) > code {
   @apply rounded-2xl py-1 px-2 border-none text-sm text-gray-900;
   word-break: keep-all;
-  color: var(--code-color-text);
+  color: var(--code-block-color);
   background-color: var(--code-color-background);
 }

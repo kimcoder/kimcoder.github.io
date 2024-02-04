@@ -36,7 +36,7 @@ export default {
   // default tags
   pre: (p: any) => <div {...p} />,
   code: (props: Parameters<typeof CodeBlock>[0]) =>
-    props.className.includes('mermaid') ? <Mermaid diagram={props.children} /> : <CodeBlock {...props} />,
+    (props.className ?? []).includes('mermaid') ? <Mermaid diagram={props.children} /> : <CodeBlock {...props} />,
   a: CustomLink,
   Head,
   h1: handleHeadingTags('h1'),

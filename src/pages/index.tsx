@@ -42,6 +42,9 @@ const Index = () => {
           </a>
         </h2>
         <ul className='ml-8 list-disc'>
+          <li>
+            <a href='/resume'>경력 기술서.</a>
+          </li>
           <li>흘러가는 지식을 정리.</li>
           <li>학습의 과정을 정리.</li>
           <li>경험(행동)의 과정/결과를 정리.</li>

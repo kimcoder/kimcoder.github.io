@@ -62,7 +62,7 @@
 
 .markdown > h4,
 .markdown > a > h4 {
-  @apply mb-3 pt-8 text-lg font-semibold  text-gray-900;
+  @apply mt-8 mb-3 text-lg font-semibold  text-gray-900;
 }
 
 .markdown > h4 code,

@@ -1,6 +1,6 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import csharp from 'react-syntax-highlighter/dist/cjs/languages/prism/csharp';
 import javascript from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
@@ -21,9 +21,6 @@ const HIGHLIGHT_REG = /{[\d,-]*}/i;
 const CodeBlock = ({ children, className = 'language-js', metastring: meta, title = '', ...props }) => {
   const language = className.replace(/language-/, '');
   const codeTitle = title.replace(/"/g, '');
-  const borderStyle: CSSProperties = codeTitle
-    ? { borderBottomLeftRadius: 12, borderBottomRightRadius: 12 }
-    : { borderRadius: 12 };
   const highlightLines =
     Object.keys(props)
       .filter((key) => HIGHLIGHT_REG.test(key))
@@ -45,8 +42,14 @@ const CodeBlock = ({ children, className = 'language-js', metastring: meta, titl
         language={language}
         wrapLines={true}
         className={'code'}
-        style={vscDarkPlus}
-        customStyle={{ ...borderStyle, padding: '1rem 0 1rem' }}
+        style={oneLight}
+        customStyle={{
+          borderRadius: codeTitle ? '0 0 0.75rem 0.75rem' : '0.75rem',
+          margin: 0,
+          padding: '1rem 0 1rem',
+          background: 'var(--code-background-color)',
+          color: 'var(--code-block-color)',
+        }}
         showLineNumbers={true}
         lineProps={(lineNumber) => {
           const isHighlighted = highlightLines.includes(lineNumber);

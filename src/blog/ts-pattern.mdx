@@ -50,21 +50,21 @@ published: true
 
 ## ts-pattern
 
-[TC39로의 제안 깃허브](https://github.com/tc39/proposal-pattern-matching?tab=readme-ov-file#userland-matching)에도 소개된 **`ts-pattern`은 타입스크립트 환경에서 패턴 매칭을 쉽게 표현할 수 있게 해주는 라이브러리다.**
+[TC39로의 제안 깃허브](https://github.com/tc39/proposal-pattern-matching?tab=readme-ov-file#userland-matching)에도 소개된 **`ts-pattern`**은 타입스크립트 환경에서 패턴 매칭을 쉽게 표현할 수 있게 해주는 라이브러리다.\*\*
 
-더 안전하고 나은 조건을 작성할 수 있고, 복잡함을 간결하게 표현할 수 있으며 그에 따라 코드 가독성도 좋아지고 철저한 타입 검사를 통해 케이스 누락도 방지할 수 있다.
+더 안전하고 나은 조건을 작성할 수 있고, 복잡함을 간결하게 표현할 수 있으며 그에 따라 코드 가독성도 좋아지고 철저한 타입 체크를 통해 케이스 누락도 방지할 수 있다.
 
 지난 2년간의 npm trends만 보더라도 라이브러리의 꾸준한 인기와 엄청난 기세를 확인할 수 있다.
 
 ![npm-trends-of-ts-pattern](/assets/images/pattern-matching-1.png)
 
-`ts-pattern`의 주요 기능과 API들을 간단히 둘러보고 이것들을 바탕으로 어떤 문제들을 해결했는지 확인해 보자.
+**`ts-pattern`**의 주요 기능과 API들을 간단히 둘러보고 이것들을 바탕으로 어떤 문제들을 해결했는지 확인해 보자.
 
 ### 주요 기능
 
 - 중첩된 객체, 배열, 튜플, 셋, 맵 및 모든 기본 유형 등 **모든 데이터 구조에 대해 패턴 매치 가능**
 - **타입 추론을 통한 타입 안전성 확보**
-- 철저한 타입 검사로 통해 **가능한 모든 경우를 `.exhaustive()`와 일치하도록 강제**
+- 철저한 타입 체크를 통해 **가능한 모든 경우를 `.exhaustive()`와 일치하도록 강제**
 - 패턴을 사용하여 **`isMatching`**으로 데이터 형태를 검증 가능
 - **catch-all**, **type-specific wildcards**를 제공하여 **표현력 좋은 API**
   - catch-all: `P._`
@@ -75,7 +75,7 @@ published: true
 
 ### 주요 API
 
-위에서 나열했던 기능들 대비하여, `ts-pattern`은 사용하기 위해 사전에 알아두어야 할 API가 많지는 않다.
+위에서 나열했던 기능들 대비하여, **`ts-pattern`**은 사용하기 위해 사전에 알아두어야 할 API가 많지는 않다.
 
 다른 언어에서 패턴 매칭을 사용하는 문법들이 익숙하다면 아주 쉽게 접근할 수 있을 것이다. 그렇지 않더라도 어려운 것은 없으니 크게 걱정할 것은 없다. 천천히 예시 코드들과 API들에 대해 확인해 보자.
 
@@ -87,9 +87,9 @@ import { match } from 'ts-pattern';
 const value = [1, 2, 3];
 
 const result = match(value)
-  .with([1, 2], () => 'it is [1, 2]')
-  .with([1, 2, 3], () => 'it is [1, 2, 3]')
   .with([1, 2, 3, 4], () => 'it is [1, 2, 3, 4]')
+  .with([1, 2, 3], () => 'it is [1, 2, 3]')
+  .with([1, 2], () => 'it is [1, 2]')
   .run();
 
 console.log(result); // it is [1, 2, 3]
@@ -97,7 +97,7 @@ console.log(result); // it is [1, 2, 3]
 
 #### match(value)
 
-`ts-pattern`은 내부적으로 [빌더 패턴](https://en.wikipedia.org/wiki/Builder_pattern)으로 디자인된 `MatchExpression`이라는 클래스를 사용하여 매칭을 처리한다.
+**`ts-pattern`**은 내부적으로 [빌더 패턴](https://en.wikipedia.org/wiki/Builder_pattern)으로 디자인된 `MatchExpression`이라는 클래스를 사용하여 매칭을 처리한다.
 
 **`match(value)`**는 이 클래스의 인스턴스를 생성하여 반환해 주는 아주 간단한 함수이다. 따라서, 이 함수의 실행은 항상 선행되어야 한다.
 
@@ -158,19 +158,22 @@ console.log(second); // 'it is upper'
 
 위 함수들은 **패턴 매칭 표현식을 실행하고, 결과를 반환**하는 `MatchExpression`의 메서드이다.
 
-| 메서드                                                    | 설명                                                                                                           |
-| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `exhaustive(): TOutput`                                   | - **입력 값과 일치하는 패턴이 없으면 타입 검사가 실패한다.**<br/>(철저한 타입 검사, Exhaustiveness Type Check) |
-| `otherwise(handler: (value: TInput) => TOutput): TOutput` | - **일치하는 패턴이 없을 경우에 실행된다.**<br/>- `switch`의 `default`로 생각하면 편하다.                      |
-| `run(): TOutput`                                          | - **일치하는 패턴이 컴파일 타임에 꼭 있어야 한다.**<br/>(아래 코드 참조)                                       |
+| 메서드                                                    | 설명                                                                                                                                                                                                   |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `exhaustive(): TOutput`                                   | - **입력 값과 일치하는 패턴이 없으면 타입 체크가 실패한다.**<br/>(철저한 타입 체크, Exhaustiveness Type Check)<br/>- **일치하는 패턴이 런타임에 꼭 있어야 한다.**<br/>(그렇지 않으면 오류가 발생한다.) |
+| `otherwise(handler: (value: TInput) => TOutput): TOutput` | - **일치하는 패턴이 없을 경우에 실행된다.**<br/>- `switch`의 `default`로 생각하면 편하다.                                                                                                              |
+| `run(): TOutput`                                          | - **일치하는 패턴이 런타임에 꼭 있어야 한다.**<br/>(그렇지 않으면 오류가 발생한다.)                                                                                                                    |
 
 ```ts {1}
 match('2024 years!').exhaustive();
 
 /*
-  위 코드는 NonExhaustiveError 명목으로 타입 검사가 실패한다.
-  아래와 같이 수정하면 정상적으로 타입 검사를 수행할 수 있다.
+  위 코드는 NonExhaustiveError 명목으로 타입 체크가 실패한다.
+  만약, 타입 불일치 경고를 무시하고 코드를 컴파일하고 실행하면, 런타임에서 아래와 같은 오류가 발생한다.
+  Error: Pattern matching error: no pattern matches value "2024 years!"
   
+  아래와 같이 수정하면 정상적으로 타입 체크를 수행할 수 있다.
+
   match("2024 years!")
     .with("2024 years!", () => "okay")
     .exhaustive();
@@ -255,16 +258,32 @@ const message = match(data)
   .otherwise(() => undefined);
 ```
 
-또, **`P.select`**를 호출 시 인자로 입력한 데이터의 프로퍼티 이름을 넣으면 그 값을 바로 추출할 수 있다.
+또, **`P.select`**를 호출 시 인자로 이름을 지정할 수도 있다. 입력받은 이름으로 핸들러 함수에서 값을 참조할 수 있다.
 
-```ts {7}
-type Error = {
-  statusCode: number;
-  errorMessage: string;
+```ts {17}
+type Data = {
+  product: {
+    name: string;
+    price: number;
+    isSale: boolean;
+    relateProducts: Product[];
+  };
+  ad: {
+    url: string;
+    bannersImages: string[];
+  };
 };
 
 match(res)
-  .with({ error: P.select(errorMessage) }, (message) => message)
+  .with(
+    {
+      product: { name: P.select('name'), price: P.select('price') },
+      ad: { url: P.select('adUrl') },
+    },
+    ({ name, price, adUrl }) => {
+      return { name, price: price.toLocaleString(), adUrl };
+    },
+  )
   .otherwise(() => '');
 ```
 
@@ -299,7 +318,9 @@ const output = match(input)
 
 **`P._(=P.any)`** **`P.string`** **`P.number`** **`P.bigint`** **`P.boolean`** **`P.symbol`** **`P.nullish`**
 
-```ts title="wildcards" {2-8}
+```ts title="wildcards" {4-10}
+import { match, P } from 'ts-pattern';
+
 const output = match<unknown>(input)
   .with(P.string, () => 'it is a string!')
   .with(P.number, () => 'it is a number!')
@@ -315,7 +336,9 @@ const output = match<unknown>(input)
 
 숫자와 문자 유형의 값들에 대한 검사를 수행 시, `predicates`들을 사용하여 좀 더 표현력 좋고 간결한 코드를 작성할 수 있다.
 
-```ts {2-6,11-14}
+```ts {4-7,13-15}
+import { match, P } from 'ts-pattern';
+
 const output = match('kimcoder')
   .with(P.string.startsWith('c'), () => '😊')
   .with(P.string.regex(/sparkle/), () => '⭐')
@@ -378,6 +401,8 @@ stateDiagram-v2
 주문의 배달 현황을 노출하는 로직을 단순화하여 패턴 매칭 사용 전/후를 가볍게 비교해 보자.
 
 ```ts title="useOrderRiderStatus.ts"
+import { match, P } from 'ts-pattern';
+
 /*
   라이더 상태에 대한 임의의 정책을 구성하여 [라이더 현황 텍스트]를 처리한다.
 
@@ -432,12 +457,20 @@ const getStatusTextWithPatterMatching = (data: Order) => {
 
 패턴 매칭을 사용한 코드에서는 많은 조건식과 블럭들이 사라졌다. 연산자 또한 사라진 모습이다.
 
-**요구사항 구현에 부합하는 패턴과 구현 처리를 해주는 함수들을 선언해두었을 뿐이다.**
+**단지 요구사항 구현에 부합하는 패턴들을 나열하고 구현 처리를 해주는 함수들을 선언해두었을 뿐이다.**
 
-객체 형식의 패턴들이 많아 가독성 측면에서 조금 불편할 수 있다면, 해당 패턴들을 변수로 선언하여 조금 더 의미 있는 값으로 표현하고 재사용성도 할 수 있다.
-주문 관련된 영역이 많아 비슷한 요구사항들을 처리하는 모듈이 많기 때문에 `{ status: P.union('신규', '취소') }` 패턴을 상수로 선언하고 그 상수를 참조하는 것으로도 코드의 재사용성과 가독성을 높일 수 있을 것이다.
+인라인으로 넣은 객체 형식의 패턴들이 많아 가독성 측면에서 조금 불편할 수 있다면, 이 패턴들을 변수로 선언하여 조금 더 의미 있는 값으로 표현하고 재사용성도 높일 수 있다.
+주문 관련 영역에서 비슷한 요구사항들을 처리하는 곳이 많아서 `{ status: P.union('신규', '취소') }` 패턴을 상수로 선언하고 그 상수를 참조하는 것으로도 코드의 재사용성과 가독성을 높일 수 있을 것이다.
 
 `.with({ status: P.union('신규', '취소') }, handler)` -> `.with(NEW_ORDER, CANCELED_ORDER, handler)`
+
+결과적으로 보면 동일한 동작을 수행하는 코드는 아래와 같은 모습으로 바뀌게 된다.
+
+```ts title="ASIS-TOBE"
+if (data.status === '신규' || data.status === '취소') return ''; // ASIS
+
+.with(NEW_ORDER, CANCELED_ORDER, handler); // TOBE
+```
 
 ## 마치며
 
@@ -447,6 +480,8 @@ const getStatusTextWithPatterMatching = (data: Order) => {
 
 그럼에도 불구하고 다루고 있는 문제들의 복잡도가 높고 안정적으로 서비스를 제공하는데 조금 더 포커스를 맞추고자 한다면, 사용을 고민하고 동료와 논의해 보는 것만으로도 좋은 시간이 될 것이라 확신한다.
 이러한 시간을 가지는 것만으로도 패턴 매칭이란 것에 대해 인지할 수 있고 복잡한 문제 해결을 위한 옵션들이 늘어나는 것이라고 생각한다.
+
+**만약 현재 마주하고 있는 문제들의 복잡도가 높고 처리하는 데 많은 시간을 할애하고 있다면 `ts-pattern`이 우리를 도와줄 것이다.**
 
 ## 참고
 

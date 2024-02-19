@@ -50,7 +50,7 @@ published: true
 
 ## ts-pattern
 
-[TC39로의 제안 깃허브](https://github.com/tc39/proposal-pattern-matching?tab=readme-ov-file#userland-matching)에도 소개된 **`ts-pattern`**은 타입스크립트 환경에서 패턴 매칭을 쉽게 표현할 수 있게 해주는 라이브러리다.\*\*
+[TC39로의 제안 깃허브](https://github.com/tc39/proposal-pattern-matching?tab=readme-ov-file#userland-matching)에도 소개된 **`ts-pattern`**은 타입스크립트 환경에서 패턴 매칭을 쉽게 표현할 수 있게 해주는 라이브러리이다.
 
 더 안전하고 나은 조건을 작성할 수 있고, 복잡함을 간결하게 표현할 수 있으며 그에 따라 코드 가독성도 좋아지고 철저한 타입 체크를 통해 케이스 누락도 방지할 수 있다.
 
@@ -195,8 +195,8 @@ match('2024 years!').run();
 
 **`isMatching`**는 타입 가드 함수이다. 커링이 된 버전과 그렇지 않은 버전, 2가지 버전으로 사용할 수 있다.
 
-- `isMatch(pattern, value): boolean`: 패턴과 값의 매치가 성공하면 결과를 `boolean` 값으로 알려준다.
-- `isMatch(pattern): (value) => boolean` : 패턴만 넣고 함수를 실행하면 해당 패턴에 대한 타입 가드 함수가 반환된다.
+- `isMatching(pattern, value): boolean`: 패턴과 값의 매치가 성공하면 결과를 `boolean` 값으로 알려준다.
+- `isMatching(pattern): (value) => boolean` : 패턴만 넣고 함수를 실행하면 해당 패턴에 대한 타입 가드 함수가 반환된다.
 
 커링이 된 버전은 아래와 같이 좀 더 의미 있는 이름으로 표현하여 사용할 수도 있다.
 

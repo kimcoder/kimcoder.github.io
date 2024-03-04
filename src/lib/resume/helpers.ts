@@ -5,7 +5,7 @@ type careerDurationDate = (typeof CAREER)[0]['beginAt'];
 
 export const getPeriod = (beginAt: careerDurationDate, endAt?: careerDurationDate) => {
   const transformDate = (dateStr: careerDurationDate) => getDateString(new Date(`${dateStr}-01`), 'yyyy.MM');
-  const endAtStr = endAt ? transformDate(endAt) : '재직중';
+  const endAtStr = endAt ? transformDate(endAt) : 'present';
 
   return `${transformDate(beginAt)} ~ ${endAtStr}`;
 };

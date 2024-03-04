@@ -32,13 +32,13 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
                   <ResumeProject.Description
                     rows={[
                       {
-                        title: '설명',
+                        title: 'Description',
                         description: (
                           <p className='' dangerouslySetInnerHTML={{ __html: description.replace(/\n/g, '<br/>') }} />
                         ),
                       },
                       {
-                        title: '역할',
+                        title: 'Role',
                         description: (
                           <ul className='ml-4 list-disc'>
                             {role.map(({ description, subDescription }) => (
@@ -59,7 +59,7 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
                         ),
                       },
                       {
-                        title: '업무',
+                        title: 'Work',
                         description: (
                           <ul className='ml-4 list-disc'>
                             {works.map(({ description, subDescription }) => (
@@ -80,7 +80,7 @@ const ResumeCompany = ({ company: { companyName, team, beginAt, endAt } }: Props
                         ),
                       },
                       {
-                        title: '사용 기술',
+                        title: 'Tech Stack',
                         description: (
                           <>
                             <ul role='list' className='flex flex-wrap children:mr-2 children:mt-2'>

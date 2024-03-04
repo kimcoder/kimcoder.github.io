@@ -84,34 +84,33 @@ type Works = {
 
 export const CAREER: Career[] = [
   {
-    companyName: '우아한형제들',
+    companyName: 'Woowa Brothers Corp',
     beginAt: '2021-05',
     team: [
       {
-        teamName: '셀러웹프론트개발팀',
-        position: '팀원',
+        teamName: 'Seller Web Front-end Team',
+        position: 'Team Member',
         beginAt: '2022-10',
         projects: [
           {
-            title: '우아한라이브러리',
+            title: 'Woowahan Library',
             beginAt: '2023-05',
-            description:
-              '우아한형제들의 전사 프론트엔드 라이브러리 제작을 위한 TF로 라이브러리의 생태계를 구축하였습니다.\nTF는 각 프론트엔드 팀의 시니어 엔지니어들로 구성되었습니다.',
+            description: `The library's ecosystem was built with TF for the creation of the company-wide front-end library of elegant brothers.\nTF consisted of senior engineers from each front-end team.`,
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리 ',
+                description: 'Project Lead and Schedule Management',
               },
               {
-                description: '신규 라이브러리 구축',
+                description: 'Build a new library',
               },
             ],
             works: [
               {
-                description: '워크플로우 구축 및 라이브러리 운영 정책 수립',
+                description: 'Establish workflow deployment and library maintenance policies',
               },
               {
-                description: 'React Custom Hook 라이브러리 개발',
-                subDescription: ['코드커버리지 100% 달성'],
+                description: 'Develop React Custom Hook Library',
+                subDescription: ['100% code coverage achieved'],
               },
             ],
             techStack: [
@@ -127,52 +126,51 @@ export const CAREER: Career[] = [
             ],
           },
           {
-            title: '배민사장님 앱',
+            title: 'BaeMin Ceo app',
             beginAt: '2022-10',
-            description:
-              '배민사장님 앱은 사장님이 앱을 통해 주문 처리, 배달 설정, 가게 운영에 관련된 설정들을 할 수 있는 서비스입니다.\n주요 기능들을 웹뷰로 제공하는 서비스이며, 앱의 주문접수 웹뷰 개발 파트 리더로 프로젝트를 진행하였습니다.',
+            description: `The BaeMin Ceo app is a service that allows the owner to process orders, set delivery settings, and set up shop operations through the app.\nIt is a service that provides major functions through web view, and the project was carried out as the leader of the app's order reception web view development part.`,
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'Project/Tech Lead and Schedule Management',
               },
               {
-                description: '서비스 고도화 및 신규 기능 개발',
+                description: 'Service enhancement and development of new features',
               },
             ],
             works: [
               {
-                description: '배달의민족 커머스 주문접수 기능 개발',
+                description: 'Development of Baedal Minjok commerce order acceptance function',
               },
               {
-                description: '배민사장님 앱 가변 폰트 기능 개발',
+                description: 'developed a variable font function',
               },
               {
-                description: '배민사장님 앱 웹뷰 브릿지 SDK 구축 및 가이드 문서 제공',
+                description: 'WebView Bridge SDK Construction and Guide Documentation',
               },
               {
-                description: 'Storybook, MSW을 활용하여 UI 개발 및 검증 편리성 증대',
+                description: 'Increase UI development and verification convenience with Storybook and MSW',
                 subDescription: [
-                  'Merge Request에 프리뷰 기능을 제공하여 시각적 리뷰 환경 도입',
-                  '개발 환경에서 가변폰트 Addon을 제공하여 앱으로부터 받아오는 폰트 크기 값을 모의할 수 있도록 제공',
+                  'Introducing a visual review environment by providing preview functionality to Merge Request',
+                  'Provides variable font addon in the development environment to simulate font size values received from the app',
                 ],
               },
               {
-                description: '개발 환경 개선',
+                description: 'Development Environment Improvement',
                 subDescription: [
-                  '애플리케이션 번들러 전환 ( 로컬 구동 속도 42배 ↑, CI 빌드 속도 1.3배 ↑)',
-                  '센트리, 그라파나 대시보드 구성으로 인한 모니터링/메트릭 측정 환경 구축',
-                  '불필요하게 사용되고 있던 Redux 관련 코드를 React Query로 전환하여 코드 복잡도 및 사용성 개선',
+                  'Application Bundler Switching (42x local drive speed ↑ and 1.3x CI build speed ↑)',
+                  'Establish a monitoring/metric measurement environment due to Centri and Grafana dashboard configurations',
+                  'Improve code complexity and usability by converting unnecessary Redux-related code to ReactQuery',
                 ],
               },
               {
-                description: '웹 성능 개선',
+                description: 'Improved Web Performance',
                 subDescription: [
-                  '코드 스플리팅, 트리쉐이킹 등으로 Overall LCP 약 40% 이상 개선 ( 2.x초 → 0.8 ~ 1.2초 )',
-                  '웹서버 정적 리소스 서빙 방식 변경으로 웹서버 부하 개선 ( 약 90% ↓ )',
+                  'Improved Overall LCP by approximately 40% or more with code-splitting, tree-shaking, etc. (2.x seconds → 0.8 to 1.2 seconds)',
+                  'Improve web server load by changing web server static resource serving method (approximately 90% ↓ )',
                 ],
               },
               {
-                description: '코드커버리지 개선 ( 20% → 60% )',
+                description: 'Improved code coverage (20% → 60%)',
               },
             ],
             techStack: [
@@ -200,65 +198,64 @@ export const CAREER: Career[] = [
         ],
       },
       {
-        teamName: '배민상회웹프론트개발팀',
-        position: '팀원',
+        teamName: 'Baemin Restaurant Supply Web Front-end Team',
+        position: 'Team Member',
         beginAt: '2021-05',
         endAt: '2022-10',
         projects: [
           {
-            title: '배민상회',
+            title: 'Baemin Restaurant Supply',
             beginAt: '2021-05',
             endAt: '2022-09',
-            description:
-              '배민상회는 사장님께서 식자재 및 비품을 구매할 수 있는 서비스입니다.\nB2B 이커머스 프론트, 기능 관리할 수 있는 어드민, 외부 판매자가 입점하여 사용할 수 있는 셀러 어드민을 운영하였습니다.',
+            description: `Baemin Restaurant Supply is a service where the boss can purchase food materials and supplies.\nB2B E-commerce Front, Admin that can manage functions, and Seller Admin that external sellers can enter and use.`,
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'Project/Tech Lead and Schedule Management',
               },
               {
-                description: '서비스 고도화 및 신규 기능 개발',
+                description: 'Service enhancement and development of new features',
               },
             ],
             works: [
               {
-                description: '판매중개 비지니스 모델 전환',
+                description: 'Marketplace Business Model Transition',
                 subDescription: [
-                  '외부 판매사들이 사용할 수 있는 셀러 어드민 서비스 구축',
-                  '상품 관리 / 가격 관리 / 카테고리 관리 기능 개발',
-                  '엑셀을 통한 대량 상품 이미지 등록 프로세스 개선 ( API 처리 시간 약 80% ↓ )',
+                  'Build a Seller Admin service that can be used by outside vendors',
+                  'Development of product management/price management/category management functions',
+                  'Improvement of mass product image registration process through Excel (approximately 80% API processing time ↓)',
                 ],
               },
               {
-                description: '배민상회 모바일 메인화면 탭 기능 개발',
+                description: 'Development of Baemin Restaurant Supply Mobile Main Page Tab Function',
               },
               {
-                description: '배민상회 사용자 맞춤 발주서 기능 개발',
+                description: 'Development of customized order form function of Baemin Restaurant Supply',
               },
               {
-                description: '배민상회 어드민 서비스 확장',
+                description: 'Expanding Baemin Restaurant Supply Admin Services',
                 subDescription: [
-                  '사내의 유사 서비스를 하나의 플랫폼에서 관리할 수 있도록 확장하여 배민문방구 쇼핑몰을 배민상회 어드민에서 관리할 수 있도록 구현',
+                  'Expanding the in-house similar services to be managed on one platform enables Baemin Stationery Shopping Mall to be managed by Baemin Restaurant Supply Admin',
                 ],
               },
               {
-                description: '디자인시스템 운영',
+                description: 'Design system maintenance',
                 subDescription: [
-                  '모노레포화를 통하여 쇼핑몰과 어드민 컴포넌트들의 패키지 분리',
-                  '패키지별 버저닝 및 배포 전략 수립',
+                  'Package separation of shopping mall and admin components through monorepo',
+                  'Establish a per-package versioning and deployment strategy',
                 ],
               },
               {
-                description: '개발 환경 개선',
+                description: 'Development Environment Improvement',
                 subDescription: [
-                  'env-launcher라는 라이브러리 제작을 통해 10개 이상인 개발존 환경의 개발/배포 환경 개선',
-                  'Redux 관련 레거시 코드를 Redux Toolkit과 React Query로 전환하여 코드 복잡도 개선',
-                  '손쉽게 사용할 수 있는 Infinite Scroll 컴포넌트 개발을 통한 여러 지면의 코드 패턴 정리 및 복잡도 개선',
+                  'Improve development/distribution of more than 10 development zone environments through the creation of a library called env-launcher',
+                  'Improve code complexity by converting Redux-related legacy code to Redux Toolkit and React Query',
+                  'Develop easy-to-use Infinite Scroll components to organize code patterns on multiple pages and improve complexity',
                 ],
               },
               {
-                description: '웹 성능 개선',
+                description: 'Improved Web Performance',
                 subDescription: [
-                  '이미지 레이지 로드 기능 추가로 쇼핑몰 메인 페이지에서만 200여개 이상의 불필요 요청 수 감소',
+                  'Additional Image Rage Load capability reduces the number of unnecessary requests by more than 200 on the main page of the shopping mall alone',
                 ],
               },
             ],
@@ -286,42 +283,43 @@ export const CAREER: Career[] = [
     ],
   },
   {
-    companyName: '카카오페이',
+    companyName: 'Kakao Pay Corp',
     beginAt: '2020-08',
     endAt: '2021-05',
     team: [
       {
-        teamName: '금융사업클랜 투자파티',
-        position: '팀원',
+        teamName: 'Investment Team',
+        position: 'Team Member',
         beginAt: '2020-08',
         endAt: '2021-05',
         projects: [
           {
-            title: '코스피 지수에 따른 인덱스/리버스 펀드 투자',
+            title: 'Index/reverse fund investment based on KOSPI index',
             beginAt: '2020-08',
             endAt: '2021-02',
             description:
-              '일반적인 펀드 서비스와 다르게 오락이 가미된 신규 펀드 매매 서비스를 구축하였습니다.\n사내 CBT까지 진행하였지만, 아쉽게도 컴플라이언스 이슈로 인해 서비스가 런칭되지는 못하였습니다.\n카카오페이에서 최초로 React Query를 도입하여 개발하였고, 그 후에 사용성 등을 전사에 전파하였습니다.',
+              'Unlike general fund services, we have established a new fund trading service with entertainment.\nWe proceeded to CBT in-house, but unfortunately, the service was not launched due to compliance issues.\nKakao Pay introduced and developed React Query for the first time, and after that, it spread usability to the company.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'Project/Tech Lead and Schedule Management',
               },
               {
-                description: '신규 서비스 구축',
+                description: 'Build new service',
               },
             ],
             works: [
               {
-                description: '기술 스택, 컨벤션 정의, 배포, 모니터링 등 신규 개발 환경 구축',
+                description:
+                  'Build a new development environment including technology stack, convention definition, deployment, monitoring, etc',
               },
               {
-                description: 'React Query를 활용한 제품 코드 및 테스트 코드 설계',
+                description: 'Product code and test code design using ReactQuery',
               },
               {
-                description: '지수 차트/펀드 매수/사용자 랭킹 등 다수의 기능 개발',
+                description: 'Development of a number of functions, including index charts/fund buying/user rankings',
               },
               {
-                description: 'Storybook, Mirage JS를 활용하여 UI 개발 및 검증 편리성 증대',
+                description: 'Increase UI development and verification convenience with Storybook, Mirage JS',
               },
             ],
             techStack: [
@@ -339,40 +337,40 @@ export const CAREER: Career[] = [
             ],
           },
           {
-            title: 'P2P 부동산 투자',
+            title: 'P2P Real Estate Investment',
             beginAt: '2020-11',
             endAt: '2021-02',
             description:
-              '부동산 P2P 투자 서비스를 운영하였습니다.\n이 서비스는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱에서 접근할 수 있었습니다.\n아쉽게도 현재는 운영이 종료되었습니다.',
+              'I have maintained a real estate P2P investment service.\nThe service was accessible in the Kakao Pay service area within the Kakao Talk app, and in the Kakao Pay app.\nUnfortunately, the service is closed now.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'Project Lead and Schedule Management',
               },
               {
-                description: '서비스 고도화',
+                description: 'Service enhancement',
               },
             ],
             works: [
               {
-                description: 'React Query를 도입하여 투자내역 목록 지면 코드 복잡도 감소',
+                description: 'Reduce code complexity on investment history list by introducing ReactQuery',
               },
               {
-                description: '카카오페이 통합웹뷰 SDK 적용',
+                description: 'Application of Kakao Pay Integrated Web View SDK',
               },
               {
-                description: '제휴사를 위한 카카오페이 통합웹뷰 SDK 브릿지 개발 및 가이드 제공',
+                description: 'Development and Guide for Kakao Pay Integrated Web View SDK Bridge for Affiliates',
               },
               {
-                description: '웹뷰 뒤로 가기 시 사용자가 보고 있던 화면이 유지되도록 사용성 개선',
+                description: `Improve usability so that the screen you're viewing is maintained when you go behind a web view`,
               },
               {
-                description: 'Storybook, Mirage JS를 활용하여 UI 개발 및 검증 편리성 증대',
+                description: 'Increase UI development and verification convenience with Storybook, Mirage JS',
               },
               {
-                description: '개발 환경 개선',
+                description: 'Development Environment Improvement',
                 subDescription: [
-                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거',
-                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'Remove libraries that are no longer maintained, such as @babel/polyfill, awesome-ts-loader, tslint',
+                  'babel-loader, core-js, eslint, prettier installation and application',
                 ],
               },
             ],
@@ -390,56 +388,57 @@ export const CAREER: Career[] = [
             ],
           },
           {
-            title: '펀드 투자',
+            title: 'Fund Investment',
             beginAt: '2020-08',
             endAt: '2020-10',
             description:
-              '펀드 매매 서비스를 운영하였습니다.\n이 서비스는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱에서 접근할 수 있었습니다.',
+              'I have maintained a fund trading service.The service was accessible in the Kakao Pay service area within the Kakao Talk app, and in the Kakao Pay app.',
             role: [
               {
-                description: '서비스 고도화',
+                description: 'Service enhancement',
               },
             ],
             works: [
               {
-                description: '단 하나의 파일로만 되어있던 js 코드를 분할 처리하여 Overall LCP 약 30% 개선',
+                description:
+                  'Overall LCP improvement by approximately 30% by splitting js code that was only a single file',
               },
               {
-                description: '개발 환경 개선',
+                description: 'Development Environment Improvement',
                 subDescription: [
-                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거',
-                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'Remove libraries that are no longer maintained, such as @babel/polyfill, awesome-ts-loader, tslint',
+                  'babel-loader, core-js, eslint, prettier installation and application',
                 ],
               },
             ],
             techStack: ['React', 'Typescript', 'Mobx', 'sass', 'Jest', 'webpack', 'Github'],
           },
           {
-            title: '투자 홈',
+            title: 'Investment Home',
             beginAt: '2020-12',
             endAt: '2021-01',
             description:
-              '카카오페이 투자 서비스들과 나의 투자 현황을 볼 수 있는 페이지를 운영하였습니다.\n이 페이지는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱의 메인 탭 페이지로 제공되었습니다.',
+              'I have maintained a page where you can see Kakao Pay investment services and my investment status.\nIt was provided in the Kakao Pay service area within the Kakao Talk app, and as the main tab page of the Kakao Pay app.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'Project Lead and Schedule Management',
               },
               {
-                description: '서비스 고도화',
+                description: 'Service enhancement',
               },
             ],
             works: [
               {
-                description: '카카오페이 통합웹뷰 SDK 적용',
+                description: 'Application of Kakao Pay Integrated Web View SDK',
               },
               {
-                description: '다크 모드 화면 대응',
+                description: 'Dark mode screen correspondence',
               },
               {
-                description: '개발 환경 개선',
+                description: 'Development Environment Improvement',
                 subDescription: [
-                  '@babel/polyfill, awesome-ts-loader, tslint와 같은 더 이상 유지되지 않는 라이브러리 제거',
-                  'babel-loader, core-js, eslint, prettier 설치 및 적용',
+                  'Remove libraries that are no longer maintained, such as @babel/polyfill, awesome-ts-loader, tslint',
+                  'babel-loader, core-js, eslint, prettier installation and application',
                 ],
               },
             ],
@@ -450,71 +449,72 @@ export const CAREER: Career[] = [
     ],
   },
   {
-    companyName: '위버스컴퍼니',
+    companyName: 'Weverse Company',
     beginAt: '2020-06',
     endAt: '2020-08',
     team: [
       {
-        teamName: '웹개발팀',
-        position: '팀원',
+        teamName: 'Web Front-end Team',
+        position: 'Team Member',
         beginAt: '2020-06',
         endAt: '2020-08',
         projects: [
           {
-            title: '위버스',
+            title: 'Weverse',
             beginAt: '2020-06',
             endAt: '2020-07',
-            description: '위버스의 웹 버전을 운영하였습니다.',
+            description: 'I have maintained the web version of Weverse.',
             role: [
               {
-                description: '서비스 고도화 및 신규 기능 개발',
+                description: 'Service enhancement and development of new features',
               },
             ],
             works: [
               {
-                description: '아티스트 커뮤니티 영역의 멤버십 혜택 기능 개발',
+                description: 'Development of membership benefits in the artist community area',
               },
             ],
             techStack: ['React', 'Typescript', 'Mobx', 'styled-components', 'i18n', 'webpack', 'Storybook', 'Github'],
           },
           {
-            title: '타이니탄 상품 프로모션',
+            title: 'Tinytan merchandise promotion',
             beginAt: '2020-07',
             endAt: '2020-08',
             description:
-              '방탄소년단 멤버들을 모티브 한 타이니탄이라는 캐릭터의 상품을 프로모션하는 사이트를 구축하였습니다.\n미디어 쿼리를 이용하여 위버스 앱 내 웹뷰 그리고 모바일 & 데스크톱 환경을 지원하였습니다.\n글로벌, 미국, 일본 Shop 설정과 그에 따른 다국어도 지원하였습니다.',
+              'It is a site that promotes products with a character called Tinytan that is based on BTS members.\nIt supported webView and mobile & desktop environments within the Weverse app using media queries.\nIt also supported global, US, and Japanese shop settings and subsequent multilingualism.',
             role: [
               {
-                description: '신규 프로모션 구축',
+                description: 'Build new promotions',
               },
             ],
             works: [
               {
-                description: '기술 스택, 컨벤션 정의, 배포 등 신규 개발 환경 구축',
+                description:
+                  'Build new development environments such as technology stack, convention definition, and deployment',
               },
               {
-                description: '타이니탄 컨셉, 상품 소개 기능 개발',
+                description: 'Development of Tinytan Concept, Product Introduction Function',
               },
               {
-                description: '여러 가게와 언어를 지원하고 있는 위버스샵 상품의 딥링크 모듈 개발',
+                description:
+                  'Development of Deep Link Module for Weverse Shop Products that Support Many Stores and Languages',
               },
             ],
             techStack: ['React', 'Typescript', 'Mobx', 'styled-components', 'i18n', 'webpack', 'Github'],
           },
           {
-            title: '위버스샵',
+            title: 'Weverse Shop',
             beginAt: '2020-07',
             endAt: '2020-07',
-            description:
-              '위버스샵의 어드민을 운영하였습니다.\n벡엔드 팀 리소스 부족으로 버그 수정 및 성능 개선 등의 업무를 지원하였습니다.',
+            description: `I have maintained Weverse Shop's Admin.\nDue to lack of Beckend team resources, I supported tasks such as bug correction and performance improvement.`,
             role: [
               {
-                description: '서비스 고도화',
+                description: 'Service enhancement',
               },
             ],
             works: [
               {
-                description: '배송지 권역 설정 지면의 렌더링 성능 개선',
+                description: 'Improved rendering performance of the destination area setting ground',
               },
             ],
             techStack: ['Angular', 'webpack'],
@@ -524,57 +524,59 @@ export const CAREER: Career[] = [
     ],
   },
   {
-    companyName: '우아한형제들',
+    companyName: 'Woowa Brothers Corp',
     beginAt: '2018-10',
     endAt: '2020-05',
     team: [
       {
-        teamName: '배민상회개발팀',
-        position: '팀원',
+        teamName: 'Baemin Restaurant Supply Development Team',
+        position: 'Team Member',
         beginAt: '2018-10',
         endAt: '2020-05',
         projects: [
           {
-            title: '배민상회',
+            title: 'Baemin Restaurant Supply',
             beginAt: '2018-10',
             endAt: '2020-05',
             description:
-              '배민상회는 사장님께서 식자재 및 비품을 구매할 수 있는 서비스입니다.\n개발팀의 초기 멤버로 합류 후, 고도몰로 운영되고 있었던 서비스를 점진적으로 내재화시켰습니다.\n내재화가 완료된 후에는 서비스 관리 어드민 및 판매중개 비지니스 모델 전환을 위해 셀러 어드민을 구축하여 서비스 고도화를 진행하였습니다.\n또한, 컴포넌트를 공통으로 사용할 수 있도록 배민상회 디자인 시스템도 구축하였습니다.',
+              'Baemin Restaurant Supply is a service where the boss can purchase food materials and supplies.\nAfter joining the development team as an early member of the development team, we gradually internalized the service that had been maintained at a godo-mall.\nAfter internalization was completed, seller administration was established to transform the service management administration and sales brokerage business model to advance the service.\n In addition, we also established a design system for the Baemin Restaurant Supply so that components can be used in common.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'Project/Tech Lead and Schedule Management',
               },
               {
-                description: '서비스 구축 및 신규 기능 개발',
+                description: 'Service deployment and development of new capabilities',
               },
               {
-                description: '서비스 고도화',
+                description: 'Service enhancement',
               },
             ],
             works: [
               {
-                description: '기술 스택, 컨벤션 정의, 배포, 모니터링 등 신규 개발 환경 구축',
+                description:
+                  'Build a new development environment including technology stack, convention definition, deployment, monitoring, etc',
               },
               {
-                description: '배민상회 서비스 자체 플랫폼 구축 ( 고도몰 기능 100% 구현 )',
+                description: `Establishment of the Baemin Restaurant Supply service's own platform (100% godo-mall function)`,
                 subDescription: [
-                  '메인 / 검색 / 상품목록 및 상세 / 장바구니 / 주문 / 회원 / 나의상회 / 샘플 등 기능 개발',
-                  '모바일, 데스크톱 브라우저를 지원하기 위한 애플리케이션 설계',
-                  '서비스 내재화가 완료되기 전까지 고도몰 운영',
+                  'Main / search / product list and details / shopping basket / order / member / my association / sample, etc. Develop functions',
+                  'Design applications to support mobile, desktop browsers',
+                  'godo-mall maintenance until service internalization is completed',
                 ],
               },
               {
-                description: '서비스 고도화를 위한 어드민과 외부 판매사에서 사용할 수 있는 셀러 어드민 구축',
+                description:
+                  'Development of Admin for Service enhancement and Seller Admin available to external vendors',
                 subDescription: [
-                  '판매사 관리 / 상품 관리 / 가격 관리 / 주문 관리 / 배송 관리 등 주요 기능 개발',
-                  '단일 소스로 2개의 서비스가 제공되도록 애플리케이션 설계',
+                  'Development of key functions such as vendor management / product management / price management / order management / delivery management',
+                  'Design applications for two services from a single source',
                 ],
               },
               {
-                description: '배민상회 디자인 시스템 구축',
+                description: 'Establishment of Design System of Baemin Restaurant Supply',
                 subDescription: [
-                  'Button / Input / Select / Modal / Pagination / Table 등 주요 컴포넌트 개발',
-                  '버저닝 및 배포 전략 수립',
+                  'Development of major components such as Button/Input/Select/Modal/Pagination/Table',
+                  'Establishing a strategy for versioning and deployment',
                 ],
               },
             ],
@@ -599,50 +601,49 @@ export const CAREER: Career[] = [
     ],
   },
   {
-    companyName: '어나더레인보우',
+    companyName: 'AnotherRainbow',
     beginAt: '2012-01',
     endAt: '2018-04',
     team: [
       {
-        teamName: '개발팀',
-        position: '책임연구원',
+        teamName: 'Development Team',
+        position: 'Senior Member',
         beginAt: '2012-01',
         endAt: '2018-04',
         projects: [
           {
-            title: '아모레퍼시픽 브랜드 웹사이트',
+            title: 'AmorePacific brand website',
             beginAt: '2012-01',
             endAt: '2018-03',
-            description:
-              '아모레퍼시픽 브랜드들을 소개해 주는 서비스입니다.\n회사 재직기간 동안 가장 많이 진행하였던 업무들이었고, 시기에 따라 적절한 기술들을 사용하였습니다.\n브라우저를 위한 사용 기술 및 언어에 대한 주요 흐름은 아래와 같고, 부가적으로 필요한 환경들을 구성했었습니다.\nActionScript 3.0  ->  jQuery  ->  AngularJS  ->  React\n\nImageMagick, FFmpeg와 같은 라이브러리들은 특수한 프로모션 사이트들에서 이미지와 영상 처리가 필요하여 사용하였습니다.',
+            description: `t is a service that introduces AmorePacific brands.\nIt was the most common task during the company's tenure, and appropriate technologies were used depending on the timing.\nThe main flow of usage technology and language for browsers is as follows, and additionally, necessary environments were constructed.\nActionScript 3.0  ->  jQuery  ->  AngularJS  ->  React\n\nLibraries such as ImageMagick and FFmpeg were used because they needed image and video processing at special promotion sites.`,
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'Project Lead and Schedule Management',
               },
               {
-                description: '프로젝트 견적 산출',
+                description: 'Project estimate calculation',
               },
               {
-                description: '신규 기능 개발',
+                description: 'Development of new features',
               },
             ],
             works: [
               {
                 description:
-                  '라네즈 프로모션 사이트 개발 및 9개국 확산(한국, 중국, 대만, 홍콩, 태국, 베트남, 싱가폴, 말레이시아, 인도네시아)',
+                  'Development of Laneige promotion sites and spread to 9 countries (Korea, China, Taiwan, Hong Kong, Thailand, Vietnam, Singapore, Malaysia, Indonesia)',
               },
-              { description: '이니스프리 프로모션 사이트 개발' },
-              { description: '프리메라 프로모션 사이트 개발' },
-              { description: 'VB프로그램 프로모션 사이트 개발' },
-              { description: '헤라 프로모션 사이트 개발' },
-              { description: '한율 프로모션 사이트 개발' },
-              { description: '설화수 프로모션 사이트 개발' },
-              { description: '리리코스 마이크로사이트 개발' },
-              { description: 'Verite 마이크로사이트 개발' },
-              { description: 'VitalBeautie 마이크로사이트 개발' },
-              { description: 'VB프로그램 마이크로사이트 개발' },
-              { description: '아이오페 마이크로사이트 개발' },
-              { description: '유스레볼루션 마이크로사이트 개발' },
+              { description: 'Development of Innisfree Promotion Site' },
+              { description: 'Development of a Primera promotion site' },
+              { description: 'Development of VB Program Promotion Site' },
+              { description: 'Development of Hera Promotional Site' },
+              { description: 'Development of Hanyul Promotion Site' },
+              { description: 'Development of Sulwhasoo Promotion Site' },
+              { description: 'Development of Lyricos microsites' },
+              { description: 'Development of Verite microsite ' },
+              { description: 'Development of VitalBeautie microsite' },
+              { description: 'Development of VB Program Microsite' },
+              { description: 'Development of IOPE Microsite' },
+              { description: 'Development of Youth Revolution Microsite' },
             ],
             techStack: [
               'ActionScript 3.0',
@@ -667,90 +668,92 @@ export const CAREER: Career[] = [
             ],
           },
           {
-            title: '하기스 네이처피크닉 시즌5',
+            title: 'Haggis Nature Picnic Season5',
             beginAt: '2016-03',
             endAt: '2016-05',
             description:
-              '하기스 네이처피크닉 프로모션 사이트에서 사용되는 API를 개발하였습니다.\n클라이언트로부터 이미지를 전달받아, 이미지에 필터 효과를 적용하고 애니메이션이 들어간 gif를 생성하고 반환해 주었습니다.',
+              'We have developed an API used on the Haggis Nature Picnic promotion site.\nI received the image from the client, applied the filter effect to the image, created a gif with animation, and returned it.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'Project Lead and Schedule Management',
               },
               {
-                description: '프로젝트 견적 산출',
+                description: 'Project estimate calculation',
               },
               {
-                description: 'API 기능 개발',
+                description: 'API capability development',
               },
             ],
             works: [
-              { description: 'ImageMagick을 활용하여 이미지 필터 모듈 개발' },
-              { description: 'FFmpeg를 활용하여 gif 생성 모듈 개발' },
-              { description: 'AWS Lambda와 API Gateway로 API 구성' },
+              { description: 'Develop image filter module using ImageMagick' },
+              { description: 'Develop gif generation module using FFmpeg' },
+              { description: 'Configure APIs with AWS Lambda and API Gateway' },
             ],
             techStack: ['FFmpeg', 'ImageMagick', 'Node.js', 'AWS', 'Github'],
           },
           {
-            title: '제주항공 My Heroine 소셜무비',
+            title: 'Jeju Air My Heroine Social Movie',
             beginAt: '2014-01',
             endAt: '2014-03',
-            description:
-              '제주항공의 프로모션 사이트에서 SNS 무비를 제작할 수 있는 서비스입니다.\n사용자 이미지와 페이스북 친구들의 이미지를 업로드하면 자신만의 SNS 무비를 만들 수 있었습니다.',
+            description: `This service allows you to create your own SNS movie on Jeju Air's promotional site.\nBy uploading user images and images of Facebook friends, you were able to create your own SNS movie.`,
             role: [
               {
-                description: '신규 기능 개발',
-              },
-            ],
-            works: [{ description: '이미지 필터 모듈 개발' }, { description: '영상 크로마키 모듈 개발' }],
-            techStack: ['ActionScript 3.0'],
-          },
-          {
-            title: '롯데센터 Fun view walk 앱 (Windows)',
-            beginAt: '2014-06',
-            endAt: '2014-09',
-            description:
-              '베트남 하노이 롯데센터 전망대의 대형 스크린에 전시했던 서비스입니다.\n사용자가 키오스크에서 입력한 텍스트를 다양한 인터랙션으로 보여주고, 세계 도시들의 전경과 우주 배경 등 다양한 테마가 디스플레이되었습니다.',
-            role: [
-              {
-                description: '신규 기능 개발',
+                description: 'Development of new features',
               },
             ],
             works: [
-              { description: '만화경 이미지 테마뷰 개발' },
-              { description: '텍스트 파티클 애니메이션 테마뷰 개발' },
+              { description: 'Development of Image Filter Module' },
+              { description: 'Development of image chroma key module' },
+            ],
+            techStack: ['ActionScript 3.0'],
+          },
+          {
+            title: 'Lotte Center Fun view walk app (Windows)',
+            beginAt: '2014-06',
+            endAt: '2014-09',
+            description: `This service was displayed on the large screen of the Lotte Center Observatory in Hanoi, Vietnam.\nThe text entered by the user at the kiosk was displayed through various interactions, and various themes such as the panoramic view of world cities and the space background were displayed.`,
+            role: [
+              {
+                description: 'Development of new features',
+              },
+            ],
+            works: [
+              { description: 'Development of Kaleidoscope Image Theme View' },
+              { description: 'Developing a Text Particle Animation Theme View' },
             ],
             techStack: ['Cinder', 'C++', 'OpenGL', 'Github'],
           },
           {
-            title: 'PlayAlarms 앱 (iOS)',
+            title: 'PlayAlarms App (iOS)',
             beginAt: '2013-04',
             endAt: '2013-07',
-            description:
-              '아이데이션부터 앱 출시까지 주도적으로 진행한 서비스입니다.\n아침 기상을 위해 알람을 설정하면, 사용자에게 특정 미션을 수행하라는 푸시 알림이 전송되며,\n미션 수행 완료 시 해당 푸시 알림이 자동으로 종료되도록 개발했습니다.\n광고 없이 중국 지역 애플스토어 유틸리티 카테고리에서 20위를 달성하였고, 앱 제작부터 배포까지의 개발 과정을 모두 혼자 진행하였습니다.',
+            description: `It is a service that has been led from idation to app launch.\nWhen you set an alarm for the morning wake-up, a push notification is sent to the user to perform a specific mission,\nWe developed it so that the push notification is automatically terminated when the mission is completed.\nIt achieved 20th place in the Apple Store Utility category in China without advertising, and carried out the development process from app production to distribution alone.`,
             role: [
               {
-                description: '서비스 기획 및 개발',
+                description: 'Service planning and development',
               },
             ],
             works: [
-              { description: 'iOS 애플리케이션 아키텍처 설계 및 UI 개발' },
-              { description: '데시벨 측정 모듈 개발' },
-              { description: '가속도센서를 활용한 흔들기 측정 모듈 개발' },
+              { description: 'iOS Application Architecture Design and UI Development' },
+              { description: 'Development of Decibel Measurement Module' },
+              { description: 'Development of shaking measurement module using acceleration sensor' },
             ],
             techStack: ['Objective-C', 'Github'],
           },
           {
-            title: '이니스프리 iCF 앱 (iOS/Android)',
+            title: 'Innisfree iCF App (iOS/Android)',
             beginAt: '2012-07',
             endAt: '2012-10',
-            description:
-              '이니스프리 iCF 앱은 이니스프리의 CF를 제작할 수 있는 서비스입니다.\n사용자들이 직접 촬영한 영상으로 자신만의 CF를 제작할 수 있고, 이것을 Youtube로 공유할 수 있었습니다.',
+            description: `The Innisfree iCF app is a service that allows you to produce Innisfree's CF.\nUsers were able to create their own commercials with videos they filmed themselves, and they were able to share them on YouTube.`,
             role: [
               {
-                description: '신규 기능 개발',
+                description: 'Development of new features',
               },
             ],
-            works: [{ description: '영상 갤러리 개발' }, { description: 'Youtube Data API 연동 모듈 개발' }],
+            works: [
+              { description: 'Development of a video gallery' },
+              { description: 'Development of Youtube Data API Module' },
+            ],
             techStack: ['ActionScript 3.0', 'Adobe AIR'],
           },
         ],

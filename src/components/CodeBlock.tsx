@@ -7,6 +7,7 @@ import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typesc
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import rust from 'react-syntax-highlighter/dist/cjs/languages/prism/rust';
 import java from 'react-syntax-highlighter/dist/cjs/languages/prism/java';
+import go from 'react-syntax-highlighter/dist/cjs/languages/prism/go';
 import classNames from 'classnames';
 
 SyntaxHighlighter.registerLanguage('csharp', csharp);
@@ -15,6 +16,7 @@ SyntaxHighlighter.registerLanguage('typescript', typescript);
 SyntaxHighlighter.registerLanguage('json', json);
 SyntaxHighlighter.registerLanguage('rust', rust);
 SyntaxHighlighter.registerLanguage('java', java);
+SyntaxHighlighter.registerLanguage('go', go);
 
 const HIGHLIGHT_REG = /{[\d,-]*}/i;
 

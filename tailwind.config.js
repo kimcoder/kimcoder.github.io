@@ -11,7 +11,7 @@ module.exports = {
   },
   purge: {
     enabled: false,
-    content: ['./src/**/*.{js,ts,jsx,tsx}'],
+    content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
     options: {
       defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
     },

@@ -1,0 +1,234 @@
+---
+id: 러닝 고
+title: '4장 블록, 섀도, 제어 구조'
+description: '러닝 고 책을 읽고 내용을 정리합니다.'
+keywords: 'go, go lang, learning go, programming language, study'
+createdAt: 2024.03.19
+---
+
+## 4.1 블록
+
+- Go는 변수를 다양한 곳에서 선언할 수 있도록 한다. 변수를 함수 외부에 선언하여 함수의 파라미터로 사용할 수도 있고, 함수 내에서 지역변수로도 사용할 수 있다.
+- 선언문이 있는 각각의 공간을 **블록**이라 부른다.
+- 함수 외부에서 선언된 변수, 상수, 타입, 함수는 패키지 블록 범위내에 속한다.
+- `import` 문이 포함된 파일에 유효한 다른 패키지의 이름을 정의한다. 해당 이름들은 파일 블록 내에 있게 된다.
+- 함수 내에서, 모든 중괄호(`{}`)세트는 다른 블록을 정의하며 Go의 제어 구조가 자체 블록을 정의한다는 것을 볼 수 있다.
+
+### 4.1.1 섀도잉 변수
+
+```go
+func main() {
+	x := 10
+	if x > 5 {
+		fmt.Println(x)
+		x := 5
+		fmt.Println(x)
+	}
+	fmt.Println(x)
+}
+
+// 출력은 아래와 같이 된다.
+// 10
+// 5
+// 10
+```
+
+- 섀도잉 변수는 포함된 블록 내에 이름이 같은 변수가 있는 것을 의미한다.
+- 내부 블록에서 변수가 섀도잉되면 해당 변수를 접근할 방법이 없어진다.
+
+### 4.1.2 섀도잉 변수 검출
+
+- 섀도잉으로 미묘한 버그를 발생시킬 수 있으므로, 작성한 프로그램에 어떤 변수도 섀도잉되지 않은 것을 확인해주는 좋은 아이디어가 있다.
+- **shadow 린터를 설치하여 빌드 프로세스에서 섀도잉된 변수를 검출해 낼 수 있다.**
+
+## 4.2 if 문
+
+- Go에서 `if` 문은 다른 프로그래밍 언어에서 if 문과 매우 비슷하지만 조건을 감싸는 괄호는 존재하지 않는다.
+
+```go
+n := rand.Intn(10)
+if n == 0 {
+  fmt.Println("That's too low")
+} else if > 5 {
+  fmt.Println("That's too big:", n)
+} else {
+  fmt.Println("That's a good number:", n)
+}
+```
+
+- `if` 혹은 `else` 문의 중괄호 내에 선언된 모든 변수는 블록 내에서만 유효하다.
+
+```go
+if n := rand.Intn(10); n == 0 {
+  fmt.Println("That's too low")
+} else if > 5 {
+  fmt.Println("That's too big:", n)
+} else {
+  fmt.Println("That's a good number:", n)
+}
+
+// 위와 같이 특별한 범위의 변수를 가지는 것은 매우 편리하다.
+// 변수를 필요한 영역에서만 사용 가능하도록 하기 때문이다.
+```
+
+## 4.3 for 문
+
+- **Go에서는 `for`가 언어의 유일한 반복문 키워드이다.**
+  - C 언어와 동일한 방식의 `for`
+  - 조건문만 있는 `for`
+  - 무한루프의 `for`
+  - `for-range`
+
+### 4.3.1 완전한 구문
+
+- `if` 문처럼 `for` 문을 감싸는 괄호는 없다.
+- 변수를 초기화 하기 위해 반드시 `:=` 를 사용해야 한다.
+
+```go
+for i :=0; i < 10; i++ {
+	fmt.Println(i)
+}
+```
+
+### 4.3.2 조건식만 사용하는 for 문
+
+- **Go는 `for` 문에서 초기값과 증감식을 생략할 수 있다.**
+- 많은 언어에서 사용되는 while 문을 사용하는 것과 비슷하다.
+
+```go
+for i < 100 {
+	fmt.Println(i)
+	i = i * 2
+}
+```
+
+### 4.3.3 for 문을 이용한 무한루프
+
+- Go는 무한루프를 위한 `for` 문을 제공한다.
+
+```go
+for {
+	fmt.Println("Hello")
+}
+```
+
+### 4.3.4 break와 continue
+
+- 다른 언어와 마찬가지로 `break` 문을 사용하여 `for` 루프를 빠져나올 수 있다.
+- 또한 루프 중에 특정 부분 이하는 수행하지 않고 바로 다음 루프로 넘기는 `continue` 키워드도 제공한다.
+
+```go
+for i :=0; i < 10; i++ {
+	if i%3 == 0 {
+			fmt.Println("AA")
+			continue
+	}
+	if i%2 == 0 {
+			fmt.Println("BB")
+			continue
+	}
+	fmt.Println(i)
+}
+```
+
+### 4.3.5 for-range 문
+
+- `for-range` 루프는 어떤 내장 타입의 요소를 순회하며 루프를 수행하는 `for` 문이다.
+- 다른 언어에서 볼 수 있는 반복자(interator)와 비슷하다.
+
+```go
+evenVals := []int{2, 4, 6, 8, 10, 12}
+for i, v := range evenVals {
+	fmt.Println(i, v)
+}
+
+// 다음과 같은 출력을 볼 수 있다.
+// 0 2
+// 1 4
+// 2 6
+// 3 8
+// 4 10
+// 5 12
+```
+
+- **`for-range` 루프로 문자열을 순회할 수도 있다. 문자열을 순회할 때는 바이트가 아닌 룬을 순회한다.**
+- 문자열에 여러 바이트에 걸친 룬을 처리할 때, UTF-8 표현을 단일 32 비트 숫자로 변환하고 값에 할당한다. 오프셋은 룬이 가지는 바이트 수에 따라 증가한다.
+
+```go
+samples := []string{"hello", "a_π!"}
+for _, sample := range sample {
+	for i, r := range sample {
+		fmt.Println(i, r, string(r))
+	}
+}
+
+// 첫번째 열은 인덱스,
+// 두번째는 문자의 숫자 값,
+// 세 번째는 문자의 숫자 값을 문자열로 변환한 값이다.
+
+// 0 104 h
+// 1 101 e
+// 2 108 l
+// 3 108 l
+// 4 110 o
+
+// 0 97 a
+// 1 95 _
+// 2 960 π  <- 한 바이트로 표현하기엔 큰 수이다.
+// 4 33 !   <- 인덱스가 이동되어 4가 된다.
+```
+
+- **`for-range` 루프로 순회할 때, 매번 가져오는 값은 복사본이다.**
+
+```go
+evenVals := []int{2, 4, 6, 8, 10, 12}
+for _, v := range evenVals {
+	v *= 2
+}
+fmt.Println(evenVals)
+
+// [2 4 6 8 10 12]
+```
+
+## 4.4 switch 문
+
+- Go는 다른 언어들과 달리 `switch` 문을 쓸모 있게 만들었다.
+
+```go
+words := []string{"a", "cow", "smile", "gopher"}
+for _, word := range words {
+	switch size := len(word); size {
+	case 1, 2, 3 ,4:
+		fmt.Println(word, "is a short word!")
+	case 5:
+		fmt.Println(word, "is a right length!")
+	case 6, 7, 8, 9:
+	default:
+		fmt.Println(word, "is a long word!")
+	}
+}
+```
+
+- `switch` 에서 비교가 될 값을 감싸는 괄호를 넣을 필요가 없다.
+- 모든 `case` 문의 마지막에 `break` 문을 넣지 않아도 된다.
+- **기본적으로 Go에서 `switch` 문의 `case` 는 아래 `case` 구분까지 실행(fall-through)하지 않는다.**
+- 완전성을 위해, 하나의 `case`에서 다음 `case` 를 계속 수행할 수 있도록 하는 fallthrough 키워드를 가지고 있지만, 이것을 구현하기 전에 로직을 재구성하거나 `case` 문 간에 의존성을 제거할 수 있는지 고민해 보자.
+- `switch` 문에서 비교가 되는 값을 명시하지 않아도 되는 **공백(blank) `switch`** 를 작성할 수도 있다.
+
+```go
+words := []string{"a", "cow", "smile", "gopher"}
+for _, word := range words {
+	switch size := len(word); {
+	case size < 5:
+		fmt.Println(word, "is a short word!")
+	case size > 10:
+	default:
+		fmt.Println(word, "is a long word!")
+	}
+}
+```
+
+## 4.5 goto 문
+
+- Go의 네 번째 제어문은 `goto` 문이다. `goto` 문을 활용하여 코드의 레이블이 지정된 줄로 실행이 해당 라인으로 이동할 수 있다.
+- 사용하는 경우가 매우 적다.

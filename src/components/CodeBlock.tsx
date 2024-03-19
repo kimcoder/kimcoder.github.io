@@ -23,6 +23,7 @@ const HIGHLIGHT_REG = /{[\d,-]*}/i;
 const CodeBlock = ({ children, className = 'language-js', metastring: meta, title = '', ...props }) => {
   const language = className.replace(/language-/, '');
   const codeTitle = title.replace(/"/g, '');
+  const showLineNumbers = props.showLineNumbers ?? false;
   const highlightLines =
     Object.keys(props)
       .filter((key) => HIGHLIGHT_REG.test(key))
@@ -52,7 +53,7 @@ const CodeBlock = ({ children, className = 'language-js', metastring: meta, titl
           background: 'var(--code-background-color)',
           color: 'var(--code-block-color)',
         }}
-        showLineNumbers={true}
+        showLineNumbers={showLineNumbers}
         lineProps={(lineNumber) => {
           const isHighlighted = highlightLines.includes(lineNumber);
           return {

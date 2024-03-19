@@ -1,0 +1,237 @@
+---
+id: 러닝 고
+title: '5장 함수'
+description: '러닝 고 책을 읽고 내용을 정리합니다.'
+keywords: 'go, go lang, learning go, programming language, study'
+createdAt: 2024.03.19
+---
+
+## 5.1 함수 선언과 호출
+
+- Go 함수의 기본적인 부분은 일급 함수를 가진 다른 언어로 프로그래밍 해본 누구든 쉽게 파악할 수 있다.
+- 제어 구조와 마찬가지로 Go는 함수 기능에 고유한 변형을 추가한다.
+- Go는 정적 타입 언어라 파라미터에 반드시 타입을 명시해야 한다.
+
+```go
+func div(numerator int, denominator int) int {
+	if denominator == 0 {
+		return 0
+	}
+	return numerator / denominator
+}
+```
+
+### 5.1.1 이름이 지정된 파라미터와 선택적 파라미터 대응
+
+- 함수를 위한 파라미터는 호출 시 모두 넘겨져야 한다. 이름이 지정된 파라미터나 선택적 파라미터처럼 사용하고 싶다면, 파라미터로 사용될 것과 동일하게 구조체로 만들어 함수로 넘겨줘야 한다.
+
+```go
+type MyFuncOpts sturct {
+	FirstName string
+	LastName string
+	Age int
+}
+
+func MyFunc(opts MyFuncOpts) error {
+	// do something
+}
+
+func main() {
+	MyFunc(MyFuncOpts {
+		LastName: "Patel",
+		Age: 50,
+	})
+	MyFunc(MyFuncOpts {
+		FirstName: "Joe",
+		LastName: "Smith",
+	})
+}
+```
+
+### 5.1.2 가변 입력 파라미터와 슬라이스
+
+- 다른 언어처럼 **Go도 가변 파라미터(variadic parameter)를 지원한다.**
+- 타입 전에 3개의 점(`…`)을 붙인다.
+
+```go
+func addTo(base int, vales ...int) []int {
+	out := make([]int, 0., len(vals))
+	for _, v := range vals {
+		out = append(out, base+v)
+	}
+	return out
+}
+
+// 아래와 같이 여러 가지 방법으로 호출할 수 있다.
+// addTo(3)
+// addTo(3, 2)
+// addTo(3, 2, 4 ,6)
+// addTo(3, []int{1, 2, 3, 4, 5})
+```
+
+### 5.1.3 다중 반환값
+
+- **Go는 다른 언어들과 달리 다중 반환값을 허용한다.**
+- 아래처럼 하나의 함수에서 나뉨수와 나머지 둘 다 반환하도록 할 수 있다.
+
+```go
+func divAndRemainder(numerator int, denominator int) (int, int, error) {
+	if denominator == 0 {
+		return 0, 0, erros.New("Cannot divide by zero")
+	}
+	return numerator / denominator, numerator % denominator, nil
+}
+
+// result, remainder, err := divAndRemainder(10 , 2)
+```
+
+- 함수로부터 반환되는 각각의 값은 변수로 할당되어야 한다. 반환되는 여러 값을 하나의 변수로 할당할 수 없다.
+- 반환되는 값 들 중 하나 혹은 그 이상을 읽고 싶지 않은 경우에는 `_` 라는 이름의 변수로 할당하게 하면 된다.
+  - `result, _ = divAndRemainder(10 , 2)`
+- 함수에서 반환되는 값들을 모두 무시할 수도 있다.
+  - `divAndRemainder(10 , 2)`
+
+## 5.2 함수는 값이다
+
+- 다른 많은 언어과 같이 Go에서 함수는 값이다.
+- 함수의 타입은 키워드 `func` 와 파라미터 타입 및 반환값으로 구성된다. 이 조합을 함수 시그니처라 부른다.
+- 구조체를 정의하기 위해 `type` 키워드를 사용한 것과 같이, 함수 타입을 정의하는데도 사용할 수 있다.
+
+```go
+type opFuncType func(int,int) int
+```
+
+- 함수를 변수에 할당할 뿐만 아니라, 함수 내에 새로운 함수를 정의하여 변수에 할당할 수 있다. 이런 이름이 없는 내부 함수를 **익명 함수(anonymous function)**라 한다. 익명 함수는 인라인으로 작성하고 바로 호출할 수 있다.
+
+```go
+func main(){
+	for i := 0; i< 5; i++ {
+		func(j int) {
+			fmt.Println("printing", j, "from inside of anonymous function")
+		}(i)
+	}
+}
+```
+
+- `defer` 문과 고루틴을 사용할 때 선언된 익명 함수를 변수에 할당없이 사용하면 유용하다.
+
+## 5.3 클로저
+
+- **클로저(closure)**는 컴퓨터 과학에서 사용하는 단어이며, 함수 내부에 선언된 함수가 외부 함수에서 선언한 변수를 접근하고 수정할 수 있는 것을 의미한다.
+- 클로저는 다른 함수로 전달되거나 함수에서 반환될 때 흥미로워진다. 전달된 함수는 함수 내에 있던 변수들을 함수 외부에서 사용할 수 있게 한다.
+
+### 5.3.1 파라미터로 함수를 전달
+
+- 함수는 값이고 파라미터와 반환값을 사용하여 함수의 타입을 지정할 수 있기 때문에, 파라미터로 함수를 다른 함수로 넘길 수 있다.
+- 아래 코드는 동일한 데이터를 다른 방식으로 정렬하기 위해 클로저를 사용하는 방법이다.
+
+```go
+type Person struct {
+	FirstName string
+	LastName  string
+	Age       int
+}
+
+people := []Person{
+	{"Pat", "Patterson", 37},
+	{"Tracy", "Bobbert", 23},
+	{"Fred", "Fredson", 18},
+}
+
+// 성으로 정렬
+sort.Slice(people, func(i int, j int) bool {
+	return people[i].LastName < poeple[j].LastName
+})
+
+// 나이로 정렬
+sort.Slice(people, func(i int, j int) bool {
+	return people[i].Age < poeple[j].Age
+})
+```
+
+### 5.3.2 함수에서 함수 반환
+
+- 클로저를 사용해서 다른 함수로 어떤 함수의 상태를 넘겨줄 뿐만 아니라, 함수에서 클로저를 반환할 수도 있다.
+
+```go
+func makeMult(base int) func(int) int {
+	return func(factor int) int {
+		return base * factor
+	}
+}
+
+func main() {
+	twoBase := makeMult(2)
+	threeBase := makeMult(3)
+	for i := 0; i < 3; i++ {
+		fmt.Println(towBase(i), threeBase(i))
+	}
+}
+```
+
+## 5.4 defer
+
+- 프로그램은 종종 파일이나 네트워크 연결과 같은 임시 자원을 만드는데 이런 자원은 향후 정리될 필요가 있다. 이런 정리는 함수에 얼마나 많은 종료지점이 있든 함수가 성공적으로 완료되었는지 여부에 관계없이 이루어져야 한다.
+- **Go에서 정리 코드는 함수에 `defer` 키워드가 붙은 함수에 들어가게 된다.**
+
+```go
+func main() {
+	if len(os.Args) < 2 {
+		log.Fatal("no file specified")
+	}
+	f, err := os.Open(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	// 유효한 파일 핸들을 얻고나서, 파일을 사용하고 함수가 어떤 식으로 종료되었던 간에 닫아줘야 한다.
+
+	_data := make([]byte, 2048)
+	for {
+		count, err := f.Read(data)
+		os.Stdout.Write(data[:count])
+		if err != nil {
+			if err != io.EOF {
+				log.Fatal(err)
+			}
+			break
+		}
+	}
+}
+```
+
+- 정리 코드 수행을 보장하기 위해, `defer` 키워드와 함수나 메서드 호출을 바로 사용한다.
+- 함수 호출은 즉시 실행되지만, `defer` 는 호출하는 함수를 둘러싼 함수가 종료될 때까지 수행을 연기한다.
+- `defer` 는 Go 함수에서 여러 클로저를 지연시킬 수 있다. 후입선출의 순서로 실행된다.
+- **마지막 `defer` 로 등록된 것이 가장 먼저 실행된다.**
+- 아래는 Go에서 자원을 할당하고 자원을 정리하는 클로저를 반환하는 함수를 작성하는 일반적인 패턴이다.
+
+```go
+func getFile(name string) (*os.File, func(), error) {
+	file, err := os.Open(name)
+	if err != nil {
+		return nil, nil, err
+	}
+	return file, func() {
+		file.Close()
+	}, err
+}
+// 위 헬퍼 함수는 파일, 함수 그리고 오류를 반환한다.
+
+func main() {
+	f, closer, err := getFile(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer closer()
+}
+```
+
+- Go는 변수를 선언하고 사용하지 않는 것을 허용하지 않기 때문에 함수로부터 반환된 클로저를 호출하지 않는다면 프로그램이 컴파일 되지 않는다는 의미일 것이다. 이는 사용자에게 `defer` 를 사용하도록 상기시킨다.
+
+## 5.5 값에 의한 호출을 사용하는 Go
+
+- **함수에 파라미터로 넘겨지는 변수가 있다면, Go는 항상 해당 변수의 복사본을 만들어 넘긴다.**
+- **기본 타입뿐만 아니라 구조체에도 적용이 되지만, 맵과 슬라이스는 포인터로 구현되어 있어 다르게 동작한다.**
+- 값에 의한 호출은 Go의 상수를 위한 지원이 제한적인 이유 중 하나이다. 변수들은 값으로 전달되기 때문에, 호출된 함수에서 함수로 전달된 변수가 수정되지 않는다는 것을 확신할 수 있다. (변수가 맵이나 슬라이스가 아니라면)
+- 함수 내부로 전달된 입력 파라미터는 수정되지 않고 대신에 새롭게 계산된 값을 반환하는 것은 프로그램의 데이터 흐름을 이해하기 쉽게 만들어준다.

@@ -7,6 +7,7 @@ import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typesc
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import rust from 'react-syntax-highlighter/dist/cjs/languages/prism/rust';
 import java from 'react-syntax-highlighter/dist/cjs/languages/prism/java';
+import go from 'react-syntax-highlighter/dist/cjs/languages/prism/go';
 import classNames from 'classnames';
 
 SyntaxHighlighter.registerLanguage('csharp', csharp);
@@ -15,12 +16,14 @@ SyntaxHighlighter.registerLanguage('typescript', typescript);
 SyntaxHighlighter.registerLanguage('json', json);
 SyntaxHighlighter.registerLanguage('rust', rust);
 SyntaxHighlighter.registerLanguage('java', java);
+SyntaxHighlighter.registerLanguage('go', go);
 
 const HIGHLIGHT_REG = /{[\d,-]*}/i;
 
 const CodeBlock = ({ children, className = 'language-js', metastring: meta, title = '', ...props }) => {
   const language = className.replace(/language-/, '');
   const codeTitle = title.replace(/"/g, '');
+  const showLineNumbers = props.showLineNumbers ?? false;
   const highlightLines =
     Object.keys(props)
       .filter((key) => HIGHLIGHT_REG.test(key))
@@ -50,7 +53,7 @@ const CodeBlock = ({ children, className = 'language-js', metastring: meta, titl
           background: 'var(--code-background-color)',
           color: 'var(--code-block-color)',
         }}
-        showLineNumbers={true}
+        showLineNumbers={showLineNumbers}
         lineProps={(lineNumber) => {
           const isHighlighted = highlightLines.includes(lineNumber);
           return {

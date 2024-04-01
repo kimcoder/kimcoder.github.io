@@ -1,0 +1,292 @@
+---
+id: 러닝 고
+title: '8장 오류'
+description: '러닝 고 책을 읽고 내용을 정리합니다.'
+keywords: 'go, go lang, learning go, programming language, study'
+createdAt: 2024.04.01
+---
+
+## 8.1 오류 처리 방법: 기초
+
+- **Go는 함수에 마지막 반환 값으로 `error` 타입의 값을 반환하여 오류를 처리한다. 이것은 전적으로 관례에 의한 것이지만, 절대 위반해서 안되는 강력한 관례이다.**
+- 함수가 예상했던 대로 수행이 되면, `error` 파라미터로 `nil` 이 반환된다. 만약 문제가 있다면, 오류 값이 반환된다.
+- 대부분의 경우 `nil` 이 아닌 오류를 반환할 때, 다른 반환 값은 제로 값으로 설정해야 한다.
+
+```go
+func calcRemainderAndModd(numerator, denominator int) (int, int, error) {
+	if denominator == 0 {
+		return 0, 0, erros.New("denominator is 0")
+	}
+	return numerator / denominator, numerator % denominator, nil
+}
+```
+
+- **Go는 오류가 반환되는 것을 검출하는 특별한 구문이 없다.** `if` 문을 사용하여 오류 변수가 `nil` 이 아닌지 확인하도록 하자.
+- 오류가 발생하지 않았다는 것을 나타내기 위해 함수에서 **`nil` 을 반환하는 이유는 `nil` 은 모든 인터페이스 타입에 대한 제로 값이기 때문이다.**
+- Go가 예외를 발생시키는 것 대신에 반환된 오류를 사용하는 두 가지 좋은 이유가 있다.
+  - 코드에 하나 이상의 새 코드 경로를 추가하는 것 ( 예외가 알맞게 처리되지 않았을 때 놀라운 방법으로 크래시가 나는 코드를 만듬 )
+  - 개발자에게 오류 조건을 확인하고 처리하는 것을 강제하거나 반환된 오류 값으로 밑줄(`_`) 을 사용해서 명시적으로 무시하도록 하는 것
+- 예외 처리는 더 짧은 코드를 생성할 수 있도록 하지만 더 적은 라인을 사용한다고 해서 코드를 더 쉽게 이해하거나 유지 관리할 수 있는 것은 아니다. 관용적 Go는 코드 라인이 더 많이 생성되더라도 명확한 코드를 선호한다.
+
+## 8.2 단순 오류에 문자열 사용
+
+- Go의 표준 라이브러리는 문자열로 오류를 생성하는 두 가지 방법을 제공한다.
+  - `errors.New` : 문자열을 받아 `error` 를 반환환다.
+  - `fmt.Errorf` : `errors.New` 와 같이, 반환된 오류 인스턴스의 `Error` 메서드가 호출될 때 문자열이 반환된다.
+
+```go
+// errors.New 함수 사용
+func doubleEvent(i int) (int, error) {
+	if i % 2 != 0 {
+		return 0, errors.New("only even numbers are processed")
+	}
+	return i * 2, nil
+}
+
+// fmt.Errorf 함수 사용
+func doubleEvent(i int) (int, error) {
+	if i % 2 != 0 {
+		return 0, fmt.Errorf("only even numbers are processed")
+	}
+	return i * 2, nil
+}
+```
+
+## 8.3 센티넬 오류
+
+- Go 커뮤니티에서 다년간 활동해온 개발자 데이브 체니(Dave Cheney)는 그의 블로그 포스트 중 “단지 오류만 확인할 것이 아니라, 오류를 멋지게 처리도 해야 한다”에서 아래에서 기술하는 **센티넬 오류(sentinel erros)**라는 용어를 만들었다.
+- 센티넬 오류는 패키지 레벨에 선언된 몇 가지 변수 중에 하나이다.
+- 관례에 따라 이름은 `Err`로 시작한다.
+- 오류는 읽기 전용으로 취급되며, 컴파일러가 이를 강제할 방법은 없지만 해당 값을 변경하는 것은 프로그래밍 오류가 된다.
+- 센티넬 오류는 대개 처리를 시작하거나 지속할 수 없음을 나타낼 때 사용된다.
+
+```go
+// 표준 ZIP 파일 패키지인 archive/zip 중,
+// 전달된 데이터가 ZIP 파일 포맷이 아닌 경우에 반환하는 ErrFormat 오류
+
+func main(){
+	data := []byte("This is not a zip file")
+	notAZipFile := bytes.NewReader(data)
+	_, err := zip.NewReadder(notAZipFile, int64(len(data)))
+	if err == zip.ErrFormat {
+		fmt.Println("Told you so")
+	}
+}
+```
+
+- 센티넬 오류를 정의하기 전에 필요한지 확인하자. 하나를 정의하면, 그것은 공개 API의 일부가 되며 이후에 모든 이전 버전과 호환되는 배포에서 사용할 수 있도록 해야 한다.
+
+## 8.4 오류는 값이다
+
+- 오류는 인터페이스이기 때문에, 로깅이나 오류 처리를 위한 추가적 정보를 포함하여 자신만의 오류를 정의할 수 있다.
+
+  ( 예를 들어, 종류를 나타내기 위해 오류의 일부로 상태 코드를 포함할 수 있다. )
+
+```go
+type Status int
+
+const (
+	InvalidLogin Status = iota + 1
+	NotFound
+)
+
+type StatusErr struct {
+	Status 	Status
+	Message string
+}
+
+func (se StatusErr) Error() string {
+	return se.Message
+}
+
+func LoginAndGetData(uid, pwd, file string) ([]byte, error) {
+	err := login(uid, pwd)
+	if err != nil {
+		return nil, StatusErr{
+			Status: InvalidLogin,
+			Message: fmt.Sprintf("invalid credentials for user %s", uid),
+		}
+	}
+	data, err := getData(file)
+	if err != nil {
+		return nil, StatusErr{
+			Status: NotFound,
+			Message: fmt.Sprintf("file %s not found", file),
+		}
+	}
+	return data, nil
+}
+```
+
+## 8.5 오류 래핑
+
+- 오류가 코드를 통해 다시 전달될 때, 해당 오류에 추가 문맥을 추가하려는 경우가 있다. 추가 정보를 추가하면서 오류를 유지하는 것을 **오류 래핑(wrapping error)**이라고 한다. 일련의 래핑된 오류를 가질 때, 그것은 **오류 체인(error chain)**이라 부른다.
+- Go 표준 라이브러리에는 오류를 래핑하는 함수가 있다. `fmt.Errorf` 함수는 특수한 형식 동사 `%w` 를 가지고 있다. 다른 오류의 형식 지정된 문자열과 원본 오류를 포함하는 형식 지정된 문자열의 오류를 생성하는데 사용할 수 있다.
+- 표준 라이브러리는 또한 오류를 **언래핑(unwrapping)**하기 위한 `errors` 패키지에 `Unwrap` 함수를 제공한다. 오류를 전달하면 래핑된 오류가 있는 경우 이를 반환하고, 없다면 `nil` 을 반환한다.
+
+```go
+func fileChecker(name string) error {
+	f, err := os.Open(name)
+	if err != nil {
+		// fmt.Errorf로 오류 래핑
+		return fmt.Errorf("in fileChecker: %w", err)
+	}
+	f.Close()
+	return nil
+}
+
+func main() {
+	err := fileChecker("not_here.txt")
+	if err != nil {
+		fmt.Println(err)
+		// errors.Unwrap으로 오류 언래핑
+		if wrappedErr := errors.Unwrap(err); wrappedErr != nil {
+			fmt.Println(wrappedErr)
+		}
+	}
+}
+```
+
+- 사용자 지정 오류 타입으로 오류를 래핑하려면 오류 타입에서 `Unwrap` 메서드를 구현할 필요가 있다.
+
+```go
+type StatusErr struct {
+	Status 	Status
+	Message string
+	err     error
+}
+
+func (se StatusErr) Error() string {
+	return se.Message
+}
+
+func (se StatusErr) Unwrap() string {
+	return se.err
+}
+```
+
+## 8.6 Is와 As
+
+- 오류 래핑은 오류와 관련하여 추가 정보를 얻기 위한 유용한 방법이지만 문제가 생길 수 있다. 센티널 오류가 래핑되었다면, 확인을 위해 `==` 를 사용하여 확인할 수 없으며 래핑된 사용자 지정 오류와 일치시키기 위해 타입 단언이나 타입 스위치를 사용할 수도 없다.
+- Go는 이런 문제를 해결하기 위해 `errors` 패키지에 `Is`와 `As` 를 제공한다.
+- **반환된 오류나 래핑된 모든 오류를 센티넬 오류 인스턴스와 일치하는지 확인하기 위해 `errors.Is` 를 사용한다.**
+
+```go
+func fileChecker(name string) error {
+	f, err := os.Open(name)
+	if err != nil {
+		// fmt.Errorf로 오류 래핑
+		return fmt.Errorf("in fileChecker: %w", err)
+	}
+	f.Close()
+	return nil
+}
+
+func main() {
+	err := fileChecker("not_here.txt")
+	if err != nil {
+		if errors.Is(err, os.ErrNotExists) {
+			fmt.Println("That fille doesn't exist")
+		}
+	}
+}
+```
+
+- 기본적으로 `errors.Is` 는 지정된 오류와 래핑된 오류를 비교하기 위해 `==` 를 사용한다. 당신이 정의한 오류 타입이 해당 동작을 하지 않을 경우 당신의 오류에 `Is` 메서드를 구현하도록 하자.
+- `errors.As` **함수는 반환된 오류가 특정 타입과 일치하는지 확인할 수 있다.**
+  - 첫 번째 파라미터는 검사할 오류를 두 번째는 찾고자 하는 타입의 변수를 가리키는 포인터이다.
+  - 함수가 `true` 를 반환하면, 오류는 두 번째 파라미터로 할당된다.
+
+```go
+err := AFunctionThatReturnsAnError()
+var myErr MyErr
+if errors.As(err, &myErr) {
+	fmt.Println(myError.Code)
+}
+```
+
+- `errors.As` 의 두 번째 파라미터로 오류의 포인터나 인터페이스 포인터가 아닌 다른 것을 전달하면, 메서드는 패닉을 발생시킨다.
+- 기본 `errors.Is` 비교를 `Is` 메서드로 재정의 할 수 있듯이, 기본 `errors.As` 비교도 해당 오류 타입 내의 `As` 메서드로 재정의 할 수 있다.
+- **특정 인스턴스나 특정 값을 찾을 때, `errors.Is` 를 사용하자. 특정 타입을 찾을 때는 `errors.As` 를 사용하자.**
+
+## 8.7 defer로 오류 래핑
+
+- 가끔씩 같은 메시지로 여러 오류를 래핑한 것을 발견할 때가 있다.
+
+```go
+func DoSomeThings(val1 int, val2 string) (string, error) {
+	val3, err := doThing1(val1)
+	if err != nil {
+		return "", fmt.Errorf("in DoSomeThings: %w", err)
+	}
+	val4, err := doThing2(val2)
+	if err != nil {
+		return "", fmt.Errorf("in DoSomeThings: %w", err)
+	}
+	result, err := doThing3(val3, val4)
+	if err != nil {
+		return "", fmt.Errorf("in DoSomeThings: %w", err)
+	}
+	return result, nil
+}
+```
+
+- 이것을 `defer` 로 이용하여 더 간단히 작성해 볼 수 있다.
+
+```go
+func DoSomeThings(val1 int, val2 string) (string, error) {
+	defer func() {
+		if err != nil {
+			err = fmt.Errorf("in DoSomeThings: %w", err)
+		}
+	}()
+	val3, err := doThing1(val1)
+	if err != nil {
+		return "", err
+	}
+	val4, err := doThing2(val2)
+	if err != nil {
+		return "", err
+	}
+
+	return doThing3(val3, val4)
+}
+```
+
+## 8.8 패닉과 복구
+
+- Go는 Go 런타임이 다음에 무슨 일이 일어날 지 알 수 없는 상황에서 패닉을 발생시킨다.
+  - 프로그래밍 오류나 환경적인 문제(메모리 부족과 같은)
+- 패닉이 발생하면 아래와 같이 동작한다.
+  - 현재 함수는 즉시 종료되고 현재 함수에 연결된 모든 `defer` 함수가 실행을 시작한다.
+  - `defer` 가 완료되면, 호출 함수에 연결된 `defer` 가 main 함수에 도달할 때까지 계속 실행된다.
+  - 이제 메시지와 스택 트레이스(stack trace)의 출력과 함께 프로그램이 종료된다.
+- 내장 함수 `recover` 는 패닉을 확인하기 위한 `defer` 내부에서 호출될 수 있다. `recover` 가 일어나면 실행은 정상적으로 진행된다.
+
+```go
+func div60(i int) {
+	defer func() {
+		int v := recover(); v != nil {
+			fmt.Println(v)
+		}
+	}()
+	fmt.Println(60 / i)
+}
+
+func main() {
+	for _, val := range []int{1, 2, 0, 6} {
+		div60(val)
+	}
+}
+```
+
+- **패닉이 발생하면, `defer` 로 등록된 함수만 실행할 수 있기 때문에, `recover` 는 반드시 `defer` 내에서 호출해야 한다.**
+- `panic` 과 `recover` 는 다른 언어에서 예외 처리와 닮아 있지만, 해당 함수들은 예외 처리처럼 사용하도록 의도된 것은 아니다. 치명적 상황에 대한 `panic` 을 예약하고 안정적으로 이런 상황을 처리할 수 있는 방법으로 `recover` 를 사용하자.
+- 패닉이 컴퓨터의 메모리나 디스크 공간의 부족으로 발생했다면, `recover` 를 사용하여 소프트웨어 모니터링을 위해 상황을 로깅하고 `os.Exit(1)` 으로 종료하여 안전하게 처리한다.
+- 패닉의 요인이 프로그래밍 오류였다면, 계속 진행을 할 수도 있지만 같은 문제가 또 다시 발생할 수 있다.
+- **`panic` 과 `recover` 에 의존하지 않는 이유는 `recover` 가 무엇이 실패할 수 있는지 명확하지 않기 때문이다.** 관용적인 Go는 아무것도 언급하지 않고 모든 것을 짧은 코드로 처리하는 것보다 가능한 실패 조건을 명시적으로 설명하는 코드를 선호한다.
+
+## 8.9 오류에서 스택 트레이스 얻기
+
+- 새로운 Go 개발자가 `panic` 과 `recover` 에 대한 유혹을 받는 이유 중 하나는 문제가 발생했을 때, 스택 트레이스를 얻을 수 있기 때문이다. 기본적으로 Go는 그것을 제공하지 않는다.
+- 오류 래핑을 사용하여 수동으로 호출 스택을 만들 수 있지만 이러한 스택을 자동으로 생성해주는 오류 타입이 있는 서드-파티 라이브러리도 있다.

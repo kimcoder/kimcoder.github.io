@@ -1,0 +1,144 @@
+---
+id: 이펙티브 타입스크립트
+title: '5장 any 다루기'
+description: '이펙티브 타입스크립트 책을 읽고 내용을 정리합니다.'
+keywords: 'effective typescript, frontend, typescript, software engineering, book'
+createdAt: 2024.10.27
+---
+
+## **any** 타입은 가능한 한 좁은 범위에서만 사용하기
+
+- 의도치 않은 타입 안전성의 손실을 피하기 위해서 `any`의 사용 범위를 최소한으로 좁혀야 합니다.
+
+```tsx
+// 객체 전체를 any로 단언하여 부작용이 생길 수 있는 코드
+const config: Config = {
+  a: 1,
+  b: 2,
+  c: {
+    key: value,
+  },
+} as any; // 이렇게 하지 맙시다!
+
+// 사용 범위를 줄인 코드
+const config: Config = {
+  a: 1,
+  b: 2, // 이 속성은 여전히 체크됩니다.
+  c: {
+    key: value as any,
+  },
+};
+```
+
+- 함수의 반환 타입이 `any`인 경우 타입 안정성이 나빠집니다. 따라서 `any` 타입을 반환하면 절대 안 됩니다.
+- 강제로 타입 오류를 제거하려면 `any` 대신 `@ts-ignore`를 사용하는 것이 좋습니다.
+
+## **any**를 구체적으로 변형해서 사용하기
+
+- `any`를 사용할 때는 정말로 모든 값이 허용되어야만 하는지 면밀히 검토해야 합니다.
+- `any`보다 더 정확하게 모델링할 수 있도록 `any[]` 또는 `{[id: string]: any}` 또는 `() => any`처럼 구체적인 형태를 사용해야 합니다.c
+
+## 함수 안으로 타입 단언문 감추기
+
+- 타입 선언문은 일반적으로 타입을 위험하게 만들지만 상황에 따라 필요하기도 하고 현실적인 해결책이 되기도 합니다. 불가피하게 사용해야 한다면, 정확한 정의를 가지는 함수 안으로 숨기도록 합니다.
+
+```
+// 함수 내부에는 any가 꽤 많이 보이지만 타입 정의에는 any가 없기 때문에,
+// cacheLast를 호출하는 쪽에서는 any가 사용됐는지 알지 못 함.
+function cacheLast<T extends Function>(fn: T): T {
+  let lastArgs: any[] | null = null;
+  let lastResult: any;
+
+  return function (...args: any[]) {
+    if (ilastArgs || !shallowEq니al(lastArgs, args)) {
+      lastResult = fn(...args);
+
+      lastArgs = args;
+    }
+
+    return lastResult;
+  } as unknown as T;
+}
+
+```
+
+## any의 진화를 이해하기
+
+- 일반적인 타입들은 정제되기만 하는 반면, 암시적 `any`와 `any[]` 타입은 진화할 수 있습니다. 이러한 동작이 발생하는 코드를 인지하고 이해할 수 있어야 합니다.
+
+```
+// any 타입의 진화는 noImplicitAny가 설정된 상태에서 변수의 타입이 암시적 any인 경우에만 일어남.
+let val = null; // 타입이 any
+
+try {
+  somethingDangerous();
+  val = 12;
+  val // 타입이 number
+} catch (e) {
+  console.warn('alas!1');
+}
+
+val // 타입이 number | null
+
+```
+
+- `any`를 진화시키는 방식보다 명시적 타입 구문을 사용하는 것이 안전한 타입을 유지하는 방법입니다.
+
+## 모르는 타입의 값에는 any 대신 unknown을 사용하기
+
+- `unknown은` `any` 대신 사용할 수 있는 안전한 타입입니다. 어떠한 값이 있지만 그 타입을 알지 못하는 경우라면 `unknown`을 사용하면 됩니다.
+- 사용자가 타입 단언문이나 타입 체크를 사용하도록 강제하려면 `unknown`을 사용하면 됩니다.
+- `{}`, `object`, `unknown`의 차이점을 이해해야 합니다.
+  - `{}` : `null`과 `undefined`를 제외한 모든 값을 포함
+  - `object` : 모든 비기본형(non-primitive) 타입으로 이루어짐
+  - `unknwon` : 어떤 타입이든 할당 가능
+
+## 몽키 패치보다는 안전한 타입을 사용하기
+
+- 전역 변수나 DOM에 데이터를 저장하지 말고, 데이터를 분리하여 사용해야합니다.
+
+```tsx
+// 타입 체커는 Document와 HTMLElement의 내장 속성에 대해서는 알고 있지만,
+// 임의로 추가한 속성에 대해서는 알지 못함.
+
+document.monkey = 'Tamarin1';
+
+// ~~ 'Document' 유형에 'monkey' 속성이 없습니다.
+// 이 오류를 해결하는 가장 간단한 방법은 any 단언문을 사용하는 것.
+
+(document as any).monkey = 'Tamarin'; // 정상
+```
+
+- 내장 타입에 데이터를 저장해야 하는 경우, 안전한 타입 접근법 중 하나(보강이나 사용자 정의 인터페이스로 단언)를 사용해야 합니다.
+
+```tsx
+declare global {
+  interface Document {
+    /** 몽키 패치의 속(genus) 또는 종(species) */
+    monkey: string;
+  }
+}
+document.monkey = 'Tamarin'; // 정상
+```
+
+- 보강의 모듈 영역 문제를 이해해야 합니다.
+  - 보강은 전역적으로 적용되기 때문에, 코드의 다른 부분이나 라이브러리로부터 분리할 수 없습니다. 따라서 더 구체적인 타입 단언문을 사용하여 해결할 수 있습니다.
+
+```tsx
+interface MonkeyDocument extends Document {
+  /** 몽키 패치의 속(genus) 또는 종(species) */
+  monkey: string;
+}
+
+(document as MonkeyDocument).monkey = 'Macaque';
+```
+
+## 타입 커버리지를 추적하여 타입 안전성 유지하기
+
+- `noImplicitAny`가 설정되어 있어도, 명시적 `any` 또는 서드파티 타입 선언(`@types`)을 통해 `any` 타입은 코드 내에 여전히 존재할 수 있다는 점을 주의해야 합니다.
+- 작성한 프로그램의 타입이 얼마나 잘 선언되었는지 추적해야 합니다. 추적함으로써 `any`의 사용을 줄여 나갈 수 있고 타입 안전성을 꾸준히 높일 수 있습니다.
+
+```tsx
+$ npx type-coverage // any의 개수 추적
+9985 / 10117 98.69%
+```

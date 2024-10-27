@@ -1,0 +1,179 @@
+---
+id: 이펙티브 타입스크립트
+title: '6장 타입 선언과 @types'
+description: '이펙티브 타입스크립트 책을 읽고 내용을 정리합니다.'
+keywords: 'effective typescript, frontend, typescript, software engineering, book'
+createdAt: 2024.10.27
+---
+
+## **devDependencies에 typescript**와 **@types**
+
+추가하기
+
+- 타입스크립트를 시스템 레벨로 설치하면 안 됩니다. 타입스크립트를 프로젝트의 `devDependencies`에 포함시키고 팀원 모두가 동일한 버전을 사용하도록 해야 합니다.
+- `@types` 의존성은 `dependencies`가 아니라 `devDependencies`에 포함시켜야 합니다. 런타임에 `@types`가 필요한 경우라면 별도의 작업이 필요할 수 있습니다.
+
+## 타입 선언과 관련된 세 가지 버전 이해하기
+
+- `@types` 의존성과 관련된 세 가지 버전이 있습니다. 라이브러리 버전, `®types`버전, 타입스크립트 버전입니다.
+- 라이브러리를 업데이트하는 경우, 해당 `@types` 역시 업데이트해야 합니다.
+- 타입 선언을 라이브러리에 포함하는 것과 DefinitelyTyped에 공개하는 것 사이의 장단점을 이해해야 합니다. 타입스크립트로 작성된 라이브러리라면 타입 선언을 자체적으로 포함하고, 자바스크립트로 작성된 라이브러 리라면 타입 선언을 DefinitelyTyped에 공개하는 것이 좋습니다.
+
+## 공개 **API**에 등장하는 모든 타입을 익스포트하기
+
+- 공개 메서드에 등장한 어떤 형태의 타입이든 익스포트합시다. 어차피 라이브러리 사용자가 추출할 수 있으므로, 익스포트하기 쉽게 만드는 것이 좋습니다.
+
+```tsx
+interface SecretName {
+  first: string;
+  last: string;
+}
+interface SecretSanta {
+  name: SecretName;
+  gift: string;
+}
+
+export function getGift(name: SecretName, gift: string): SecretSanta {
+  // ...
+}
+
+// 위의 공개 메서드에서 타입 추출하기
+type MySanta = ReturnType<typeof getGift>; // SecretSanta
+type MyName = Parameters<typeof getGift>[0]; // SecretName
+```
+
+## **API** 주석에 **TSDoc** 사용하기
+
+- 익스포트된 함수, 클래스, 타입에 주석을 달 때는 `JSDoc`/ `TSDoc` 형태를 사용 합시다. `JSDoc`/ `TSDoc` 형태의 주석을 달면 편집기가 주석 정보를 표시해 줍니다.
+
+```tsx
+// JSDoc 활용
+
+/**
+ * * 인사말을 생성합니다.
+ * @param name 인사할 사람의 이름
+ * @param title 그 사람의 칭호
+ * @returns 사람이 보기 좋은 형태의 인사말 */
+function greetFullTSDoc(name: string, title: string) {
+  return 'Hello ${title} ${name}';
+}
+
+// TSDoc 활용
+
+/** 특정 시간과 장소에서 수행된 측정 */
+interface Measurement {
+  /** 어디에서 측정되었나? */
+  position: Vector3D;
+  /** 언제 측정되었나? epoch에서부터 초 단위로 */
+  time: number;
+  /** 측정된 운동량 */
+  momentum: Vector3D;
+}
+```
+
+- `@param`, `@returns` 구문과 문서 서식을 위해 마크다운을 사용할 수 있습니다.
+- 주석에 타입 정보를 포함하면 안 됩니다.
+
+## 콜백에서 **this**에 대한 타입 제공하기
+
+- this 바인딩이 동작하는 원리를 이해해야 합니다.
+- 콜백 함수에서 this를 사용해야 한다면, 타입 정보를 명시해야 합니다.
+
+```tsx
+function addKeyListener(el: HTMLElement, fn: (this: HTMLElement, e: KeyboardEvent) => void) {
+  el.addEventListener('keydown', (e) => {
+    fn.call(el, e);
+  });
+}
+
+// 라이브러리 사용자의 콜백 함수에서 this를 참조할 수 있고
+// 완전한 타입 안전성도 얻을 수 있습니다.
+declare let el: HTWLElement;
+addKeyListener(el, function (e) {
+  this.innerHTWL; // 정상, "this"는 HTMLElement 타입
+});
+
+// 만약 라이브러리 사용자가 콜백을 화살표 함수로 작성하고 this를 참조할시 오류 발생
+class Foo {
+  registerHandler(el: HTMLElement) {
+    addKeyListener(el, (e) => {
+      this.innerHIWL; // 'Foo' 유형에 'innerHIML' 속성이 없습니다.
+    });
+  }
+}
+```
+
+## 오버로딩 타입보다는 조건부 타입을 사용하기
+
+- 오버로딩 타입보다 조건부 타입을 사용하는 것이 좋습니다. 조건부 타입은 추가적인 오버로딩 없이 유니온 타입을 지원할 수 있습니다.
+
+```tsx
+// string 또는 number 타입의 매개변수가 들어올 수 있는 double 함수
+// 오버로딩 타입 사용
+function double(x: number): number;
+function double(x: string): string;
+function double(x: any) {
+  return x + x;
+}
+
+// 기대하는대로 정상 동작
+const num = double(12); // 타입이 number
+const str = double('x'); // 타입이 string
+
+// 유니온 타입 관련해서는 문제 발생
+function f(x: number | string) {
+  return double(x);
+  // ~ 'string | number' 형식의 인수는 'string1 형식의 매개변수에 할당될 수 없습니다.
+}
+```
+
+```tsx
+// string 또는 number 타입의 매개변수가 들어올 수 있는 double 함수
+// 제네릭과 조건부 타입 사용
+function double<T extends number | string>(x: T): T extends string ? string : number;
+function double(x: any) {
+  return x + x;
+}
+
+// 정상 동작
+const num = double(12); // number
+const str = double('x'); // string
+
+// 정상 동작
+function f(x: number | string) {
+  return double(x);
+}
+```
+
+## 의존성 분리를 위해 미러 타입 사용하기
+
+- 필수가 아닌 의존성을 분리할 때는 구조적 타이핑을 사용하면 됩니다.
+- 공개한 라이브러리를 사용하는 자바스크립트 사용자가 `@types` 의존성을 가지지 않게 해야 합니다. 그리고 웹 개발자가 NodeJS 관련된 의존성을 가지지 않게 해야 합니다.
+
+```tsx
+// Buffer 타입은 NodeJS 개발자만 필요함
+// 따라서, 웹 개발자에게는 무관한 타입
+function parseCSV(contents: string | Buffer): { [column: string]: string }[] {
+  if (typeof contents === 'object') {
+    // 버퍼인 경우
+    return parseCSV(contents.toString('utf8'));
+  }
+  //  ...
+}
+
+// 타입을 미러링을 하여 일부 동작만 뗴어 내어 명시
+interface CsvBuffer {
+  toString(encoding: string): string;
+}
+function parseCSV(contents: string | CsvBuffer): { [column: string]: string }[] {
+  // ...
+}
+```
+
+## 테스팅 타입의 함정에 주의하기
+
+- 타입을 테스트할 때는 특히 함수 타입의 동일성(equality)과 할당 가능성(assignability)의 차이점을 알고 있어야 합니다.
+  - 동일성(equality): 두 함수 타입이 정확히 동일한지 판단. 예를 들어, 매개변수의 타입, 개수, 리턴 타입이 모두 같아야 동일하다고 할 수 있습니다.
+  - 할당 가능성(assignability): 한 함수 타입이 다른 함수 타입에 할당될 수 있는지를 검사. 이 경우, 더 구체적인 타입이 더 일반적인 타입에 할당될 수 있는지 여부를 평가합니다. 예를 들어, 매개변수가 더 적거나 더 일반적인 타입일 때 할당이 가능합니다.
+- 콜백이 있는 함수를 테스트할 때, 콜백 매개변수의 추론된 타입을 체크해야 합니다. 또한 `this`가 API의 일부분이라면 역시 테스트해야 합니다
+- 타입 관련된 테스트에서 any를 주의해야 합니다. 더 엄격한 테스트를 위해 `dtslint` 같은 도구를 사용하는 것이 좋습니다

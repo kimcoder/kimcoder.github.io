@@ -1,0 +1,269 @@
+---
+id: 이펙티브 타입스크립트
+title: '2장 타입스크립트의 타입 시스템'
+description: '이펙티브 타입스크립트 책을 읽고 내용을 정리합니다.'
+keywords: 'effective typescript, frontend, typescript, software engineering, book'
+createdAt: 2024.10.27
+---
+
+## 편집기를 사용하여 타입 시스템 탐색하기
+
+- 편집기에서 타입스크립트 언어 서비스를 적극 활용해야 합니다.
+- 편집기를 사용하면 어떻게 타입 시스템이 동작하는지, 그리고 타입스크립트가 어떻게 타입을 추론하는지 개념을 잡을 수 있습니다.
+- 타입스크립트가 동작을 어떻게 모델링하는지 알기 위해 타입 선언 파일을 찾아보는 방법을 터득해야 합니다.
+
+## 타입이 값들의 집합이라고 생각하기
+
+- 타입을 값의 집합으로 생각하면 이해하기 편합니다(타입의 '범'’). 이 집합은 유한(`boolean` 또는 리터럴 타입)하거나 무한(`number` 또는 `string`)합니다.
+
+| 타입스크립트 용어            | 집합 용어                     |
+| ---------------------------- | ----------------------------- |
+| never                        | ∅ (공집합)                    |
+| 리터럴 타입                  | 원소가 1개인 집합             |
+| 값이 T에 할당 가능           | 값 ∈ T (값이 T의 원소)        |
+| T1이 T2에 할당 가능          | T1 ⊆ T2 (T1이 T2의 부분 집합) |
+| T1이 T2를 상속               | T1 ⊆ T2 (T1이 T2의 부분 집합) |
+| T1                           | T2 (T1과 T2의 유니온)         |
+| T1 & T2 (T1과 T2의 인터섹션) | T1 ∩ T2 (T1과 T2의 교집합)    |
+| unknown                      | 전체 (universal) 집합         |
+
+- 타입스크립트 타입은 엄격한 상속 관계가 아니라 겹쳐지는 집합(벤 다이어그램)으로 표현됩니다. 두 타입은 서로 서브타입이 아니면서도 겹쳐질 수 있습니다.
+- 한 객체의 추가적인 속성이 타입 선언에 언급되지 않더라도 그 타입에 속할 수 있습니다.
+
+```tsx
+interface Person {
+  name: string;
+  age: number;
+}
+
+const employee: Person = {
+  name: '홍길동',
+  age: 30,
+  department: '개발팀', // 추가적인 속성
+};
+```
+
+- 타입 연산은 집합의 범위에 적용됩니다. A와 B의 인터섹션은 A의 범위와 B의 범위의 인터섹션입니다. 객체 타입에서는 A & B인 값이 A와 B의 속성을 모두 가짐을 의미합니다.
+
+```tsx
+interface A {
+  name: string;
+}
+
+interface B {
+  age: number;
+}
+
+type C = A & B;
+
+const person: C = {
+  name: '홍길동',
+  age: 30,
+};
+```
+
+- 'A는 B를 상속', 'A는 B에 할당 가능', 'A는 B의 서브타입'은 'A는 B의 부분집합'과 같은 의미입니다.
+
+```tsx
+// Person 인터페이스 정의
+interface Person {
+  name: string;
+}
+
+// PersonSpan 인터페이스는 Person을 상속 (서브타입 관계)
+interface PersonSpan extends Person {
+  birth: Date;
+  death?: Date;
+}
+
+// Person은 PersonSpan의 상위 타입
+// PersonSpan은 Person의 서브타입이며, Person에 할당 가능 (부분집합 관계)
+
+// Person 타입의 변수
+let person: Person;
+
+// PersonSpan 타입의 객체
+const personSpan: PersonSpan = {
+  name: 'John Doe',
+  birth: new Date('1980-01-01'),
+  death: new Date('2020-01-01'),
+};
+
+// PersonSpan은 Person의 서브타입이므로 personSpan을 person에 할당 가능
+person = personSpan; // 상속(extends), 서브타입(subtype), 할당 가능(assignable)
+
+console.log(person.name); // person.name을 접근할 수 있음 (Person의 속성)
+```
+
+## 타입 공간과 값 공간의 심벌 구분하기
+
+- 타입스크립트 코드를 읽을 때 타입인지 값인지 구분하는 방법을 터득해야 합니다.
+- 모든 값은 타입을 가지지만, 타입은 값을 가지지 않습니다. `type`과 `interface` 같은 키워드는 타입 공간에만 존재합니다.
+- `class`나 `enum` 같은 키워드는 타입과 값 두 가지로 사용될 수 있습니다.
+- `"foo"`는 문자열 리터럴이거나, 문자열 리터럴 타입일 수 있습니다. 차이점을 알고 구별하는 방법을 터득해야 합니다.
+- `typeof`, `this` 그리고 많은 다른 연산자들과 키워드들은 타입 공간과 값 공간에서 다른 목적으로 사용될 수 있습니다.
+
+```tsx
+// 타입 공간에서의 typeof
+type T1 = typeof p; // 타입은 Person
+type T2 = typeof email; // 타입은 (p: Person, subject: string, body: string) => Response
+
+// 값 공간에서의 typeof
+const v1 = typeof p; // 값은 "object"
+const v2 = typeof email; // 값은 "function"
+```
+
+## 타입 단언보다는 타입 선언을 사용하기
+
+- 타입 단언(`as Type`)보다 타입 선언(`: Type`)을 사용해야 합니다.
+- 화살표 함수의 반환 타입을 명시하는 방법을 터득해야 합니다.
+- 타입스크립트보다 타입 정보를 더 잘 알고 있는 상황에서는 타입 단언문과 null 아님 단언문을 사용하면 됩니다.
+
+```tsx
+const elNull = document.getElementByld('foo'); // 타입은 HTMLElement | null
+const el = document.getElementByld('foo')!; // 타입은 HTMLElement
+```
+
+## 객체 래퍼 타입 피하기
+
+- 기본형 값에 메서드를 제공하기 위해 객체 래퍼 타입이 어떻게 쓰이는지 이해해야 합니다. 직접 사용하거나 인스턴스를 생성하는 것은 피해야 합니다.
+- 타입스크립트 객체 래퍼 타입은 지양하고, 대신 기본형 타입을 사용해야 합니다. `String` 대신 `string`, `Number` 대신 `number`, `Boolean` 대신 `boolean`, `Symbol` 대신 `symbol`, `BigInt` 대신 `bigint`를 사용해야 합니다.
+
+```tsx
+function isGreeting(phrase: string) {
+  return ['hello', 'good day'].includes(phrase);
+}
+// ~~~~~
+// 'String' 형식의 인수는
+// 'string' 형식의 매개변수에 할당될 수 없습니다.
+// 'string'은 기본 개체이지만 'String'은 래퍼 개체입니다.
+// 가능한 경우 'string'을 사용하세요.
+```
+
+## 잉여 속성 체크의 한계 인지하기
+
+- 객체 리터럴을 변수에 할당하거나 함수에 매개변수로 전달할 때 잉여 속성 체크가 수행됩니다.
+
+```tsx
+interface Room {
+  numDoors: number;
+  ceilingHeightFt: number;
+}
+
+const r: Room = {
+  numDoors: 1,
+  ceilingHeightFt: 10,
+  elephant: 'present',
+  // ~~~~~~~~~~~~~~~~ 객체 리터럴은 알려진 속성만 지정할 수 있으며 'Room' 형식에 'elephant'이(가) 없습니다.
+};
+```
+
+- 잉여 속성 체크는 오류를 찾는 효과적인 방법이지만, 타입스크립트 타입 체커가 수행하는 일반적인 구조적 할당 가능성 체크와 역할이 다릅니다. 할당의 개념을 정확히 알아야 잉여 속성 체크와 일반적인 구조적 할당 가능성 체크를 구분할 수 있습니다.
+
+```tsx
+const obj = {
+  numDoors: 1,
+  ceilingHeightFt: 10,
+  elephant: 'present',
+};
+
+const r: Room = obj; // 정상
+
+// obj의 타입은 { numDoors: number; ceilingHeightFt: number; elephant: string }으로 추론됩니다.
+// obj 타입은 Room 타입의 부분 집합을 포함하므로, Room에 할당 가능하며 타입 체크도 통과합니다
+```
+
+- 잉여 속성 체크에는 한계가 있습니다. 임시 변수를 도입하면 잉여 속성 체크를 건너뛸 수 있다는 점을 기억해야 합니다.
+
+```tsx
+interface Room {
+  numDoors: number;
+  ceilingHeightFt: number;
+}
+
+// 잉여 속성 체크 발생 (오류)
+const r1: Room = {
+  numDoors: 1,
+  ceilingHeightFt: 10,
+  elephant: 'present', // 오류: 'Room' 타입에 'elephant' 속성이 존재하지 않습니다.
+};
+
+// 임시 변수를 사용하면 잉여 속성 체크를 건너뜀 (정상)
+const obj = {
+  numDoors: 1,
+  ceilingHeightFt: 10,
+  elephant: 'present',
+};
+
+const r2: Room = obj; // 정상: obj는 'Room' 타입과 호환 가능
+```
+
+## 함수 표현식에 타입 적용하기
+
+- 매개변수나 반환 값에 타입을 명시하기보다는 함수 표현식 전체에 타입 구문을 적용하는 것이 좋습니다.
+- 만약 같은 타입 시그니처를 반복적으로 작성한 코드가 있다면 함수 타입을 분리해 내거나 이미 존재하는 타입을 찾아보도록 합니다. 라이브러리를 직접 만든다면 공통 콜백에 타입을 제공해야 합니다.
+- 다른 함수의 시그니처를 참조하려면 `typeof fn`을 사용하면 됩니다.
+
+## 타입과 인터페이스의 차이점 알기
+
+- 타입과 인터페이스의 차이점과 비슷한 점을 이해해야 합니다.
+- 한 타입을 `type`과 `interface` 두 가지 문법을 사용해서 작성하는 방법을 터득해야 합니다.
+- 프로젝트에서 어떤 문법을사용할지 결정할 때 한가지 일관된 스타일을 확립하고, 보강 기법이 필요한지 고려해야 합니다.
+- 타입을 보강하는 여러 방법들
+  - **선언 병합**: 동일한 이름의 인터페이스를 병합하여 보강.
+  - **타입 확장**: `extends` 키워드로 인터페이스 확장.
+  - **교차 타입**: `&`를 사용하여 여러 타입을 하나로 결합.
+  - **유니온 타입**: 다양한 타입을 지원하는 선택적 타입 정의.
+  - **타입 매핑**: `Partial`, `Readonly` 등을 사용하여 기존 타입 변형.
+  - **함수 오버로딩**: 함수 시그니처를 다양하게 정의하여 처리.
+
+## 타입 연산과 제너릭 사용으로 반복 줄이기
+
+- DRY(don’t repeat yourself) 원칙을 타입 에도 최대한 적용해야 합니다.
+- 타입에 이름을 붙여서 반복을 피해야 합니다. `extends`를 사용해서 인터페이스 필드의 반복을 피해야 합니다.
+- 타입들 간의 매핑을 위해 타입스크립트가 제공한 도구들을 공부하면 좋습니다. 여기에는 `keyof`, `typeof`, 인덱싱, 매핑된 타입들이 포함됩니다.
+- 제너릭 타입은 타입을 위한 함수와 같습니다. 타입을 반복하는 대신 제너릭 타입을 사용하여 타입들 간에 매핑을 하는 것이 좋습니다. 제너릭 타입을 제한하려면 `extends`를 사용하면 됩니다.
+- 표준 라이브러리에 정의된 `Pick`, `Partial`, `ReturnType` 같은 제너릭 타입에 익숙해져야 합니다.
+
+## 동적 데이터에 인덱스 시그니처 사용하기
+
+- 런타임때까지 객체의 속성을 알 수 없을 경우에만(예를들어 CSV파일에서 로드하는 경우) 인덱스 시그니처를 사용하도록 합니다.
+- 안전한 접근을 위해 인덱스 시그니처의 값 타입에 `undefined`를 추가하는 것을 고려해야 합니다.
+- 가능하다면 인터페이스, `Record`, 매핑된 타입 같은 인덱스 시그니처보다 정확한 타입을 사용하는 것이 좋습니다.
+
+## **number** 인덱스 시그니처보다는 **Array,** 튜플, ArrayLike를 사용하기
+
+- 배열은 객체이므로 키는 숫자가 아니라 문자열입니다. 인덱스 시그니처로 사용된 `number` 타입은 버그를 잡기 위한 순수 타입스크립트 코드입니다.
+- 인덱스 시그니처에 `number`를 사용하기보다 `Array`나 튜플, 또는 `ArrayLike` 타입을 사용하는 것이 좋습니다.
+
+## 변경 관련된 오류 방지를 위해 readonly 사용하기
+
+- 만약 함수가 매개변수를 수정하지 않는다면 `readonly`로 선언하는 것이 좋습니다. `readonly` 매개변수는 인터페이스를 명확하게 하며, 매개변수가 변경 되는 것을 방지합니다.
+- `readonly`를 사용하면 변경하면서 발생하는 오류를 방지할 수 있고, 변경이 발생하는 코드도 쉽게 찾을 수 있습니다.
+- `const`와 `readonly`의 차이를 이해해야 합니다. `readonly`는 얕게 동작한다는 것을 명심해야 합니다.
+
+## 매핑된 타입을 사용하여 값을 동기화하기
+
+- 매핑 된 타입을 사용해서 관련된 값과 타입을 동기화하도록 합니다.
+- 인터페이스에 새로운 속성을 추가할 때, 선택을 강제하도록 매핑된 타입을 고려해야 합니다.
+
+```tsx
+const REQUIRES_UPDATE: { [k in keyof ScatterProps]: boolean } = {
+  xs: true,
+  ys: true,
+  xRange: true,
+  yRange: true,
+  color: true,
+  onClick: false,
+};
+
+function shouldUpdate(oldProps: ScatterProps, newProps: ScatterProps) {
+  let k: keyof ScatterProps;
+  for (k in oldProps) {
+    if (oldProps[k] !== newProps[k] && REQUIRES_UPDATE[k]) {
+      return true;
+    }
+  }
+  return false;
+}
+```

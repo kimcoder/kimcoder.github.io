@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
  */
 const nextConfig = {
   pageExtensions: ['jsx', 'js', 'ts', 'tsx', 'mdx', 'md'],
+  swcMinify: true,
   env: {
     NEXT_PUBLIC_GA_TRACKING_ID: 'UA-122659594-1',
     NEXT_PUBLIC_GTM_ID: 'GTM-MKLQHRB',

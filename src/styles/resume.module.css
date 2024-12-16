@@ -9,4 +9,5 @@
   margin-top: -6rem;
   visibility: hidden;
   content: '';
+  pointer-events: none;
 }

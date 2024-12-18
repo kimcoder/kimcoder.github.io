@@ -7,11 +7,9 @@ export const Nav = () => (
   <div className='border-b border-gray-200 bg-white'>
     <div className='container mx-auto'>
       <div className='flex flex-wrap items-center'>
-        <div className='nav-height flex w-60 items-center pt-4 md:pt-0'>
+        <div className='nav-height flex w-60 items-center'>
           <Link href='/' as='/'>
-
             <h1 id='page-title'>@kimcoder</h1>
-
           </Link>
         </div>
 

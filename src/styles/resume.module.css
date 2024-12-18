@@ -10,3 +10,10 @@
   content: '';
   pointer-events: none;
 }
+
+@media screen and (max-width: 760px) {
+  .resume h3:before {
+    height: 7rem;
+    margin-top: -7rem;
+  }
+}

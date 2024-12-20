@@ -1,12 +1,19 @@
 .resume h1:before,
 .resume h2:before,
 .resume h3:before,
-.resume h4:before,
 .resume h5:before,
 .resume h6:before {
   display: block;
-  height: 6rem;
-  margin-top: -6rem;
+  height: 5rem;
+  margin-top: -5rem;
   visibility: hidden;
   content: '';
+  pointer-events: none;
+}
+
+@media screen and (max-width: 760px) {
+  .resume h3:before {
+    height: 7rem;
+    margin-top: -7rem;
+  }
 }

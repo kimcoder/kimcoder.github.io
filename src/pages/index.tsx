@@ -27,9 +27,9 @@ const Index = () => {
             <p>kimcoder</p>
             <p>
               <a
-                href='https://www.woowahan.com/'
+                href='https://kcd.co.kr/'
                 className='font-semibold text-blue-600 transition-colors duration-150 ease-out'>
-                woowabros
+                Korea Credit Data
               </a>{' '}
               frontend engineer
             </p>

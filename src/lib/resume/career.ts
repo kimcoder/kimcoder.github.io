@@ -25,6 +25,7 @@ type Project = {
     | 'Next.js'
     | 'Typescript'
     | 'styled-components'
+    | 'Tailwind CSS'
     | 'Node.js'
     | 'Express'
     | 'MSW'
@@ -39,6 +40,7 @@ type Project = {
     | 'Redux Thunk'
     | 'React Hook Form'
     | 'React Query'
+    | 'TanStack Query'
     | 'Mobx'
     | 'MobX-state-tree'
     | 'Javascript'
@@ -74,6 +76,8 @@ type Project = {
     | 'Turborepo'
     | 'Slack Bolt'
     | 'Docusaurus'
+    | 'Datadog'
+    | 'Module Federation'
   )[];
 };
 
@@ -84,17 +88,144 @@ type Works = {
 
 export const CAREER: Career[] = [
   {
+    companyName: '한국신용데이터',
+    beginAt: '2024-05',
+    team: [
+      {
+        teamName: 'FE 협의체',
+        position: '챕터 리드',
+        beginAt: '2024-05',
+        projects: [
+          {
+            title: 'FE 협의체',
+            beginAt: '2023-05',
+            description:
+              '사내 FE 개발 환경의 표준화와 생산성 향상을 위해 FE 협의체라는 가상조직에 참여하여 다양한 기술적 기여와 개선 활동을 수행했습니다.',
+            role: [
+              {
+                description: '챕터 리드',
+              },
+            ],
+            works: [
+              {
+                description: '사내 FE 표준 기술안 수립',
+              },
+              {
+                description: '서비스 및 어드민 애플리케이션 저장소 템플릿 제공으로 FE 개발자들의 생산성 개선',
+              },
+              {
+                description: 'FE 공통 npm 패키지의 배포 및 알림 프로세스 자동화로 업무 효율 개선',
+              },
+              {
+                description:
+                  'Next.js 설정을 위한 플러그인 시스템과 다양한 플러그인을 개발·제공하여 사내 FE 서비스들의 운영 효율 개선',
+              },
+              {
+                description:
+                  'FE 개발자들과의 1:1 미팅과 Meet-up으로 기술 피드백 제공 및 개발 문화와 트렌드 확산에 기여',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Tailwind CSS',
+              'Github',
+              'Storybook',
+              'Vite',
+              'Vitest',
+              'Rollup',
+              'Datadog',
+            ],
+          },
+        ],
+      },
+
+      {
+        teamName: '구독팀',
+        position: '팀원',
+        beginAt: '2024-05',
+        projects: [
+          {
+            title: '캐시노트 플러스 멤버십',
+            beginAt: '2023-05',
+            description:
+              '캐시노트 플러스 멤버십은 장부, 마켓, 금융, 광고 등 캐시노트의 주요 기능을 선별하여 멤버십 전용 혜택으로 제공하는 서비스입니다.\n캐시노트 앱의 웹뷰를 통해 제공되며 회사 매출의 핵심 역할을 담당하고 있는 서비스입니다.',
+            role: [
+              {
+                description: '테크 리드 및 일정 관리',
+              },
+              {
+                description: '서비스 고도화 및 신규 기능 개발',
+              },
+            ],
+            works: [
+              {
+                description: '기존 가격보다 2배 비싼 신규 멤버십 플랜 출시 및 가입 유도 작업을 통한 매출 목표 90% 달성',
+              },
+              {
+                description: '서비스 제휴 및 프로모션 기반의 여러 멤버십 가입 페이지 제작으로 가입자 목표 99% 달성',
+                subDescription: [
+                  '반복 작업 해소를 위해 모듈화 시스템 작업을 제안하고 시스템 설계, 구현을 통해 생산성 향상',
+                ],
+              },
+              {
+                description: '멤버십 플랜별 기능 소구를 할 수 있는 라운지 페이지 개발로 전용 혜택 및 제휴 서비스 강화',
+              },
+              {
+                description:
+                  '모듈 페더레이션을 활용하여 사내 어드민에 멤버십 도메인 통합으로 인증과 리소스 권한 관리 효율화',
+              },
+              {
+                description: '웹 성능 개선',
+                subDescription: [
+                  'RSC 사용, BTF 영역의 리소스 레이지 로딩 작업을 통해 내매장 페이지의 LCP 약 65% 개선 ( 2.x초 → 0.7초 )',
+                ],
+              },
+              {
+                description: '개발 환경 개선',
+                subDescription: [
+                  '데이터독의 RUM, APM을 활용한 모니터링 환경과 E2E 테스트 구축으로 장애 탐지 강화와 업타임을 약 50% 개선',
+                  '커스텀 Next.js 로그 모듈을 작성해 서비스 운영과 배포 모니터링 환경 개선',
+                ],
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Next.js',
+              'React Hook Form',
+              'TanStack Query',
+              'Tailwind CSS',
+              'Github',
+              'Storybook',
+              'Jest',
+              'React Testing Library',
+              'MSW',
+              'Vite',
+              'Module Federation',
+              'AWS',
+              'Datadog',
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     companyName: '우아한형제들',
     beginAt: '2021-05',
+    endAt: '2024-05',
     team: [
       {
         teamName: '셀러웹프론트개발팀',
         position: '팀원',
         beginAt: '2022-10',
+        endAt: '2024-05',
         projects: [
           {
             title: '우아한라이브러리',
             beginAt: '2023-05',
+            endAt: '2024-05',
             description:
               '우아한형제들의 전사 프론트엔드 라이브러리 제작을 위한 TF로 라이브러리의 생태계를 구축하였습니다.\nTF는 각 프론트엔드 팀의 시니어 엔지니어들로 구성되었습니다.',
             role: [
@@ -129,6 +260,7 @@ export const CAREER: Career[] = [
           {
             title: '배민사장님 앱',
             beginAt: '2022-10',
+            endAt: '2024-05',
             description:
               '배민사장님 앱은 사장님이 앱을 통해 주문 처리, 배달 설정, 가게 운영에 관련된 설정들을 할 수 있는 서비스입니다.\n주요 기능들을 웹뷰로 제공하는 서비스이며, 앱의 주문접수 웹뷰 개발 파트 리더로 프로젝트를 진행하였습니다.',
             role: [

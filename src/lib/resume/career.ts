@@ -184,7 +184,7 @@ export const CAREER: Career[] = [
               {
                 description: '개발 환경 개선',
                 subDescription: [
-                  '데이터독을 활용하여 RUM, APM, E2E 테스트 환경 구축으로 애플리케이션 성능 및 오류 모니터링 강화',
+                  '데이터독의 RUM, APM을 활용한 모니터링 환경과 E2E 테스트 구축으로 장애 탐지 강화와 업타임을 약 50% 개선',
                   '커스텀 Next.js 로그 모듈을 작성해 서비스 운영과 배포 모니터링 환경 개선',
                 ],
               },

@@ -92,6 +92,55 @@ export const CAREER: Career[] = [
     beginAt: '2024-05',
     team: [
       {
+        teamName: 'FE 협의체',
+        position: '챕터 리드',
+        beginAt: '2024-05',
+        projects: [
+          {
+            title: 'FE 협의체',
+            beginAt: '2023-05',
+            description:
+              '사내 FE 개발 환경의 표준화와 생산성 향상을 위해 FE 협의체라는 가상조직에 참여하여 다양한 기술적 기여와 개선 활동을 수행했습니다.',
+            role: [
+              {
+                description: '챕터 리드',
+              },
+            ],
+            works: [
+              {
+                description: '사내 FE 표준 기술안 수립',
+              },
+              {
+                description: '서비스 및 어드민 애플리케이션 저장소 템플릿 제공으로 FE 개발자들의 생산성 개선',
+              },
+              {
+                description: 'FE 공통 npm 패키지의 배포 및 알림 프로세스 자동화로 업무 효율 개선',
+              },
+              {
+                description:
+                  'Next.js 설정을 위한 플러그인 시스템과 다양한 플러그인을 개발·제공하여 사내 FE 서비스들의 운영 효율 개선',
+              },
+              {
+                description:
+                  'FE 개발자들과의 1:1 미팅과 Meet-up으로 기술 피드백 제공 및 개발 문화와 트렌드 확산에 기여',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Tailwind CSS',
+              'Github',
+              'Storybook',
+              'Vite',
+              'Vitest',
+              'Rollup',
+              'Datadog',
+            ],
+          },
+        ],
+      },
+
+      {
         teamName: '구독팀',
         position: '팀원',
         beginAt: '2024-05',

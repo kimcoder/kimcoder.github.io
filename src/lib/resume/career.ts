@@ -78,6 +78,7 @@ type Project = {
     | 'Docusaurus'
     | 'Datadog'
     | 'Module Federation'
+    | 'changesets'
   )[];
 };
 
@@ -130,6 +131,7 @@ export const CAREER: Career[] = [
               'Typescript',
               'Tailwind CSS',
               'Github',
+              'changesets',
               'Storybook',
               'Vite',
               'Vitest',

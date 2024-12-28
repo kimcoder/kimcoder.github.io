@@ -99,7 +99,7 @@ export const CAREER: Career[] = [
         projects: [
           {
             title: 'FE 협의체',
-            beginAt: '2023-05',
+            beginAt: '2024-05',
             description:
               '사내 FE 개발 환경의 표준화와 생산성 향상을 위해 FE 협의체라는 가상조직에 참여하여 다양한 기술적 기여와 개선 활동을 수행했습니다.',
             role: [

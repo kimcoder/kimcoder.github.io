@@ -27,9 +27,9 @@ const Index = () => {
             <p>kimcoder</p>
             <p>
               <a
-                href='https://kcd.co.kr/'
+                href='https://kakaopay.com/'
                 className='font-semibold text-blue-600 transition-colors duration-150 ease-out'>
-                Korea Credit Data
+                kakao<strong>pay</strong>
               </a>{' '}
               frontend engineer
             </p>

@@ -1,7 +1,7 @@
 ## Author
 
 - kimcoder
-- <a href='https://www.woowahan.com/'>woowabros</a> frontend engineer
+- <a href='https://kakaopay.com/'>kakaopay</a> frontend engineer
 
 ## Contents
 

@@ -59,7 +59,6 @@ export default function ResumePage({ career, etc }: Props) {
           <ResumeSection title='그 외 경력'>
             <ResumeEtc etc={etc} />
           </ResumeSection>
-          {/* <ResumeSection title='스킬'></ResumeSection> */}
         </div>
         <div className='ml-10 hidden w-28 flex-shrink-0 xl:block'>
           <div className='on-this-page sticky top-24 overflow-y-auto pb-16'>

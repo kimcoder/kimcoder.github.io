@@ -41,6 +41,7 @@ type Project = {
     | 'React Hook Form'
     | 'React Query'
     | 'TanStack Query'
+    | 'Zod'
     | 'Mobx'
     | 'MobX-state-tree'
     | 'Javascript'
@@ -89,17 +90,117 @@ type Works = {
 
 export const CAREER: Career[] = [
   {
+    companyName: '카카오페이',
+    beginAt: '2025-06',
+    team: [
+      {
+        teamName: '광고클랜 광고플랫폼파티',
+        position: '팀원',
+        beginAt: '2025-06',
+        projects: [
+          {
+            title: '광고플랫폼',
+            beginAt: '2025-06',
+            description:
+              '카카오페이 광고플랫폼은 광고주와 운영자가 캠페인·소재를 생성하고, 노출 조건을 설정하여 카카오페이 서비스 지면에 광고를 집행·관리할 수 있는 플랫폼입니다.\n또한, 사내의 여러 서비스에서 광고를 일관되게 서빙할 수 있도록 광고 노출/트래킹/렌더링을 표준화한 SDK도 운영합니다.',
+            role: [
+              {
+                description: 'FE 개발 리드 및 일정 관리',
+              },
+              {
+                description: '플랫폼 고도화 및 신규 기능 개발',
+              },
+            ],
+            works: [
+              {
+                description:
+                  '광고주/운영자용 광고 서빙 플랫폼을 구축하고 캠페인/소재/노출 설정 플로우를 고도화하여 운영 효율을 개선',
+              },
+              {
+                description: '캐시된 광고 서빙 결과에 대한 SDK 내부 노출 제어 로직을 개발하여 노출 품질 및 효율 개선',
+              },
+              {
+                description:
+                  '외부 광고 제휴사 배너를 SDK로 표준화하여 각 서비스 지면에 손쉽게 적용할 수 있도록 지원, 도입/운영 비용 절감',
+              },
+              {
+                description: '광고 서빙 플랫폼 코드 커버리지 개선 ( 0% → 20% )',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Next.js',
+              'React Hook Form',
+              'Zod',
+              'TanStack Query',
+              'sass',
+              'Github',
+              'changesets',
+              'Storybook',
+              'Vitest',
+              'React Testing Library',
+              'MSW',
+            ],
+          },
+          {
+            title: '혜택',
+            beginAt: '2025-09',
+            description:
+              '카카오페이 혜택은 사용자가 카카오페이 앱 및 카카오톡 내 카카오페이 영역에서 리워드/프로모션/제휴 혜택을 탐색하고 참여할 수 있는 사용자 대상 서비스입니다.',
+            role: [
+              {
+                description: 'FE 개발 리드 및 일정 관리',
+              },
+              {
+                description: '서비스 고도화 및 신규 기능 개발',
+              },
+            ],
+            works: [
+              {
+                description:
+                  '외부 광고 제휴사 및 Google AdMob 광고 연동 기반의 광고 레버리지 기능을 개발·운영하여 월 매출 KPI 목표 대비 약 110% 달성',
+              },
+              {
+                description:
+                  'Google AdMob 광고 리워드 미지급 이슈를 3% → 0%로 개선하여 리워드 신뢰도 및 사용자 경험 안정화',
+              },
+              {
+                description:
+                  '프로모션/리워드 혜택 지면 고도화 및 신규 기능 개발을 통해 사용자 참여 흐름(탐색 → 참여 → 전환) 개선',
+              },
+            ],
+            techStack: [
+              'React',
+              'Typescript',
+              'Next.js',
+              'TanStack Query',
+              'Github',
+              'Storybook',
+              'Vitest',
+              'React Testing Library',
+              'MSW',
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     companyName: '한국신용데이터',
     beginAt: '2024-05',
+    endAt: '2025-06',
     team: [
       {
         teamName: 'FE 협의체',
         position: '챕터 리드',
         beginAt: '2024-05',
+        endAt: '2025-06',
         projects: [
           {
             title: 'FE 협의체',
             beginAt: '2024-05',
+            endAt: '2025-06',
             description:
               '사내 FE 개발 환경의 표준화와 생산성 향상을 위해 FE 협의체라는 가상조직에 참여하여 다양한 기술적 기여와 개선 활동을 수행했습니다.',
             role: [
@@ -146,15 +247,17 @@ export const CAREER: Career[] = [
         teamName: '구독팀',
         position: '팀원',
         beginAt: '2024-05',
+        endAt: '2025-06',
         projects: [
           {
             title: '캐시노트 플러스 멤버십',
             beginAt: '2024-05',
+            endAt: '2025-06',
             description:
               '캐시노트 플러스 멤버십은 장부, 마켓, 금융, 광고 등 캐시노트의 주요 기능을 선별하여 멤버십 전용 혜택으로 제공하는 서비스입니다.\n캐시노트 앱의 웹뷰를 통해 제공되며 회사 매출의 핵심 역할을 담당하고 있는 서비스입니다.',
             role: [
               {
-                description: '테크 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 고도화 및 신규 기능 개발',
@@ -232,7 +335,7 @@ export const CAREER: Career[] = [
               '우아한형제들의 전사 프론트엔드 라이브러리 제작을 위한 TF로 라이브러리의 생태계를 구축하였습니다.\nTF는 각 프론트엔드 팀의 시니어 엔지니어들로 구성되었습니다.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리 ',
+                description: 'FE 개발 리드 및 일정 관리 ',
               },
               {
                 description: '신규 라이브러리 구축',
@@ -244,7 +347,7 @@ export const CAREER: Career[] = [
               },
               {
                 description: 'React Custom Hook 라이브러리 개발',
-                subDescription: ['코드커버리지 100% 달성'],
+                subDescription: ['코드 커버리지 100% 달성'],
               },
             ],
             techStack: [
@@ -267,7 +370,7 @@ export const CAREER: Career[] = [
               '배민사장님 앱은 사장님이 앱을 통해 주문 처리, 배달 설정, 가게 운영에 관련된 설정들을 할 수 있는 서비스입니다.\n주요 기능들을 웹뷰로 제공하는 서비스이며, 앱의 주문접수 웹뷰 개발 파트 리더로 프로젝트를 진행하였습니다.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 고도화 및 신규 기능 개발',
@@ -306,7 +409,7 @@ export const CAREER: Career[] = [
                 ],
               },
               {
-                description: '코드커버리지 개선 ( 20% → 60% )',
+                description: '코드 커버리지 개선 ( 20% → 60% )',
               },
             ],
             techStack: [
@@ -347,7 +450,7 @@ export const CAREER: Career[] = [
               '배민상회는 사장님께서 식자재 및 비품을 구매할 수 있는 서비스입니다.\nB2B 이커머스 프론트, 기능 관리할 수 있는 어드민, 외부 판매자가 입점하여 사용할 수 있는 셀러 어드민을 운영하였습니다.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 고도화 및 신규 기능 개발',
@@ -438,7 +541,7 @@ export const CAREER: Career[] = [
               '일반적인 펀드 서비스와 다르게 오락이 가미된 신규 펀드 매매 서비스를 구축하였습니다.\n사내 CBT까지 진행하였지만, 아쉽게도 컴플라이언스 이슈로 인해 서비스가 런칭되지는 못하였습니다.\n카카오페이에서 최초로 React Query를 도입하여 개발하였고, 그 후에 사용성 등을 전사에 전파하였습니다.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '신규 서비스 구축',
@@ -480,7 +583,7 @@ export const CAREER: Career[] = [
               '부동산 P2P 투자 서비스를 운영하였습니다.\n이 서비스는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱에서 접근할 수 있었습니다.\n아쉽게도 현재는 운영이 종료되었습니다.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 고도화',
@@ -556,7 +659,7 @@ export const CAREER: Career[] = [
               '카카오페이 투자 서비스들과 나의 투자 현황을 볼 수 있는 페이지를 운영하였습니다.\n이 페이지는 카카오톡 앱 내의 카카오페이 서비스 영역, 그리고 카카오페이 앱의 메인 탭 페이지로 제공되었습니다.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 고도화',
@@ -676,7 +779,7 @@ export const CAREER: Career[] = [
               '배민상회는 사장님께서 식자재 및 비품을 구매할 수 있는 서비스입니다.\n개발팀의 초기 멤버로 합류 후, 고도몰로 운영되고 있었던 서비스를 점진적으로 내재화시켰습니다.\n내재화가 완료된 후에는 서비스 관리 어드민 및 판매중개 비지니스 모델 전환을 위해 셀러 어드민을 구축하여 서비스 고도화를 진행하였습니다.\n또한, 컴포넌트를 공통으로 사용할 수 있도록 배민상회 디자인 시스템도 구축하였습니다.',
             role: [
               {
-                description: '프로젝트/테크 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '서비스 구축 및 신규 기능 개발',
@@ -751,7 +854,7 @@ export const CAREER: Career[] = [
               '아모레퍼시픽 브랜드들을 소개해 주는 서비스입니다.\n회사 재직기간 동안 가장 많이 진행하였던 업무들이었고, 시기에 따라 적절한 기술들을 사용하였습니다.\n브라우저를 위한 사용 기술 및 언어에 대한 주요 흐름은 아래와 같고, 부가적으로 필요한 환경들을 구성했었습니다.\nActionScript 3.0  ->  jQuery  ->  AngularJS  ->  React\n\nImageMagick, FFmpeg와 같은 라이브러리들은 특수한 프로모션 사이트들에서 이미지와 영상 처리가 필요하여 사용하였습니다.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '프로젝트 견적 산출',
@@ -808,7 +911,7 @@ export const CAREER: Career[] = [
               '하기스 네이처피크닉 프로모션 사이트에서 사용되는 API를 개발하였습니다.\n클라이언트로부터 이미지를 전달받아, 이미지에 필터 효과를 적용하고 애니메이션이 들어간 gif를 생성하고 반환해 주었습니다.',
             role: [
               {
-                description: '프로젝트 리드 및 일정 관리',
+                description: 'FE 개발 리드 및 일정 관리',
               },
               {
                 description: '프로젝트 견적 산출',

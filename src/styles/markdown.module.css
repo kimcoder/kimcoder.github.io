@@ -70,11 +70,12 @@
   @apply text-base;
 }
 
-.markdown > p > a,
+.markdown p > a,
 .markdown > p > strong > a,
 .markdown > ul > li > a,
 .markdown > ol > li > a,
-.markdown > table > tbody > tr > td > a {
+.markdown > table > tbody > tr > td > a,
+.markdown > .custom-anchor {
   @apply text-gray-900 transition-colors duration-150 ease-out font-medium border-b border-dashed border-b-blue-700;
 }
 
